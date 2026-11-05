@@ -89,8 +89,10 @@ Every push runs these in GitHub Actions. Results for `main` are published at [/r
 |---|---|---|
 | **Static analysis:** golangci-lint with rules from the [Google Go Style Guide](https://google.github.io/styleguide/go/) (vet, staticcheck, errcheck, revive, godot, …), ESLint with a DOM-XSS check, Prettier | `make lint` | 0 issues |
 | **Go unit tests + coverage**, including golden files that pin every order students see | `make cover` | ≥ 90% (currently ~98%) |
-| **Mutation testing** with [Gremlins](https://github.com/go-gremlins/gremlins): plants small bugs and checks the tests catch them | `make mutation` | ≥ 90% efficacy (currently ~96%) |
+| **Mutation testing** with [Gremlins](https://github.com/go-gremlins/gremlins): plants small bugs and checks the tests catch them | `make mutation` | ≥ 90% efficacy (currently ~94%) |
 | **Playwright UI tests** on desktop Chrome and a Pixel 7, opening the built single file; includes print checks and browser code coverage | `make e2e` | all pass |
+
+Mutation testing is the slow one, so CI splits it into 4 shards that run in parallel on separate machines (about 2 minutes each), then merges the results. Every job has a time limit, so a stuck run fails within minutes instead of hours. A failing mutation score shows up red but doesn't stop the site from deploying. Lint, Go tests, or Playwright failures do.
 
 If you change game wording or math on purpose, the golden-file tests will fail. Run `make golden`, then review the diff in `kitchen/testdata/golden/` before committing.
 

@@ -74,8 +74,8 @@ var liquidLines = func() []Tool {
 	seen := map[int]bool{}
 	var out []Tool
 	for _, d := range []int{4, 3} {
-		for n := 1; n <= 4*d; n++ {
-			size := Cup * n / d
+		for n := range 4 * d {
+			size := Cup * (n + 1) / d
 			if seen[size] {
 				continue
 			}
@@ -183,9 +183,12 @@ func coins(amount int, tools []Tool) ([]Tool, bool) {
 	if count[amount] >= inf {
 		return nil, false
 	}
-	var out []Tool
-	for a := amount; a > 0; a -= tools[last[a]].Size {
-		out = append(out, tools[last[a]])
+	// Walk back through the table: one tool per scoop.
+	out := make([]Tool, 0, count[amount])
+	for a := amount; len(out) < count[amount]; {
+		t := tools[last[a]]
+		out = append(out, t)
+		a -= t.Size
 	}
 	sort.SliceStable(out, func(i, j int) bool { return out[i].Size > out[j].Size })
 	return out, true
