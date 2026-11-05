@@ -29,6 +29,7 @@
   <section id="kitchen" class="panel" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
     <div id="home">
       <p class="house-rules"><b>How it works:</b> a wrong serve drops a plate 🍽. A right answer wins half a plate back. Lose them all and Chef pulls you off the line.</p>
+      <div id="gear" class="gear"></div>
       <h2 class="ladder-title">The brigade: start at Dish Pit and work your way up</h2>
       <ol id="rank-list" class="rank-list"></ol>
     </div>
@@ -39,6 +40,7 @@
         <div class="plates" id="plates" role="img" aria-label="Plates"></div>
         <div class="clock" id="clock" aria-live="off">⏱ 0:00</div>
         <div class="tips" id="tips">💰 0</div>
+        <div class="streak" id="streak" hidden></div>
         <button type="button" id="quit" class="link-button" aria-label="Leave shift">✕<span class="quit-word"> Leave</span></button>
       </div>
       <ol id="rail" class="rail" aria-label="Ticket rail"></ol>
@@ -67,6 +69,7 @@
             <div class="bowl-wrap">
               <div class="bowl" id="bowl" aria-live="polite" aria-label="Mixing bowl"></div>
               <button type="button" id="bowl-clear" class="small">Empty bowl</button>
+              <button type="submit" class="primary tray-serve">🛎 Serve</button>
             </div>
             <div id="drawer" class="drawer"></div>
           </div>
@@ -90,6 +93,7 @@
       <p id="r-stars" class="stars-big" aria-hidden="true"></p>
       <h2 id="r-title"></h2>
       <p id="r-sub" class="r-sub"></p>
+      <div id="r-unlock" class="r-unlock"></div>
       <dl id="r-stats" class="r-stats"></dl>
       <div id="r-review"></div>
       <div class="actions center">

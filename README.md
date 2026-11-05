@@ -13,6 +13,10 @@ The app is **one file**: `dist/recipe-math.html`. Open it in any browser on a Ch
 - **⏱ The shift clock** counts down. Finishing early earns tips. Running late never costs plates; the time bonus just stops.
 - **Sounds:** an order-up bell, a soft tick for correct answers, a plate clatter for accidents, a chime for a finished recipe card. All are synthesized in the browser. The 🔉 button cycles soft / full / off.
 - Lose every plate and **Chef pulls you off the line**: a review of what tripped you up, then a retry.
+- **🔥 Hot line:** 3+ clean answers in a row earn a streak bonus. An accident or a hint quietly resets it.
+- **Clean answers move on by themselves** after a moment. After an accident or a hint, the student taps Next, so they read the explanation.
+- **Chef gear:** tips add up across shifts and unlock cosmetic gear (Paper cap → Apron → Side towel → Chef's knife → Toque → Copper pan → Golden whisk). Each station also tracks a personal best.
+- **On phones**, the mixing bowl becomes a sticky tray at the bottom with its own Serve button.
 
 ## Stations
 
@@ -41,6 +45,7 @@ Every shift mixes order types, so it never drills one conversion over and over.
 | `?timer=off` | Hide the clock |
 | `?sound=off` | Start with sound off (students can still change it) |
 | `?rank=1` | Open straight into a station's shift (1–6) |
+| `?auto=off` | Always wait for Next instead of moving on after clean answers |
 
 Combine them: `recipe-math.html?plates=6&timer=off`.
 

@@ -42,6 +42,20 @@ const store = {
 const params = new URLSearchParams(location.search);
 const MAX_PLATES = Math.min(10, Math.max(1, Number(params.get("plates")) || 4));
 const TIMER_ON = params.get("timer") !== "off";
+const AUTO_NEXT = params.get("auto") !== "off"; // clean answers move on by themselves
+
+// Tips add up over every shift and unlock chef gear (cosmetic, just for fun).
+const GEAR = [
+  { tips: 0, icon: "🧢", name: "Paper cap" },
+  { tips: 200, icon: "🥼", name: "Apron" },
+  { tips: 500, icon: "🧣", name: "Side towel" },
+  { tips: 1000, icon: "🔪", name: "Chef's knife" },
+  { tips: 2000, icon: "👨‍🍳", name: "Toque" },
+  { tips: 3500, icon: "🍳", name: "Copper pan" },
+  { tips: 5000, icon: "🏆", name: "Golden whisk" },
+];
+const gearFor = (tips) => GEAR.filter((g) => tips >= g.tips).at(-1);
+const nextGear = (tips) => GEAR.find((g) => g.tips > tips);
 
 const randomSeed = () => crypto.getRandomValues(new Uint32Array(1))[0];
 const randomVersion = () => 1000 + (randomSeed() % 9000);
@@ -194,8 +208,24 @@ function showTab(name) {
 
 // ---------- Kitchen home ----------
 
+function renderGear() {
+  const life = store.get("lifetime", 0);
+  const now = gearFor(life);
+  const next = nextGear(life);
+  const pct = next ? Math.round(((life - now.tips) / (next.tips - now.tips)) * 100) : 100;
+  $("gear").replaceChildren(
+    el("span", { class: "gear-icon", "aria-hidden": "true" }, now.icon),
+    el("span", { class: "gear-text" },
+      el("strong", {}, `Your gear: ${now.name}`),
+      el("span", {}, `💰 ${life} lifetime tips`, next ? ` · next: ${next.icon} ${next.name} at ${next.tips}` : " · you've earned it all!"),
+      el("span", { class: "gear-bar", role: "progressbar", "aria-valuenow": String(pct), "aria-valuemin": "0", "aria-valuemax": "100", "aria-label": "Progress to next gear" },
+        el("span", { style: `width:${pct}%` }))));
+}
+
 function renderRanks() {
+  renderGear();
   const best = store.get("best", {});
+  const pb = store.get("pb", {});
   const fresh = Object.keys(best).length === 0;
   $("rank-list").replaceChildren(...RANKS.map((r) =>
     el("li", {},
@@ -209,6 +239,7 @@ function renderRanks() {
           el("span", { class: "rank-example" }, r.example)),
         el("span", { class: "rank-side" },
           el("span", { class: "rank-stars", "aria-label": `Best: ${best[r.id] || 0} of 3 stars` }, starText(best[r.id] || 0)),
+          pb[r.id] ? el("span", { class: "rank-pb" }, `Best: 💰 ${pb[r.id].tips}`) : "",
           el("span", { class: "rank-go" }, "Start shift →"))))));
 }
 
@@ -236,6 +267,9 @@ function startShift(rankId) {
     phase: "answer",
     bowl: [],
     over: false,
+    streak: 0,
+    bestStreak: 0,
+    lastPlates: MAX_PLATES,
   });
   S.timer = setInterval(tick, 1000);
   $("home").hidden = true;
@@ -276,7 +310,19 @@ function renderHUD() {
     const fill = Math.max(0, Math.min(1, S.plates - i));
     icons.push(el("span", { class: `plate ${fill === 1 ? "full" : fill > 0 ? "half" : "empty"}` }));
   }
+  // Juice: the plate that was just lost falls; one that was won back pops.
+  const changed = Math.floor(Math.min(S.plates, S.lastPlates));
+  if (icons[changed] && S.plates < S.lastPlates) icons[changed].classList.add("drop");
+  if (icons[changed] && S.plates > S.lastPlates) icons[changed].classList.add("heal");
+  S.lastPlates = S.plates;
   p.replaceChildren(...icons);
+  const st = $("streak");
+  st.hidden = S.streak < 3;
+  if (S.streak >= 3) {
+    st.textContent = `🔥 ×${S.streak}`;
+    st.setAttribute("aria-label", `Hot line: ${S.streak} clean answers in a row`);
+    st.classList.remove("pop"); void st.offsetWidth; st.classList.add("pop");
+  }
   p.setAttribute("aria-label", `Plates: ${S.plates} of ${MAX_PLATES}`);
   $("tips").textContent = `💰 ${S.tips}`;
   renderClock();
@@ -322,6 +368,7 @@ function showOrder() {
   $("in-choice").hidden = o.input !== "choice";
   $("in-number").hidden = o.input !== "number";
   $("in-build").hidden = o.input !== "build";
+  $("ticket").classList.toggle("is-build", o.input === "build");
   if (o.input === "choice") renderChoices(o, r);
   if (o.input === "number") {
     $("num").value = "";
@@ -550,6 +597,7 @@ function serve(extra) {
   if (!res.correct) {
     r.accidents++;
     S.accidents++;
+    S.streak = 0; // quietly: the lost bonus is penalty enough
     S.plates = Math.max(0, S.plates - 1);
     if (o.input === "choice") { r.wrongChoices.push(resp.choice); S.selected = null; $("serve").disabled = true; $("serve").textContent = "🛎 Serve"; }
     if (res.freeHint && r.shown === 0) r.shown = 1; // the message already asked hint 1
@@ -572,16 +620,22 @@ function serve(extra) {
   S.phase = "review";
   S.paused = true;
   S.plates = Math.min(MAX_PLATES, S.plates + 0.5);
-  let earned = r.accidents === 0 && r.hints === 0 ? 10 : 5;
+  const clean = r.accidents === 0 && r.hints === 0;
+  let earned = clean ? 10 : 5;
   let note = "";
   if (res.bestScoops && res.scoops === res.bestScoops) { earned += 5; note = " Fewest scoops: +5!"; }
+  S.streak = clean ? S.streak + 1 : 0;
+  S.bestStreak = Math.max(S.bestStreak, S.streak);
+  if (S.streak >= 3) { earned += 2; note += ` 🔥 Hot line ×${S.streak}: +2!`; }
   S.tips += earned;
   sound.correct();
   let msg = `✅ ${res.message} +${earned} tips.${note}`;
+  let cardDone = false;
   if (o.card && o.kind !== "fix") {
     const key = cardKey(o.card);
     if (S.orders.every((x, i) => cardKey(x.card) !== key || S.rec[i].solved)) {
       sound.chime();
+      cardDone = true;
       msg += " 📋 Recipe card complete. Mise en place is ready!";
     }
   }
@@ -605,9 +659,24 @@ function serve(extra) {
   $("skip-btn").hidden = true;
   $("next-btn").hidden = false;
   $("next-btn").focus();
+  // A clean first-try answer moves on by itself; after an accident or a hint
+  // the student taps Next, because that's when the explanation matters.
+  const nb = $("next-btn");
+  nb.classList.remove("auto");
+  if (clean && AUTO_NEXT) {
+    const ms = cardDone ? 2600 : 1800;
+    nb.style.setProperty("--auto", `${ms}ms`);
+    void nb.offsetWidth;
+    nb.classList.add("auto");
+    clearTimeout(S.autoTimer);
+    S.autoTimer = setTimeout(() => { if (!S.over && S.phase === "review" && cur() === o) nextOrder(); }, ms);
+  }
 }
 
 function nextOrder() {
+  clearTimeout(S.autoTimer);
+  $("next-btn").classList.remove("auto");
+  if (S.phase !== "review") return;
   S.doneOrder.push(S.queue.shift());
   if (S.queue.length === 0) return endShift(true);
   showOrder();
@@ -620,6 +689,7 @@ function useHint() {
   r.shown++;
   r.hints++;
   S.hintsUsed++;
+  S.streak = 0;
   S.plates -= 0.5;
   renderHints(o, r);
   renderHUD();
@@ -649,6 +719,15 @@ function endShift(cleared) {
   const onTime = S.timed && !S.late;
   const bonus = cleared && onTime ? Math.floor(Math.max(0, S.timeLeft) / 3) : 0; // 1 tip per 3 seconds left
   S.tips += bonus;
+  clearTimeout(S.autoTimer);
+  const lifeBefore = store.get("lifetime", 0);
+  const lifeAfter = lifeBefore + S.tips;
+  store.set("lifetime", lifeAfter);
+  const unlocked = GEAR.filter((g) => g.tips > lifeBefore && g.tips <= lifeAfter);
+  const pb = store.get("pb", {});
+  const prevBest = pb[S.rank.id];
+  const newBest = cleared && (!prevBest || S.tips > prevBest.tips);
+  if (newBest) { pb[S.rank.id] = { tips: S.tips, plates: S.plates }; store.set("pb", pb); }
   const half = S.plates >= MAX_PLATES / 2;
   const stars = cleared ? 1 + (half ? 1 : 0) + (half && (onTime || !S.timed) ? 1 : 0) : 0;
   if (cleared) {
@@ -669,8 +748,14 @@ function endShift(cleared) {
   $("r-sub").textContent = cleared
     ? (onTime ? `On-time bonus: +${bonus} tips.` : S.timed ? "Tickets ran late, so no time bonus." : "")
     : "You dropped all your plates. Study what tripped you up, then get back in there.";
+  const nxt = nextGear(lifeAfter);
+  $("r-unlock").replaceChildren(
+    newBest ? el("p", { class: "pb" }, prevBest ? `🏅 New personal best: ${S.tips} tips (was ${prevBest.tips})` : `🏅 First clear! Personal best: ${S.tips} tips`) : "",
+    ...unlocked.map((g) => el("p", { class: "unlock" }, `🎉 Unlocked: ${g.icon} ${g.name}`)),
+    el("p", { class: "next-gear" }, nxt ? `${nxt.tips - lifeAfter} more tips to ${nxt.icon} ${nxt.name}` : "All chef gear unlocked. 🏆"));
   const stats = [
     ["Tips", `💰 ${S.tips}`],
+    ["Best streak", `🔥 ${S.bestStreak}`],
     ["Plates left", `🍽 ${S.plates} of ${MAX_PLATES}`],
     ["Accidents", String(S.accidents)],
     ["Hints", String(S.hintsUsed)],
@@ -696,6 +781,7 @@ function endShift(cleared) {
 
 function goHome() {
   clearInterval(S.timer);
+  clearTimeout(S.autoTimer);
   S.over = true;
   $("shift").hidden = true;
   $("result").hidden = true;
