@@ -17,6 +17,7 @@ The app is **one file**: `dist/recipe-math.html`. Open it in any browser on a Ch
 - **Clean answers move on by themselves** after a moment. After an accident or a hint, the student taps Next, so they read the explanation.
 - **Chef gear:** tips add up across shifts and unlock cosmetic gear (Paper cap → Apron → Side towel → Chef's knife → Toque → Copper pan → Golden whisk). Each station also tracks a personal best.
 - **On phones**, the mixing bowl becomes a sticky tray at the bottom with its own Serve button.
+- **Pictures:** orders about cups, tablespoons, or butter end their hint ladder with a picture. It's either the **cup wall** (one cup split into ½, ⅓, ¼, 2 T, and 1 T blocks) or **butter sticks** with their tablespoon marks, with the starting amount shaded. "Chef says" shows the answer shaded the same way. The cheat sheet includes both pictures, and worksheets can add a blank cup wall for students to label.
 
 ## Stations
 

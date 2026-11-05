@@ -389,3 +389,36 @@ func TestStyles(t *testing.T) {
 		t.Errorf("eggs = %q", got)
 	}
 }
+
+func TestVisuals(t *testing.T) {
+	g := &gen{rng: newRNG(2)}
+	walls, butters := 0, 0
+	for range 300 {
+		for _, o := range []Order{g.swap(), g.fact(), g.measure(true)} {
+			if o.Visual == nil {
+				continue
+			}
+			if o.Hints[len(o.Hints)-1] != pictureHint {
+				t.Errorf("%s: picture hint should be the last rung", o.Prompt)
+			}
+			if o.Visual.Given <= 0 || o.Visual.Given%Tbsp != 0 {
+				t.Errorf("%s: bad picture amount %d", o.Prompt, o.Visual.Given)
+			}
+			switch o.Visual.Kind {
+			case "wall":
+				walls++
+				if o.Visual.Given > Cup {
+					t.Errorf("%s: cup wall only shows up to 1 cup", o.Prompt)
+				}
+			case "butter":
+				butters++
+			}
+		}
+	}
+	if walls == 0 || butters == 0 {
+		t.Errorf("expected both pictures: walls=%d butters=%d", walls, butters)
+	}
+	if v := wallVisual(ThirdCup+Tsp, 0); v != nil {
+		t.Error("amounts that aren't whole tablespoons shouldn't get a wall")
+	}
+}

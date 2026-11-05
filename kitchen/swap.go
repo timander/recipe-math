@@ -85,7 +85,7 @@ func (g *gen) swap() Order {
 		hints = append(hints, fmt.Sprintf("So you have %s groups of that many. How do you find the total?", spaced(given, st)))
 		explain = fmt.Sprintf("1 %s = %d %s, so %s × %d = %s.", big.spell[st], p.factor, small.label(st, frac.Int(p.factor)), Mixed(given), p.factor, Mixed(want))
 	}
-	return Order{Kind: KSwap, Input: InNumber, Unit: toLabel,
+	o := Order{Kind: KSwap, Input: InNumber, Unit: toLabel,
 		Prompt:  fmt.Sprintf("%s %s = ___ %s", spaced(given, st), from.label(st, given), toLabel),
 		Context: "Type a whole number or a fraction, like 4 or 1/2.",
 		Hints:   hints,
@@ -93,4 +93,23 @@ func (g *gen) swap() Order {
 		Answer: Answer{Num: pair(want), Text: spaced(want, st) + " " + toLabel,
 			Given: pair(given), Factor: pair(want.Div(given))},
 	}
+	// Cups, tablespoons, and butter get a picture (the cup wall or sticks).
+	vol := swapVolume(p.big, a)
+	switch {
+	case p.big == "c" && p.small == "T":
+		return withVisual(o, wallVisual(vol, vol))
+	case p.big == "stick" || p.small == "stick":
+		return withVisual(o, butterVisual(vol, vol))
+	}
+	return o
+}
+
+// swapVolume is an amount of a big unit in eighth-teaspoons (0 if not a volume we draw).
+func swapVolume(unit string, amount frac.Frac) int {
+	size := map[string]int64{"c": Cup, "stick": Stick, "T": Tbsp}[unit]
+	v := amount.Mul(frac.Int(size))
+	if size == 0 || !v.IsInt() {
+		return 0
+	}
+	return int(v.Num())
 }

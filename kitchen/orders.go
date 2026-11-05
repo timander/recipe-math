@@ -80,6 +80,7 @@ type Order struct {
 	Hints   []string `json:"hints"`
 	Explain []string `json:"explain"`
 	Answer  Answer   `json:"answer"`
+	Visual  *Visual  `json:"visual,omitempty"`
 }
 
 // Answer is the key. The page needs it for the printed answer key, and a
@@ -259,8 +260,15 @@ func (g *gen) vocab() Order {
 
 func (g *gen) fact() Order {
 	f := facts[g.fresh("fact", len(facts))]
-	return Order{Kind: KFact, Prompt: f.Q, Input: InNumber, Unit: f.Unit, Hints: f.Hints,
+	o := Order{Kind: KFact, Prompt: f.Q, Input: InNumber, Unit: f.Unit, Hints: slices.Clone(f.Hints),
 		Explain: []string{f.Explain}, Answer: Answer{Num: pair(frac.Int(f.Answer)), Text: fmt.Sprintf("%d %s", f.Answer, f.Unit)}}
+	switch pic := factPics[f.Q]; pic.pic {
+	case "wall":
+		return withVisual(o, wallVisual(pic.vol, pic.vol))
+	case "butter":
+		return withVisual(o, butterVisual(pic.vol, pic.vol))
+	}
+	return o
 }
 
 func (g *gen) call() Order {
@@ -444,6 +452,12 @@ func (g *gen) measure(consolidate bool) Order {
 	o.Context = "Tap tools into the bowl. Fewest scoops earns a bonus."
 	o.Hints = measureHints(t.vol, d, amount)
 	o.Explain = append([]string{fmt.Sprintf("%s = %s.", amount, o.Answer.Text)}, measureFacts(o.Answer.Text)...)
+	switch d {
+	case DrawerDry:
+		return withVisual(o, wallVisual(t.vol, t.vol))
+	case DrawerButter:
+		return withVisual(o, butterVisual(t.vol, t.vol))
+	}
 	return o
 }
 
@@ -673,7 +687,10 @@ func lineOrder(k Kind, orig, scaled Line, f frac.Frac, fs string, st Style) Orde
 		work += " = " + other
 	}
 	o.Explain = []string{work + ".", fmt.Sprintf("Measure it as %s.", o.Answer.Text)}
-	return o
+	if d == DrawerButter {
+		return withVisual(o, butterVisual(orig.Vol, scaled.Vol))
+	}
+	return withVisual(o, wallVisual(orig.Vol, scaled.Vol))
 }
 
 func (g *gen) scale(factors []frac.Frac) Order {

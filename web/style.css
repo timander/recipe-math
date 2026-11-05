@@ -456,3 +456,47 @@ legend { font-weight: 700; margin-bottom: 0.3rem; }
   .is-key .ans { color: #000; text-decoration: underline; }
 }
 .ticket.solved .tray-serve { display: none !important; }
+
+/* ---------- Cup wall and butter pictures ---------- */
+.cup-wall { position: relative; display: grid; gap: 2px; margin: 0.5rem 0; max-width: 34rem; background: #fff; }
+.wall-row { display: flex; gap: 2px; }
+.wall-block {
+  flex: 1; min-width: 0; text-align: center; font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0;
+  border: 1.5px solid var(--steel); border-radius: 3px; background: #fff; white-space: nowrap; overflow: hidden;
+}
+.wall-row:nth-child(1) .wall-block { background: #fde7d9; }
+.wall-row:nth-child(2) .wall-block { background: #fff3c4; }
+.wall-row:nth-child(3) .wall-block { background: #e6dcf5; }
+.wall-row:nth-child(4) .wall-block { background: #dcefff; }
+.wall-row:nth-child(5) .wall-block { background: #e2f5e5; }
+.wall-row:nth-child(6) .wall-block { background: #f3f3f3; font-size: 0.6rem; }
+.cup-wall.blank .wall-block { background: #fff; min-height: 1.6rem; }
+.wall-shade {
+  position: absolute; top: -3px; bottom: -3px; left: 0; pointer-events: none;
+  background: rgb(194 65 12 / 0.22); border-right: 3px dashed var(--accent); border-radius: 3px 0 0 3px;
+}
+.hints .cup-wall, .hints .butter-pic { margin-top: 0.5rem; }
+.explain-pic { margin-top: 0.4rem; }
+.butter-pic { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.5rem 0; }
+.stick { width: 15rem; max-width: 100%; }
+.stick-halves { display: flex; font-size: 0.68rem; color: var(--muted); }
+.stick-halves span { flex: 1; text-align: center; border-bottom: 2px solid #d8b934; margin: 0 2px 2px; }
+.stick-marks { display: flex; background: #ffe680; border: 2px solid #d8b934; border-radius: 4px; }
+.mark { flex: 1; text-align: center; font-size: 0.62rem; font-weight: 700; padding: 0.55rem 0; border-right: 1px dashed #b8992a; color: #7a6512; }
+.mark:last-child { border-right: 0; }
+.mark.on { background: rgb(194 65 12 / 0.3); color: var(--accent-dark); }
+.stick-name { font-size: 0.72rem; text-align: center; color: var(--muted); margin-top: 2px; }
+.cheat-grid.pics { margin-top: 0.3rem; align-items: start; }
+.ws-wall { margin-top: 0.8em; break-inside: avoid; }
+@media print {
+  .wall-block { border-color: #000; }
+  .wall-shade { display: none; }
+  #cheat-sheet .wall-block { padding: 0.12rem 0; font-size: 0.62rem; }
+  #cheat-sheet .wall-row:nth-child(6) .wall-block { font-size: 0.5rem; }
+  #cheat-sheet .mark { padding: 0.3rem 0; }
+  #cheat-sheet h3 { margin-top: 0.45rem; }
+  #cheat-sheet .ref-table, #cheat-sheet .fact-list, #cheat-sheet .tips { font-size: 8.8pt; }
+  #cheat-sheet .ref-table td, #cheat-sheet .ref-table th { padding-top: 0.08em; padding-bottom: 0.08em; }
+  #cheat-sheet .caption { font-size: 8.8pt; }
+  .cheat-grid.pics { grid-template-columns: 1.15fr 1fr; }
+}

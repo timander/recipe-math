@@ -187,6 +187,20 @@ type fact struct {
 	Explain string
 }
 
+// factPics gives some facts a picture: the amount they're about and which
+// drawing to use.
+var factPics = map[string]struct {
+	vol int
+	pic string
+}{
+	"How many T are in ¼ c?":               {QuarterCup, "wall"},
+	"How many T are in ½ c?":               {HalfCup, "wall"},
+	"How many T are in 1 c?":               {Cup, "wall"},
+	"How many T are in ¾ c?":               {3 * QuarterCup, "wall"},
+	"How many T are in 1 stick of butter?": {Stick, "butter"},
+	"How many sticks of butter make 1 c?":  {Cup, "butter"},
+}
+
 var facts = []fact{
 	{"How many t are in 1 T?", 3, "t", []string{"Is a T bigger or smaller than a t?", "How many t scoops would fill one T spoon?"}, "3 t = 1 T"},
 	{"How many T are in ¼ c?", 4, "T", []string{"How many T are in a whole cup?", "A ¼ cup is 1 of 4 equal parts of a cup. How do you split 16 T into 4 equal parts?"}, "4 T = ¼ c"},

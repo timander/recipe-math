@@ -446,7 +446,8 @@ function renderChoices(o, r) {
 
 function renderHints(o, r) {
   $("hints").replaceChildren(...o.hints.slice(0, r.shown).map((h, i) =>
-    el("li", {}, el("span", { class: "hint-num" }, `💡 ${i + 1}`), " ", h)));
+    el("li", {}, el("span", { class: "hint-num" }, `💡 ${i + 1}`), " ", h,
+      o.visual && i === o.hints.length - 1 ? picture(o.visual, o.visual.given) : "")));
 }
 
 // ---------- The recipe card (mise en place board) ----------
@@ -641,7 +642,8 @@ function serve(extra) {
   }
   flash(msg, "good");
   $("ticket").classList.add("solved");
-  $("explain").replaceChildren(el("h4", {}, "Chef says"), ...o.explain.map((e) => el("p", {}, e)));
+  $("explain").replaceChildren(el("h4", {}, "Chef says"), ...o.explain.map((e) => el("p", {}, e)),
+    o.visual && o.visual.answer ? el("div", { class: "explain-pic" }, picture(o.visual, o.visual.answer)) : "");
   $("explain").hidden = false;
   if (o.input === "number") $("num").disabled = true;
   if (o.input === "choice") {
@@ -797,6 +799,7 @@ function wsSettings() {
     rank: checked ? Number(checked.value) : 1,
     title: $("ws-title").value.trim() || "Recipe Math: The Line",
     version: Math.min(9999, Math.max(1000, Number($("ws-version").value) || 1000)),
+    wall: $("ws-wall").checked,
   };
 }
 
@@ -834,7 +837,11 @@ function renderWorksheet(mode) {
     }
     items.push(printOrder(++n, o, key));
   }
-  sheet.replaceChildren(head, instructions, el("ol", { class: "ws-items" }, items));
+  const wall = s.wall ? el("section", { class: "ws-wall" },
+    el("p", { class: "q" }, el("span", { class: "q-station" }, "Cup Wall"),
+      key ? " Answer key: each block's size." : " Label every block with its size (1 cup, ½ cup, ⅓ cup, ¼ cup, 2 T, 1 T)."),
+    cupWall(0, { blank: !key })) : "";
+  sheet.replaceChildren(head, instructions, el("ol", { class: "ws-items" }, items), wall);
 }
 
 const blank = (cls = "") => el("i", { class: `blank ${cls}` });
@@ -894,6 +901,43 @@ function printSheet(mode) {
   window.print();
 }
 
+// ---------- Pictures: the cup wall and butter sticks ----------
+
+// One cup split into equal blocks, row by row, so "4 T = ¼ c" is something
+// you can see and count. Shading marks an amount without labeling it.
+const WALL_ROWS = [["1 cup", 1], ["½ cup", 2], ["⅓ cup", 3], ["¼ cup", 4], ["2 T", 8], ["1 T", 16]];
+
+function cupWall(shade, { blank = false } = {}) {
+  const wall = el("div", {
+    class: `cup-wall${blank ? " blank" : ""}`, role: "img",
+    "aria-label": shade
+      ? "Cup wall: one cup split into halves, thirds, quarters, 2-tablespoon and 1-tablespoon blocks. The shaded part is the amount on this ticket. Count the blocks under it."
+      : "Cup wall: 1 cup = 2 half cups = 3 third cups = 4 quarter cups = 8 two-tablespoon blocks = 16 tablespoons.",
+  }, ...WALL_ROWS.map(([label, n]) => el("div", { class: "wall-row" },
+    Array.from({ length: n }, () => el("span", { class: "wall-block" }, blank ? "" : label)))));
+  if (shade) wall.append(el("div", { class: "wall-shade", style: `width:${Math.min(100, (shade / 384) * 100)}%` }));
+  return wall;
+}
+
+// Butter sticks with the tablespoon marks from the wrapper; shaded marks
+// show an amount.
+function butterSticks(shade, count = 1) {
+  const marks = Math.round(shade / 24);
+  return el("div", {
+    class: "butter-pic", role: "img",
+    "aria-label": shade ? `Butter sticks with ${marks} tablespoon marks shaded. Count the sticks and marks.` : "A stick of butter: 1 stick = ½ cup = 8 tablespoons; half a stick = ¼ cup.",
+  }, Array.from({ length: count }, (_, s) => el("div", { class: "stick" },
+    el("div", { class: "stick-halves" }, el("span", {}, "½ stick = ¼ c"), el("span", {}, "½ stick = ¼ c")),
+    el("div", { class: "stick-marks" }, Array.from({ length: 8 }, (_, m) =>
+      el("span", { class: `mark${s * 8 + m < marks ? " on" : ""}` }, "1 T"))),
+    el("div", { class: "stick-name" }, "1 stick = ½ c = 8 T"))));
+}
+
+function picture(v, amount) {
+  if (v.kind === "butter") return butterSticks(amount, Math.max(1, Math.ceil(Math.max(v.given, v.answer) / 192)));
+  return cupWall(amount);
+}
+
 // ---------- Cheat sheet ----------
 
 function renderCheatSheet() {
@@ -908,11 +952,18 @@ function renderCheatSheet() {
       el("section", {},
         el("h3", {}, "Know these cold"),
         el("ul", { class: "fact-list" }, REF.facts.map((f) => el("li", {}, f))),
-        el("h3", {}, "The drawer"),
-        el("div", { class: "drawer-ref" }, REF.drawer.map((t) => el("span", { class: `ref-tool ${t.kind}` }, t.label))),
         el("h3", {}, "The Gallon Kingdom"),
         gallonDiagram(),
         el("p", { class: "caption" }, "1 gal = 4 qt = 8 pt = 16 c"))),
+    el("div", { class: "cheat-grid pics" },
+      el("section", {},
+        el("h3", {}, "The cup wall"),
+        cupWall(0),
+        el("p", { class: "caption" }, "Notice: ⅓ c doesn't line up with the T blocks. ⅓ c = 5 T + 1 t.")),
+      el("section", {},
+        el("h3", {}, "Butter"),
+        butterSticks(0, 1),
+        el("p", { class: "caption" }, "1 stick = ½ c = 8 T = 4 oz. 2 sticks = 1 c."))),
     el("h3", {}, "Chef's rules"),
     el("ul", { class: "tips" }, REF.tips.map((t) => el("li", {}, t))));
 }
@@ -976,6 +1027,7 @@ function wireUp() {
       ` ${r.id}. ${r.name}`)));
   $("ws-title").value = saved.title ?? "";
   $("ws-version").value = String(saved.version || randomVersion());
+  $("ws-wall").checked = saved.wall ?? false;
   const saveWs = () => store.set("ws", { ...wsSettings(), title: $("ws-title").value });
   $("ws-form").addEventListener("input", () => { saveWs(); renderWorksheet(); });
   $("ws-new").addEventListener("click", () => { $("ws-version").value = String(randomVersion()); saveWs(); renderWorksheet(); });
