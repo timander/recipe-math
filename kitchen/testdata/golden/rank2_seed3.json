@@ -1,0 +1,382 @@
+[
+  {
+    "id": 1,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "“1 c packed brown sugar” means…",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "weigh it in its package",
+      "press it into the cup until it holds its shape",
+      "use a liquid cup",
+      "pour it in loosely"
+    ],
+    "seconds": 20,
+    "hints": [
+      "What does it mean to pack a suitcase full?",
+      "If you dumped the cup out, should it hold the cup's shape?"
+    ],
+    "explain": [
+      "Packed = press it firmly into a dry cup. It should hold the cup's shape when you tip it out."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "press it into the cup until it holds its shape",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "What does lb mean?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "large bag",
+      "level",
+      "pound",
+      "liter"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Is lb a weight or a volume?",
+      "16 oz make one of these. Which one?"
+    ],
+    "explain": [
+      "lb = pound (from the Latin libra). 1 lb = 16 oz."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "pound",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "“8 oz cheddar” is measured by…",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "the size of the bag",
+      "space, in a liquid cup",
+      "counting pieces",
+      "weight, on a scale"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does “oz” say fluid ounces or plain ounces?",
+      "Plain ounces measure how heavy something is. What tool measures heavy?"
+    ],
+    "explain": [
+      "oz = ounces of weight (use a scale). fl oz = fluid ounces of space (use a liquid cup)."
+    ],
+    "answer": {
+      "choices": [
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "weight, on a scale",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many T are in ¾ c?",
+    "line": -1,
+    "input": "number",
+    "unit": "T",
+    "seconds": 20,
+    "hints": [
+      "How many T are in ¼ c?",
+      "¾ c is three ¼ cups. What's three of those?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "12 T = ¾ c"
+    ],
+    "answer": {
+      "num": [
+        12,
+        1
+      ],
+      "text": "12 T",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 288,
+      "answer": 288
+    }
+  },
+  {
+    "id": 5,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "What does pt mean?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "pint",
+      "pinch",
+      "part",
+      "portion"
+    ],
+    "seconds": 20,
+    "hints": [
+      "What size container does a small tub of ice cream come in?",
+      "2 cups make one of these. Which one?"
+    ],
+    "explain": [
+      "pt = pint = 2 cups."
+    ],
+    "answer": {
+      "choices": [
+        0
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "pint",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "What does gal mean?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "glass",
+      "gallon",
+      "galley",
+      "gram"
+    ],
+    "seconds": 20,
+    "hints": [
+      "What size jug does milk come in at the store?",
+      "4 quarts make one of these. Which one?"
+    ],
+    "explain": [
+      "gal = gallon = 4 quarts = 16 cups."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "gallon",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "A recipe says “2 T butter.” What does T mean?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "teaspoon",
+      "tub",
+      "ton",
+      "tablespoon"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Capital T or lowercase t: which one is the bigger letter?",
+      "Which spoon is bigger: a tablespoon or a teaspoon?"
+    ],
+    "explain": [
+      "Capital T = tablespoon (the bigger spoon). Lowercase t = teaspoon."
+    ],
+    "answer": {
+      "choices": [
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "tablespoon",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many qt are in 1 gal?",
+    "line": -1,
+    "input": "number",
+    "unit": "qt",
+    "seconds": 20,
+    "hints": [
+      "What does “quart” sound like?",
+      "A quart is a quarter of a gallon. How many quarters make a whole?"
+    ],
+    "explain": [
+      "4 qt = 1 gal"
+    ],
+    "answer": {
+      "num": [
+        4,
+        1
+      ],
+      "text": "4 qt",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many c are in 1 qt?",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 20,
+    "hints": [
+      "“Quart” sounds like “quarter.” A quarter of what?",
+      "A quart is a quarter of a gallon (16 c). What's 16 split into 4?"
+    ],
+    "explain": [
+      "4 c = 1 qt"
+    ],
+    "answer": {
+      "num": [
+        4,
+        1
+      ],
+      "text": "4 c",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many sticks of butter make 1 c?",
+    "line": -1,
+    "input": "number",
+    "unit": "sticks",
+    "seconds": 20,
+    "hints": [
+      "How many cups is 1 stick?",
+      "1 stick = ½ c. How many halves make a whole?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "2 sticks = 1 c"
+    ],
+    "answer": {
+      "num": [
+        2,
+        1
+      ],
+      "text": "2 sticks",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 384,
+      "answer": 384
+    }
+  }
+]

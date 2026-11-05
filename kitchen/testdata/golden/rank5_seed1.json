@@ -1,0 +1,1590 @@
+[
+  {
+    "id": 1,
+    "kind": "call",
+    "station": "Chef's Call",
+    "prompt": "Scaling a recipe ×3 gives 4½ eggs. What's the best call?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Round to 5 eggs",
+      "Leave the eggs out",
+      "Use 9 eggs",
+      "Round down to 3 eggs",
+      "Use 4 eggs, then beat a 5th and add half of it"
+    ],
+    "seconds": 30,
+    "hints": [
+      "Can you crack half an egg?",
+      "Is 4½ closer to 4 or 5? Will one extra half-egg ruin it?"
+    ],
+    "explain": [
+      "4½ eggs: use 4 plus half a beaten egg, or round to 5. Eggs are forgiving by a half."
+    ],
+    "answer": {
+      "choices": [
+        0,
+        4
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Use 4 eggs, then beat a 5th and add half of it or Round to 5 eggs",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “1 T baking powder.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Is this amount more or less than ¼ c, your smallest cup?",
+      "For less than ¼ c, what tools are left in the drawer?"
+    ],
+    "explain": [
+      "Less than ¼ c: use measuring spoons, filled level."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Measuring spoons",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Mise en place: Brownies makes 16 brownies, and the order is for 48. What's your conversion factor?",
+    "context": "Type 2, 1/2, 1 1/2, or 1.5",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 16 × ? = 48.",
+      "Divide what you want by what the recipe makes. What's 48 ÷ 16?"
+    ],
+    "explain": [
+      "48 ÷ 16 = 3. Every line gets ×3."
+    ],
+    "answer": {
+      "num": [
+        3,
+        1
+      ],
+      "text": "×3",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 16,
+      "want": 48
+    }
+  },
+  {
+    "id": 4,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “½ cup (1 stick) butter, softened” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 0,
+    "input": "build",
+    "drawer": "butter",
+    "tools": [
+      {
+        "id": "stick",
+        "label": "1 stick",
+        "name": "stick of butter (½ c)",
+        "kind": "butter",
+        "size": 192
+      },
+      {
+        "id": "bT",
+        "label": "1 T mark",
+        "name": "tablespoon mark on the wrapper",
+        "kind": "butter",
+        "size": 24
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's ½ c × 3? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "8 T × 3 = 24 T = 1½ c.",
+      "Measure it as 3 sticks."
+    ],
+    "answer": {
+      "vol": 576,
+      "num": [
+        0,
+        0
+      ],
+      "text": "3 sticks",
+      "bestScoops": 3,
+      "best": [
+        "stick",
+        "stick",
+        "stick"
+      ],
+      "given": [
+        192,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 192,
+      "answer": 576
+    }
+  },
+  {
+    "id": 5,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 cup sugar” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's 1 c × 3? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 T × 3 = 48 T = 3 c.",
+      "Measure it as 3 c."
+    ],
+    "answer": {
+      "vol": 1152,
+      "num": [
+        0,
+        0
+      ],
+      "text": "3 c",
+      "bestScoops": 3,
+      "best": [
+        "c1",
+        "c1",
+        "c1"
+      ],
+      "given": [
+        384,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 384,
+      "answer": 0
+    }
+  },
+  {
+    "id": 6,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “2 large eggs” by ×3. How many?",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 2,
+    "input": "number",
+    "unit": "eggs",
+    "seconds": 45,
+    "hints": [
+      "With ×3, more or fewer than 2?",
+      "What's 2 × 3?"
+    ],
+    "explain": [
+      "2 × 3 = 6."
+    ],
+    "answer": {
+      "num": [
+        6,
+        1
+      ],
+      "text": "6 eggs",
+      "given": [
+        2,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 teaspoon pure vanilla extract” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 3,
+    "input": "build",
+    "drawer": "liquid",
+    "tools": [
+      {
+        "id": "L96",
+        "label": "¼ c",
+        "name": "¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 96
+      },
+      {
+        "id": "L128",
+        "label": "⅓ c",
+        "name": "⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 128
+      },
+      {
+        "id": "L192",
+        "label": "½ c",
+        "name": "½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 192
+      },
+      {
+        "id": "L256",
+        "label": "⅔ c",
+        "name": "⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 256
+      },
+      {
+        "id": "L288",
+        "label": "¾ c",
+        "name": "¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 288
+      },
+      {
+        "id": "L384",
+        "label": "1 c",
+        "name": "1 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 384
+      },
+      {
+        "id": "L480",
+        "label": "1¼ c",
+        "name": "1¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 480
+      },
+      {
+        "id": "L512",
+        "label": "1⅓ c",
+        "name": "1⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 512
+      },
+      {
+        "id": "L576",
+        "label": "1½ c",
+        "name": "1½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 576
+      },
+      {
+        "id": "L640",
+        "label": "1⅔ c",
+        "name": "1⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 640
+      },
+      {
+        "id": "L672",
+        "label": "1¾ c",
+        "name": "1¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 672
+      },
+      {
+        "id": "L768",
+        "label": "2 c",
+        "name": "2 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 768
+      },
+      {
+        "id": "L864",
+        "label": "2¼ c",
+        "name": "2¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 864
+      },
+      {
+        "id": "L896",
+        "label": "2⅓ c",
+        "name": "2⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 896
+      },
+      {
+        "id": "L960",
+        "label": "2½ c",
+        "name": "2½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 960
+      },
+      {
+        "id": "L1024",
+        "label": "2⅔ c",
+        "name": "2⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1024
+      },
+      {
+        "id": "L1056",
+        "label": "2¾ c",
+        "name": "2¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1056
+      },
+      {
+        "id": "L1152",
+        "label": "3 c",
+        "name": "3 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1152
+      },
+      {
+        "id": "L1248",
+        "label": "3¼ c",
+        "name": "3¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1248
+      },
+      {
+        "id": "L1280",
+        "label": "3⅓ c",
+        "name": "3⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1280
+      },
+      {
+        "id": "L1344",
+        "label": "3½ c",
+        "name": "3½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1344
+      },
+      {
+        "id": "L1408",
+        "label": "3⅔ c",
+        "name": "3⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1408
+      },
+      {
+        "id": "L1440",
+        "label": "3¾ c",
+        "name": "3¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1440
+      },
+      {
+        "id": "L1536",
+        "label": "4 c",
+        "name": "4 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1536
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's 1 t × 3? Then which tools add up to it?"
+    ],
+    "explain": [
+      "1 t × 3 = 3 t = 1 T.",
+      "Measure it as 1 T."
+    ],
+    "answer": {
+      "vol": 24,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 T",
+      "bestScoops": 1,
+      "best": [
+        "T1"
+      ],
+      "given": [
+        8,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “⅓ cup cocoa powder” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 4,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's ⅓ c × 3? Then which tools add up to it?"
+    ],
+    "explain": [
+      "16 t × 3 = 48 t = 1 c.",
+      "Measure it as 1 c."
+    ],
+    "answer": {
+      "vol": 384,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 c",
+      "bestScoops": 1,
+      "best": [
+        "c1"
+      ],
+      "given": [
+        128,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “½ cup all-purpose flour” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 5,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's ½ c × 3? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "8 T × 3 = 24 T = 1½ c.",
+      "Measure it as 1 c + ½ c."
+    ],
+    "answer": {
+      "vol": 576,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 c + ½ c",
+      "bestScoops": 2,
+      "best": [
+        "c1",
+        "c12"
+      ],
+      "given": [
+        192,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 192,
+      "answer": 0
+    }
+  },
+  {
+    "id": 10,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “¼ teaspoon salt” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 6,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's ¼ t × 3? Then which tools add up to it?"
+    ],
+    "explain": [
+      "¼ t × 3 = ¾ t.",
+      "Measure it as ½ t + ¼ t."
+    ],
+    "answer": {
+      "vol": 6,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ t + ¼ t",
+      "bestScoops": 2,
+      "best": [
+        "t12",
+        "t14"
+      ],
+      "given": [
+        2,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “¼ teaspoon baking powder” by ×3, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Brownies",
+      "makes": 16,
+      "makesWhat": "brownies",
+      "want": 48,
+      "factor": "3",
+      "lines": [
+        {
+          "text": "½ cup (1 stick) butter, softened",
+          "scaled": "3 sticks",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 cup sugar",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 large eggs",
+          "scaled": "6 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "1 teaspoon pure vanilla extract",
+          "scaled": "1 T",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ cup cocoa powder",
+          "scaled": "1 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ cup all-purpose flour",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¼ teaspoon salt",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "¼ teaspoon baking powder",
+          "scaled": "½ t + ¼ t",
+          "tool": "spoons"
+        }
+      ]
+    },
+    "line": 7,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's ¼ t × 3? Then which tools add up to it?"
+    ],
+    "explain": [
+      "¼ t × 3 = ¾ t.",
+      "Measure it as ½ t + ¼ t."
+    ],
+    "answer": {
+      "vol": 6,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ t + ¼ t",
+      "bestScoops": 2,
+      "best": [
+        "t12",
+        "t14"
+      ],
+      "given": [
+        2,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "kind": "call",
+    "station": "Chef's Call",
+    "prompt": "You're doubling a cookie recipe. How long do you bake each pan?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Twice as long",
+      "The same time: each cookie is still the same size",
+      "It depends on how many cookies are in the oven, so add 5 min per dozen",
+      "Half as long"
+    ],
+    "seconds": 30,
+    "hints": [
+      "Does doubling the dough make each cookie bigger?",
+      "What decides how long one cookie takes to bake?"
+    ],
+    "explain": [
+      "Bake time depends on the size of each piece, not the size of the batch. Same cookies, same time."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "The same time: each cookie is still the same size",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 12 T all-purpose flour.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 12 T without going over?",
+      "Start with ½ c. How much is still missing, and which tool holds that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "12 T = ½ c + ¼ c."
+    ],
+    "answer": {
+      "vol": 288,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ c + ¼ c",
+      "bestScoops": 2,
+      "best": [
+        "c12",
+        "c14"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 288,
+      "answer": 288
+    }
+  }
+]

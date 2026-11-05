@@ -1,0 +1,641 @@
+[
+  {
+    "id": 1,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 1 c butter.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "butter",
+    "tools": [
+      {
+        "id": "stick",
+        "label": "1 stick",
+        "name": "stick of butter (½ c)",
+        "kind": "butter",
+        "size": 192
+      },
+      {
+        "id": "bT",
+        "label": "1 T mark",
+        "name": "tablespoon mark on the wrapper",
+        "kind": "butter",
+        "size": 24
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 1 c without going over?",
+      "Start with 1 stick. How much is still missing, and which tool holds that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "1 c = 2 sticks.",
+      "1 stick = ½ c = 8 T."
+    ],
+    "answer": {
+      "vol": 384,
+      "num": [
+        0,
+        0
+      ],
+      "text": "2 sticks",
+      "bestScoops": 2,
+      "best": [
+        "stick",
+        "stick"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 384,
+      "answer": 384
+    }
+  },
+  {
+    "id": 2,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Pancakes makes 8 pancakes. You need 12. What's the conversion factor?",
+    "context": "Type it as a whole number, fraction, or decimal: 2, 1/2, 1 1/2, or 1.5",
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 8 × ? = 12.",
+      "Divide what you want by what the recipe makes. What's 12 ÷ 8?"
+    ],
+    "explain": [
+      "Want ÷ makes: 12 ÷ 8 = 1½. Multiply every line by 1½."
+    ],
+    "answer": {
+      "num": [
+        3,
+        2
+      ],
+      "text": "×1½",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 8,
+      "want": 12
+    }
+  },
+  {
+    "id": 3,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 6 T butter.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "butter",
+    "tools": [
+      {
+        "id": "stick",
+        "label": "1 stick",
+        "name": "stick of butter (½ c)",
+        "kind": "butter",
+        "size": 192
+      },
+      {
+        "id": "bT",
+        "label": "1 T mark",
+        "name": "tablespoon mark on the wrapper",
+        "kind": "butter",
+        "size": 24
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 6 T without going over?",
+      "Start with 1 T mark. How much is still missing, and which tool holds that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "6 T = 6 T marks."
+    ],
+    "answer": {
+      "vol": 144,
+      "num": [
+        0,
+        0
+      ],
+      "text": "6 T marks",
+      "bestScoops": 6,
+      "best": [
+        "bT",
+        "bT",
+        "bT",
+        "bT",
+        "bT",
+        "bT"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 144,
+      "answer": 144
+    }
+  },
+  {
+    "id": 4,
+    "kind": "scale",
+    "station": "Scale a Line",
+    "prompt": "Scale “1 tsp salt” by ×½, then measure it.",
+    "context": "Biscuits: makes 12 biscuits, you need 6 (×½).",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 60,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "What's 1 t × ½? Then which tools add up to it?"
+    ],
+    "explain": [
+      "1 t × ½ = ½ t.",
+      "Measure it as ½ t."
+    ],
+    "answer": {
+      "vol": 4,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ t",
+      "bestScoops": 1,
+      "best": [
+        "t12"
+      ],
+      "given": [
+        8,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "kind": "scale",
+    "station": "Scale a Line",
+    "prompt": "Scale “1 cup firmly packed brown sugar” by ×3, then measure it.",
+    "context": "Oatmeal Cookies: makes 36 cookies, you need 108 (×3).",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 60,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's 1 c × 3? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 T × 3 = 48 T = 3 c.",
+      "Measure it as 3 c."
+    ],
+    "answer": {
+      "vol": 1152,
+      "num": [
+        0,
+        0
+      ],
+      "text": "3 c",
+      "bestScoops": 3,
+      "best": [
+        "c1",
+        "c1",
+        "c1"
+      ],
+      "given": [
+        384,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 384,
+      "answer": 0
+    }
+  },
+  {
+    "id": 6,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “1 t cumin.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Is this amount more or less than ¼ c, your smallest cup?",
+      "For less than ¼ c, what tools are left in the drawer?"
+    ],
+    "explain": [
+      "Less than ¼ c: use measuring spoons, filled level."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Measuring spoons",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many c are in 1 gal?",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 20,
+    "hints": [
+      "How many qt are in a gallon?",
+      "Each quart is 4 c. How many cups in 4 quarts?"
+    ],
+    "explain": [
+      "16 c = 1 gal"
+    ],
+    "answer": {
+      "num": [
+        16,
+        1
+      ],
+      "text": "16 c",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Blueberry Muffins makes 12 muffins. You need 24. What's the conversion factor?",
+    "context": "Type it as a whole number, fraction, or decimal: 2, 1/2, 1 1/2, or 1.5",
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 12 × ? = 24.",
+      "Divide what you want by what the recipe makes. What's 24 ÷ 12?"
+    ],
+    "explain": [
+      "Want ÷ makes: 24 ÷ 12 = 2. Multiply every line by 2."
+    ],
+    "answer": {
+      "num": [
+        2,
+        1
+      ],
+      "text": "×2",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 12,
+      "want": 24
+    }
+  },
+  {
+    "id": 9,
+    "kind": "scale",
+    "station": "Scale a Line",
+    "prompt": "Scale “2 Tbsp. sugar” by ×2, then measure it.",
+    "context": "Pancakes: makes 8 pancakes, you need 16 (×2).",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 60,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's 2 T × 2? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "2 T × 2 = 4 T = ¼ c.",
+      "Measure it as ¼ c."
+    ],
+    "answer": {
+      "vol": 96,
+      "num": [
+        0,
+        0
+      ],
+      "text": "¼ c",
+      "bestScoops": 1,
+      "best": [
+        "c14"
+      ],
+      "given": [
+        48,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 48,
+      "answer": 96
+    }
+  },
+  {
+    "id": 10,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “2 c milk.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does this ingredient pour, or does it pile up?",
+      "Which cup has a spout and lines below the rim so it won't spill?"
+    ],
+    "explain": [
+      "Milk is a liquid: liquid measuring cup on the counter, read at eye level."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Liquid measuring cup",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  }
+]

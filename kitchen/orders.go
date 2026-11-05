@@ -571,8 +571,10 @@ func scaledLine(l Line, f frac.Frac) (Line, bool) {
 	if out.Vol > 8*Cup {
 		return out, false
 	}
-	_, ok := Solve(out.Vol, drawerFor(l.Ing))
-	return out, ok
+	// It must be measurable with a reasonable number of scoops. (A 4-cup
+	// liquid measure plus 64 tablespoons is not a recipe-card answer.)
+	best, ok := Solve(out.Vol, drawerFor(l.Ing))
+	return out, ok && len(best) <= MaxScoops
 }
 
 // lineText writes a line as the recipe card prints it, in a recipe style,
@@ -742,7 +744,7 @@ func (g *gen) card(factors []frac.Frac) []Order {
 	}
 
 	fo := g.factorFor(r, f, want)
-	fo.Card = card
+	fo.Card, fo.Line = card, -1 // the factor isn't any one ingredient line
 	out := []Order{fo}
 	for i, l := range r.Lines {
 		s, _ := scaledLine(l, f)

@@ -1,0 +1,870 @@
+[
+  {
+    "id": 1,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 5 t cinnamon.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 5 t without going over?",
+      "Start with 1 T. How much is still missing, and which tool holds that?"
+    ],
+    "explain": [
+      "5 t = 1 T + 2 t."
+    ],
+    "answer": {
+      "vol": 40,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 T + 2 t",
+      "bestScoops": 3,
+      "best": [
+        "T1",
+        "t1",
+        "t1"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “⅓ c vegetable oil.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does this ingredient pour, or does it pile up?",
+      "Which cup has a spout and lines below the rim so it won't spill?"
+    ],
+    "explain": [
+      "Vegetable oil is a liquid: liquid measuring cup on the counter, read at eye level."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Liquid measuring cup",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 1 ½ cups rolled oats.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 1 ½ cups without going over?",
+      "Start with 1 c. How much is still missing, and which tool holds that?"
+    ],
+    "explain": [
+      "1 ½ cups = 1 c + ½ c."
+    ],
+    "answer": {
+      "vol": 576,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 c + ½ c",
+      "bestScoops": 2,
+      "best": [
+        "c1",
+        "c12"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Blueberry Muffins makes 12 muffins. You need 6. What's the conversion factor?",
+    "context": "Type it as a whole number, fraction, or decimal: 2, 1/2, 1 1/2, or 1.5",
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 12 × ? = 6.",
+      "Divide what you want by what the recipe makes. What's 6 ÷ 12?"
+    ],
+    "explain": [
+      "Want ÷ makes: 6 ÷ 12 = ½. Multiply every line by ½."
+    ],
+    "answer": {
+      "num": [
+        1,
+        2
+      ],
+      "text": "×½",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 12,
+      "want": 6
+    }
+  },
+  {
+    "id": 5,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Pancakes makes 8 pancakes. You need 24. What's the conversion factor?",
+    "context": "Type it as a whole number, fraction, or decimal: 2, 1/2, 1 1/2, or 1.5",
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 8 × ? = 24.",
+      "Divide what you want by what the recipe makes. What's 24 ÷ 8?"
+    ],
+    "explain": [
+      "Want ÷ makes: 24 ÷ 8 = 3. Multiply every line by 3."
+    ],
+    "answer": {
+      "num": [
+        3,
+        1
+      ],
+      "text": "×3",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 8,
+      "want": 24
+    }
+  },
+  {
+    "id": 6,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many T are in 1 c?",
+    "line": -1,
+    "input": "number",
+    "unit": "T",
+    "seconds": 20,
+    "hints": [
+      "How many T are in ¼ c?",
+      "1 c is four ¼ cups. What's four of those?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 T = 1 c"
+    ],
+    "answer": {
+      "num": [
+        16,
+        1
+      ],
+      "text": "16 T",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 384,
+      "answer": 384
+    }
+  },
+  {
+    "id": 7,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “2 T butter.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "How does butter come from the store?",
+      "What's printed on a stick's wrapper?"
+    ],
+    "explain": [
+      "Butter wrappers are marked in tablespoons: 1 stick = 8 T = ½ c."
+    ],
+    "answer": {
+      "choices": [
+        4
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Butter wrapper marks",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "scale",
+    "station": "Scale a Line",
+    "prompt": "Scale “1 Tbsp honey” by ×4, then measure it.",
+    "context": "House Vinaigrette: makes 6 servings, you need 24 (×4).",
+    "line": -1,
+    "input": "build",
+    "drawer": "liquid",
+    "tools": [
+      {
+        "id": "L96",
+        "label": "¼ c",
+        "name": "¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 96
+      },
+      {
+        "id": "L128",
+        "label": "⅓ c",
+        "name": "⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 128
+      },
+      {
+        "id": "L192",
+        "label": "½ c",
+        "name": "½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 192
+      },
+      {
+        "id": "L256",
+        "label": "⅔ c",
+        "name": "⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 256
+      },
+      {
+        "id": "L288",
+        "label": "¾ c",
+        "name": "¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 288
+      },
+      {
+        "id": "L384",
+        "label": "1 c",
+        "name": "1 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 384
+      },
+      {
+        "id": "L480",
+        "label": "1¼ c",
+        "name": "1¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 480
+      },
+      {
+        "id": "L512",
+        "label": "1⅓ c",
+        "name": "1⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 512
+      },
+      {
+        "id": "L576",
+        "label": "1½ c",
+        "name": "1½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 576
+      },
+      {
+        "id": "L640",
+        "label": "1⅔ c",
+        "name": "1⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 640
+      },
+      {
+        "id": "L672",
+        "label": "1¾ c",
+        "name": "1¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 672
+      },
+      {
+        "id": "L768",
+        "label": "2 c",
+        "name": "2 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 768
+      },
+      {
+        "id": "L864",
+        "label": "2¼ c",
+        "name": "2¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 864
+      },
+      {
+        "id": "L896",
+        "label": "2⅓ c",
+        "name": "2⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 896
+      },
+      {
+        "id": "L960",
+        "label": "2½ c",
+        "name": "2½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 960
+      },
+      {
+        "id": "L1024",
+        "label": "2⅔ c",
+        "name": "2⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1024
+      },
+      {
+        "id": "L1056",
+        "label": "2¾ c",
+        "name": "2¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1056
+      },
+      {
+        "id": "L1152",
+        "label": "3 c",
+        "name": "3 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1152
+      },
+      {
+        "id": "L1248",
+        "label": "3¼ c",
+        "name": "3¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1248
+      },
+      {
+        "id": "L1280",
+        "label": "3⅓ c",
+        "name": "3⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1280
+      },
+      {
+        "id": "L1344",
+        "label": "3½ c",
+        "name": "3½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1344
+      },
+      {
+        "id": "L1408",
+        "label": "3⅔ c",
+        "name": "3⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1408
+      },
+      {
+        "id": "L1440",
+        "label": "3¾ c",
+        "name": "3¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1440
+      },
+      {
+        "id": "L1536",
+        "label": "4 c",
+        "name": "4 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1536
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 60,
+    "hints": [
+      "With ×4, should the amount get bigger or smaller?",
+      "What's 1 T × 4? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "1 T × 4 = 4 T = ¼ c.",
+      "Measure it as ¼ c (liquid cup)."
+    ],
+    "answer": {
+      "vol": 96,
+      "num": [
+        0,
+        0
+      ],
+      "text": "¼ c (liquid cup)",
+      "bestScoops": 1,
+      "best": [
+        "L96"
+      ],
+      "given": [
+        24,
+        1
+      ],
+      "factor": [
+        4,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 24,
+      "answer": 96
+    }
+  },
+  {
+    "id": 9,
+    "kind": "scale",
+    "station": "Scale a Line",
+    "prompt": "Scale “1 t cinnamon” by ×2, then measure it.",
+    "context": "Oatmeal Cookies: makes 36 cookies, you need 72 (×2).",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 60,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's 1 t × 2? Then which tools add up to it?"
+    ],
+    "explain": [
+      "1 t × 2 = 2 t.",
+      "Measure it as 2 t."
+    ],
+    "answer": {
+      "vol": 16,
+      "num": [
+        0,
+        0
+      ],
+      "text": "2 t",
+      "bestScoops": 2,
+      "best": [
+        "t1",
+        "t1"
+      ],
+      "given": [
+        8,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "scale",
+    "station": "Scale a Line",
+    "prompt": "Scale “¾ C. firmly packed brown sugar” by ×3, then measure it.",
+    "context": "Chocolate Chip Cookies: makes 24 cookies, you need 72 (×3).",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 60,
+    "hints": [
+      "With ×3, should the amount get bigger or smaller?",
+      "What's ¾ c × 3? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "12 T × 3 = 36 T = 2¼ c.",
+      "Measure it as 2 c + ¼ c."
+    ],
+    "answer": {
+      "vol": 864,
+      "num": [
+        0,
+        0
+      ],
+      "text": "2 c + ¼ c",
+      "bestScoops": 3,
+      "best": [
+        "c1",
+        "c1",
+        "c14"
+      ],
+      "given": [
+        288,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 288,
+      "answer": 0
+    }
+  }
+]

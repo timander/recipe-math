@@ -100,6 +100,10 @@ var toolByID = func() map[string]Tool {
 	return m
 }()
 
+// MaxScoops is the most scoops any answer needs. The page's bowl holds a few
+// more than this, so every order can be answered.
+const MaxScoops = 10
+
 // Drawer names which tools a Measure It order offers.
 type Drawer string
 
@@ -187,6 +191,27 @@ func coins(amount int, tools []Tool) ([]Tool, bool) {
 	return out, true
 }
 
+// scoopGroup is one tool and how many times it's used.
+type scoopGroup struct {
+	tool  Tool
+	count int
+}
+
+// groupScoops sorts tools biggest first and groups repeats.
+func groupScoops(tools []Tool) []scoopGroup {
+	sorted := slices.Clone(tools)
+	sort.SliceStable(sorted, func(i, j int) bool { return sorted[i].Size > sorted[j].Size })
+	var out []scoopGroup
+	for _, t := range sorted {
+		if n := len(out); n > 0 && out[n-1].tool.ID == t.ID {
+			out[n-1].count++
+			continue
+		}
+		out = append(out, scoopGroup{t, 1})
+	}
+	return out
+}
+
 // Combo writes scoops the way a cook says them: "¼ c + 2 T + 1 t".
 // Repeated spoons read as "2 T"; repeated cups as "2 × ⅓ c" so it's clear
 // that's two scoops.
@@ -194,15 +219,9 @@ func Combo(tools []Tool) string {
 	if len(tools) == 0 {
 		return "nothing"
 	}
-	sorted := slices.Clone(tools)
-	sort.SliceStable(sorted, func(i, j int) bool { return sorted[i].Size > sorted[j].Size })
 	var parts []string
-	for i := 0; i < len(sorted); {
-		t, k := sorted[i], 0
-		for i < len(sorted) && sorted[i].ID == t.ID {
-			i, k = i+1, k+1
-		}
-		parts = append(parts, scoops(t, k))
+	for _, g := range groupScoops(tools) {
+		parts = append(parts, scoops(g.tool, g.count))
 	}
 	return strings.Join(parts, " + ")
 }
@@ -294,14 +313,16 @@ const (
 // Styles lists every style, for picking one at random.
 var Styles = []Style{Short, Abbr, Lab, Words}
 
+// unitNames spells T, t, and c in each style (singular).
+var unitNames = map[string][4]string{
+	"T": {"T", "Tbsp", "Tbsp.", "tablespoon"},
+	"t": {"t", "tsp", "tsp.", "teaspoon"},
+	"c": {"c", "cup", "C.", "cup"},
+}
+
 // unitName spells T, t, or c in a style, singular or plural.
 func unitName(u string, s Style, plural bool) string {
-	names := map[string][4]string{
-		"T": {"T", "Tbsp", "Tbsp.", "tablespoon"},
-		"t": {"t", "tsp", "tsp.", "teaspoon"},
-		"c": {"c", "cup", "C.", "cup"},
-	}
-	name := names[u][s]
+	name := unitNames[u][s]
 	if plural && (s == Words || (s == Abbr && u == "c")) {
 		name += "s"
 	}
@@ -344,22 +365,16 @@ func comboStyled(tools []Tool, s Style) string {
 		return Combo(tools)
 	}
 	var parts []string
-	for i := 0; i < len(tools); {
-		t, k := tools[i], 0
-		for i < len(tools) && tools[i].ID == t.ID {
-			i, k = i+1, k+1
-		}
-		size := frac.New(int64(t.Size*k), 1)
-		switch t.Kind {
-		case DryCup:
-			parts = append(parts, Text(t.Size*k, s))
+	for _, g := range groupScoops(tools) {
+		total := g.tool.Size * g.count
+		switch {
+		case g.tool.Kind == DryCup:
+			parts = append(parts, Text(total, s))
+		case g.tool.Size >= Tbsp:
+			parts = append(parts, fmt.Sprintf("%d %s", total/Tbsp, unitName("T", s, g.count > 1)))
 		default:
-			if t.Size >= Tbsp {
-				parts = append(parts, fmt.Sprintf("%d %s", t.Size*k/Tbsp, unitName("T", s, k > 1)))
-			} else {
-				amt := size.Div(frac.Int(Tsp))
-				parts = append(parts, spaced(amt, s)+" "+unitName("t", s, amt.Cmp(frac.Int(1)) > 0))
-			}
+			amt := frac.New(int64(total), Tsp)
+			parts = append(parts, spaced(amt, s)+" "+unitName("t", s, amt.Cmp(frac.Int(1)) > 0))
 		}
 	}
 	return strings.Join(parts, " + ")

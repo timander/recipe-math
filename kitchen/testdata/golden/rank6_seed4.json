@@ -1,0 +1,2145 @@
+[
+  {
+    "id": 1,
+    "kind": "call",
+    "station": "Chef's Call",
+    "prompt": "Your recipe calls for 2 c milk, but you only have a dry measuring cup. What's the best call?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Guess with a mixing bowl",
+      "Fill it 3 times to be safe",
+      "Use 2 c of cream instead",
+      "Fill it carefully to the very rim and use it twice"
+    ],
+    "seconds": 30,
+    "hints": [
+      "Do dry and liquid cups hold different amounts, or are they just shaped differently?",
+      "Why is it harder to fill a dry cup with liquid?"
+    ],
+    "explain": [
+      "Both hold the same volume. A liquid cup just has a spout and room below the rim so it doesn't spill."
+    ],
+    "answer": {
+      "choices": [
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Fill it carefully to the very rim and use it twice",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "fix",
+    "station": "Fix the Mistake",
+    "prompt": "The line cook scaled Biscuits ×2 (12 → 24 biscuits). One row is wrong. Which one?",
+    "context": "Each row shows the original amount and what the cook wrote after ×2. Tap the wrong row.",
+    "card": {
+      "id": 0,
+      "name": "Biscuits",
+      "makes": 12,
+      "makesWhat": "biscuits",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "2 cups",
+          "scaled": "4 cups",
+          "tool": "all-purpose flour"
+        },
+        {
+          "text": "1 Tbsp",
+          "scaled": "2 Tbsp",
+          "tool": "baking powder"
+        },
+        {
+          "text": "1 tsp",
+          "scaled": "½ tsp",
+          "tool": "salt"
+        },
+        {
+          "text": "6 Tbsp",
+          "scaled": "¾ cup",
+          "tool": "butter"
+        },
+        {
+          "text": "¾ cup",
+          "scaled": "1 ½ cups",
+          "tool": "milk"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "all-purpose flour: 2 cups → 4 cups",
+      "baking powder: 1 Tbsp → 2 Tbsp",
+      "salt: 1 tsp → ½ tsp",
+      "butter: 6 Tbsp → ¾ cup",
+      "milk: ¾ cup → 1 ½ cups"
+    ],
+    "seconds": 60,
+    "hints": [
+      "Go row by row. Is each new amount really the original × 2?",
+      "With ×2, should every amount get bigger or smaller? Does one row go the other way?"
+    ],
+    "explain": [
+      "The cook went the wrong way. With ×2 every amount gets bigger: 1 tsp × 2 = 2 tsp, not ½ tsp."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "salt: 1 tsp → ½ tsp",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 10 T sugar.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 10 T without going over?",
+      "Start with ½ c. How much is still missing, and which tool holds that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "10 T = ½ c + 2 T.",
+      "Remember: 4 T = ¼ c, and 16 T = 1 c."
+    ],
+    "answer": {
+      "vol": 240,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ c + 2 T",
+      "bestScoops": 3,
+      "best": [
+        "c12",
+        "T1",
+        "T1"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 240,
+      "answer": 240
+    }
+  },
+  {
+    "id": 4,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Mise en place: Oatmeal Cookies makes 36 cookies, and the order is for 18. What's your conversion factor?",
+    "context": "Type 2, 1/2, 1 1/2, or 1.5",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 36 × ? = 18.",
+      "Divide what you want by what the recipe makes. What's 18 ÷ 36?"
+    ],
+    "explain": [
+      "18 ÷ 36 = ½. Every line gets ×½."
+    ],
+    "answer": {
+      "num": [
+        1,
+        2
+      ],
+      "text": "×½",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 36,
+      "want": 18
+    }
+  },
+  {
+    "id": 5,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 c (2 sticks) butter” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 0,
+    "input": "build",
+    "drawer": "butter",
+    "tools": [
+      {
+        "id": "stick",
+        "label": "1 stick",
+        "name": "stick of butter (½ c)",
+        "kind": "butter",
+        "size": 192
+      },
+      {
+        "id": "bT",
+        "label": "1 T mark",
+        "name": "tablespoon mark on the wrapper",
+        "kind": "butter",
+        "size": 24
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "Fractions of cups get messy. How many T is 1 c? (There are 16 T in every cup.)",
+      "What's 16 T × ½? Which tools add up to that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 T × ½ = 8 T = ½ c.",
+      "Measure it as 1 stick."
+    ],
+    "answer": {
+      "vol": 192,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 stick",
+      "bestScoops": 1,
+      "best": [
+        "stick"
+      ],
+      "given": [
+        384,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 384,
+      "answer": 192
+    }
+  },
+  {
+    "id": 6,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 c packed brown sugar” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "Fractions of cups get messy. How many T is 1 c? (There are 16 T in every cup.)",
+      "What's 16 T × ½? Which tools add up to that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 T × ½ = 8 T = ½ c.",
+      "Measure it as ½ c."
+    ],
+    "answer": {
+      "vol": 192,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ c",
+      "bestScoops": 1,
+      "best": [
+        "c12"
+      ],
+      "given": [
+        384,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 384,
+      "answer": 192
+    }
+  },
+  {
+    "id": 7,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “½ c sugar” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 2,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "Fractions of cups get messy. How many T is ½ c? (There are 16 T in every cup.)",
+      "What's 8 T × ½? Which tools add up to that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "8 T × ½ = 4 T = ¼ c.",
+      "Measure it as ¼ c."
+    ],
+    "answer": {
+      "vol": 96,
+      "num": [
+        0,
+        0
+      ],
+      "text": "¼ c",
+      "bestScoops": 1,
+      "best": [
+        "c14"
+      ],
+      "given": [
+        192,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 192,
+      "answer": 96
+    }
+  },
+  {
+    "id": 8,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “2 eggs” by ×½. How many?",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 3,
+    "input": "number",
+    "unit": "eggs",
+    "seconds": 45,
+    "hints": [
+      "With ×½, more or fewer than 2?",
+      "What's 2 × ½?"
+    ],
+    "explain": [
+      "2 × ½ = 1."
+    ],
+    "answer": {
+      "num": [
+        1,
+        1
+      ],
+      "text": "1 egg",
+      "given": [
+        2,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 t vanilla extract” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 4,
+    "input": "build",
+    "drawer": "liquid",
+    "tools": [
+      {
+        "id": "L96",
+        "label": "¼ c",
+        "name": "¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 96
+      },
+      {
+        "id": "L128",
+        "label": "⅓ c",
+        "name": "⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 128
+      },
+      {
+        "id": "L192",
+        "label": "½ c",
+        "name": "½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 192
+      },
+      {
+        "id": "L256",
+        "label": "⅔ c",
+        "name": "⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 256
+      },
+      {
+        "id": "L288",
+        "label": "¾ c",
+        "name": "¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 288
+      },
+      {
+        "id": "L384",
+        "label": "1 c",
+        "name": "1 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 384
+      },
+      {
+        "id": "L480",
+        "label": "1¼ c",
+        "name": "1¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 480
+      },
+      {
+        "id": "L512",
+        "label": "1⅓ c",
+        "name": "1⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 512
+      },
+      {
+        "id": "L576",
+        "label": "1½ c",
+        "name": "1½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 576
+      },
+      {
+        "id": "L640",
+        "label": "1⅔ c",
+        "name": "1⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 640
+      },
+      {
+        "id": "L672",
+        "label": "1¾ c",
+        "name": "1¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 672
+      },
+      {
+        "id": "L768",
+        "label": "2 c",
+        "name": "2 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 768
+      },
+      {
+        "id": "L864",
+        "label": "2¼ c",
+        "name": "2¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 864
+      },
+      {
+        "id": "L896",
+        "label": "2⅓ c",
+        "name": "2⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 896
+      },
+      {
+        "id": "L960",
+        "label": "2½ c",
+        "name": "2½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 960
+      },
+      {
+        "id": "L1024",
+        "label": "2⅔ c",
+        "name": "2⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1024
+      },
+      {
+        "id": "L1056",
+        "label": "2¾ c",
+        "name": "2¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1056
+      },
+      {
+        "id": "L1152",
+        "label": "3 c",
+        "name": "3 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1152
+      },
+      {
+        "id": "L1248",
+        "label": "3¼ c",
+        "name": "3¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1248
+      },
+      {
+        "id": "L1280",
+        "label": "3⅓ c",
+        "name": "3⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1280
+      },
+      {
+        "id": "L1344",
+        "label": "3½ c",
+        "name": "3½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1344
+      },
+      {
+        "id": "L1408",
+        "label": "3⅔ c",
+        "name": "3⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1408
+      },
+      {
+        "id": "L1440",
+        "label": "3¾ c",
+        "name": "3¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1440
+      },
+      {
+        "id": "L1536",
+        "label": "4 c",
+        "name": "4 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1536
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "What's 1 t × ½? Then which tools add up to it?"
+    ],
+    "explain": [
+      "1 t × ½ = ½ t.",
+      "Measure it as ½ t."
+    ],
+    "answer": {
+      "vol": 4,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ t",
+      "bestScoops": 1,
+      "best": [
+        "t12"
+      ],
+      "given": [
+        8,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1½ c all-purpose flour” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 5,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "Fractions of cups get messy. How many T is 1½ c? (There are 16 T in every cup.)",
+      "What's 24 T × ½? Which tools add up to that?"
+    ],
+    "explain": [
+      "24 T × ½ = 12 T = ¾ c.",
+      "Measure it as ½ c + ¼ c."
+    ],
+    "answer": {
+      "vol": 288,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ c + ¼ c",
+      "bestScoops": 2,
+      "best": [
+        "c12",
+        "c14"
+      ],
+      "given": [
+        576,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 t baking soda” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 6,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "What's 1 t × ½? Then which tools add up to it?"
+    ],
+    "explain": [
+      "1 t × ½ = ½ t.",
+      "Measure it as ½ t."
+    ],
+    "answer": {
+      "vol": 4,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ t",
+      "bestScoops": 1,
+      "best": [
+        "t12"
+      ],
+      "given": [
+        8,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 t cinnamon” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 7,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "What's 1 t × ½? Then which tools add up to it?"
+    ],
+    "explain": [
+      "1 t × ½ = ½ t.",
+      "Measure it as ½ t."
+    ],
+    "answer": {
+      "vol": 4,
+      "num": [
+        0,
+        0
+      ],
+      "text": "½ t",
+      "bestScoops": 1,
+      "best": [
+        "t12"
+      ],
+      "given": [
+        8,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “½ t salt” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 8,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "What's ½ t × ½? Then which tools add up to it?"
+    ],
+    "explain": [
+      "½ t × ½ = ¼ t.",
+      "Measure it as ¼ t."
+    ],
+    "answer": {
+      "vol": 2,
+      "num": [
+        0,
+        0
+      ],
+      "text": "¼ t",
+      "bestScoops": 1,
+      "best": [
+        "t14"
+      ],
+      "given": [
+        4,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “3 c rolled oats” by ×½, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 c (2 sticks) butter",
+          "scaled": "1 stick",
+          "tool": "butter wrapper"
+        },
+        {
+          "text": "1 c packed brown sugar",
+          "scaled": "½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "½ c sugar",
+          "scaled": "¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "count"
+        },
+        {
+          "text": "1 t vanilla extract",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "½ c + ¼ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "1 t baking soda",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "1 t cinnamon",
+          "scaled": "½ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "¼ t",
+          "tool": "spoons"
+        },
+        {
+          "text": "3 c rolled oats",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 9,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×½, should the amount get bigger or smaller?",
+      "Fractions of cups get messy. How many T is 3 c? (There are 16 T in every cup.)",
+      "What's 48 T × ½? Which tools add up to that?"
+    ],
+    "explain": [
+      "48 T × ½ = 24 T = 1½ c.",
+      "Measure it as 1 c + ½ c."
+    ],
+    "answer": {
+      "vol": 576,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 c + ½ c",
+      "bestScoops": 2,
+      "best": [
+        "c1",
+        "c12"
+      ],
+      "given": [
+        1152,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "kind": "call",
+    "station": "Chef's Call",
+    "prompt": "Scaling a recipe ×3 gives 4½ eggs. What's the best call?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Leave the eggs out",
+      "Use 9 eggs",
+      "Use 4 eggs, then beat a 5th and add half of it",
+      "Round to 5 eggs",
+      "Round down to 3 eggs"
+    ],
+    "seconds": 30,
+    "hints": [
+      "Can you crack half an egg?",
+      "Is 4½ closer to 4 or 5? Will one extra half-egg ruin it?"
+    ],
+    "explain": [
+      "4½ eggs: use 4 plus half a beaten egg, or round to 5. Eggs are forgiving by a half."
+    ],
+    "answer": {
+      "choices": [
+        2,
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Use 4 eggs, then beat a 5th and add half of it or Round to 5 eggs",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "kind": "fix",
+    "station": "Fix the Mistake",
+    "prompt": "The line cook scaled Chocolate Chip Cookies ×½ (24 → 12 cookies). One row is wrong. Which one?",
+    "context": "Each row shows the original amount and what the cook wrote after ×½. Tap the wrong row.",
+    "card": {
+      "id": 0,
+      "name": "Chocolate Chip Cookies",
+      "makes": 24,
+      "makesWhat": "cookies",
+      "want": 12,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "2 ¼ C.",
+          "scaled": "4 ½ C.",
+          "tool": "all-purpose flour"
+        },
+        {
+          "text": "1 tsp.",
+          "scaled": "½ tsp.",
+          "tool": "baking soda"
+        },
+        {
+          "text": "½ tsp.",
+          "scaled": "¼ tsp.",
+          "tool": "salt"
+        },
+        {
+          "text": "1 C.",
+          "scaled": "½ C.",
+          "tool": "butter"
+        },
+        {
+          "text": "¾ C.",
+          "scaled": "6 Tbsp.",
+          "tool": "sugar"
+        },
+        {
+          "text": "¾ C.",
+          "scaled": "6 Tbsp.",
+          "tool": "packed brown sugar"
+        },
+        {
+          "text": "1 tsp.",
+          "scaled": "½ tsp.",
+          "tool": "vanilla extract"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "egg"
+        },
+        {
+          "text": "2 C.",
+          "scaled": "1 C.",
+          "tool": "chocolate chips"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "all-purpose flour: 2 ¼ C. → 4 ½ C.",
+      "baking soda: 1 tsp. → ½ tsp.",
+      "salt: ½ tsp. → ¼ tsp.",
+      "butter: 1 C. → ½ C.",
+      "sugar: ¾ C. → 6 Tbsp.",
+      "packed brown sugar: ¾ C. → 6 Tbsp.",
+      "vanilla extract: 1 tsp. → ½ tsp.",
+      "egg: 2 eggs → 1 egg",
+      "chocolate chips: 2 C. → 1 C."
+    ],
+    "seconds": 60,
+    "hints": [
+      "Go row by row. Is each new amount really the original × ½?",
+      "With ×½, should every amount get bigger or smaller? Does one row go the other way?"
+    ],
+    "explain": [
+      "The cook went the wrong way. With ×½ every amount gets smaller: 2 ¼ C. × ½ = 18 Tbsp., not 4 ½ C."
+    ],
+    "answer": {
+      "choices": [
+        0
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "all-purpose flour: 2 ¼ C. → 4 ½ C.",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  }
+]

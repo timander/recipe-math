@@ -1,5 +1,7 @@
 package kitchen
 
+import "slices"
+
 // Reference is everything the cheat sheet prints.
 type Reference struct {
 	Facts   []string    `json:"facts"`
@@ -25,7 +27,7 @@ func Ref() Reference {
 			{"Kitchen scale", "anything in oz or lb (not fl oz): cheese, meat, pasta."},
 			{"Butter wrapper", "1 stick = ½ c = 8 T = 4 oz. Cut at the T marks."},
 		},
-		Drawer: append(append(dryCupsCopy(), spoons...), butterTools...),
+		Drawer: append(append(slices.Clone(dryCups), spoons...), butterTools...),
 		Tips: []string{
 			"Capital T is the big spoon. Mixing up T and t means 3× too much or too little.",
 			"Conversion factor = what you want ÷ what the recipe makes. Multiply every line by it.",
@@ -41,5 +43,3 @@ func Ref() Reference {
 	}
 	return r
 }
-
-func dryCupsCopy() []Tool { return append([]Tool(nil), dryCups...) }

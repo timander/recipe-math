@@ -13,19 +13,20 @@ import (
 type swapUnit struct {
 	spell [4]string // Short, Abbr, Lab, Words (singular)
 	word  string    // for hints: "tablespoon"
+	words string    // plural, for hints: "tablespoons"
 }
 
 var swapUnits = map[string]swapUnit{
-	"T":     {[4]string{"T", "Tbsp", "Tbsp.", "tablespoon"}, "tablespoon"},
-	"t":     {[4]string{"t", "tsp", "tsp.", "teaspoon"}, "teaspoon"},
-	"c":     {[4]string{"c", "cup", "C.", "cup"}, "cup"},
-	"floz":  {[4]string{"fl oz", "fl oz", "fl. oz.", "fluid ounce"}, "fluid ounce"},
-	"pt":    {[4]string{"pt", "pint", "pt.", "pint"}, "pint"},
-	"qt":    {[4]string{"qt", "quart", "qt.", "quart"}, "quart"},
-	"gal":   {[4]string{"gal", "gallon", "gal.", "gallon"}, "gallon"},
-	"oz":    {[4]string{"oz", "oz", "oz.", "ounce"}, "ounce"},
-	"lb":    {[4]string{"lb", "lb", "lb.", "pound"}, "pound"},
-	"stick": {[4]string{"stick", "stick", "stick", "stick"}, "stick of butter"},
+	"T":     {[4]string{"T", "Tbsp", "Tbsp.", "tablespoon"}, "tablespoon", "tablespoons"},
+	"t":     {[4]string{"t", "tsp", "tsp.", "teaspoon"}, "teaspoon", "teaspoons"},
+	"c":     {[4]string{"c", "cup", "C.", "cup"}, "cup", "cups"},
+	"floz":  {[4]string{"fl oz", "fl oz", "fl. oz.", "fluid ounce"}, "fluid ounce", "fluid ounces"},
+	"pt":    {[4]string{"pt", "pint", "pt.", "pint"}, "pint", "pints"},
+	"qt":    {[4]string{"qt", "quart", "qt.", "quart"}, "quart", "quarts"},
+	"gal":   {[4]string{"gal", "gallon", "gal.", "gallon"}, "gallon", "gallons"},
+	"oz":    {[4]string{"oz", "oz", "oz.", "ounce"}, "ounce", "ounces"},
+	"lb":    {[4]string{"lb", "lb", "lb.", "pound"}, "pound", "pounds"},
+	"stick": {[4]string{"stick", "stick", "stick", "stick"}, "stick of butter", "sticks of butter"},
 }
 
 // label spells a unit for an amount, adding an s where a word needs it.
@@ -75,7 +76,7 @@ func (g *gen) swap() Order {
 	toLabel := to.label(st, want)
 	hints := []string{
 		fmt.Sprintf("Which is bigger: one %s or one %s? So should your number come out bigger or smaller than %s?", from.word, to.word, spaced(given, st)),
-		fmt.Sprintf("How many %ss fit in one %s?", small.word, big.word),
+		fmt.Sprintf("How many %s fit in one %s?", small.words, big.word),
 	}
 	var explain string
 	if down {

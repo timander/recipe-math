@@ -1,0 +1,507 @@
+[
+  {
+    "id": 1,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “1 c (2 sticks) butter.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "How does butter come from the store?",
+      "What's printed on a stick's wrapper?"
+    ],
+    "explain": [
+      "Butter wrappers are marked in tablespoons: 1 stick = 8 T = ½ c."
+    ],
+    "answer": {
+      "choices": [
+        4
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Butter wrapper marks",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many c are in 1 gal?",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 20,
+    "hints": [
+      "How many qt are in a gallon?",
+      "Each quart is 4 c. How many cups in 4 quarts?"
+    ],
+    "explain": [
+      "16 c = 1 gal"
+    ],
+    "answer": {
+      "num": [
+        16,
+        1
+      ],
+      "text": "16 c",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many T are in 1 stick of butter?",
+    "line": -1,
+    "input": "number",
+    "unit": "T",
+    "seconds": 20,
+    "hints": [
+      "Look at a butter wrapper. How many lines are marked on it?",
+      "1 stick = ½ c. How many T are in ½ c?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "1 stick = 8 T = ½ c = 4 oz"
+    ],
+    "answer": {
+      "num": [
+        8,
+        1
+      ],
+      "text": "8 T",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 192,
+      "answer": 192
+    }
+  },
+  {
+    "id": 4,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “⅓ c vegetable oil.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does this ingredient pour, or does it pile up?",
+      "Which cup has a spout and lines below the rim so it won't spill?"
+    ],
+    "explain": [
+      "Vegetable oil is a liquid: liquid measuring cup on the counter, read at eye level."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Liquid measuring cup",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "kind": "tool",
+    "station": "Grab the Tool",
+    "prompt": "The recipe says “⅓ c cocoa powder.” What do you grab?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Dry measuring cups",
+      "Liquid measuring cup",
+      "Measuring spoons",
+      "Kitchen scale",
+      "Butter wrapper marks"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does this ingredient pour, or does it pile up?",
+      "Which cups can you fill to the rim and level off with a straight edge?"
+    ],
+    "explain": [
+      "Cocoa powder is dry: spoon it into dry measuring cups and level it off."
+    ],
+    "answer": {
+      "choices": [
+        0
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Dry measuring cups",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "Which abbreviation means teaspoon?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Tbsp",
+      "tbs",
+      "tsp",
+      "T"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does “teaspoon” have a b in it?",
+      "Which choice has no b and starts with a lowercase t?"
+    ],
+    "explain": [
+      "Teaspoon: t or tsp. Tablespoon: T, Tbsp, Tbs, or tbsp."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "tsp",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "Which abbreviation means tablespoon?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Tsp",
+      "tsp",
+      "Tbsp",
+      "t"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Which choice has the letter b for “table”?",
+      "tsp is the teaspoon. Which one is left with a b in it?"
+    ],
+    "explain": [
+      "Tablespoon: T, Tbsp, Tbs, or tbsp. Teaspoon: t or tsp."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Tbsp",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 1½ c butter.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "butter",
+    "tools": [
+      {
+        "id": "stick",
+        "label": "1 stick",
+        "name": "stick of butter (½ c)",
+        "kind": "butter",
+        "size": 192
+      },
+      {
+        "id": "bT",
+        "label": "1 T mark",
+        "name": "tablespoon mark on the wrapper",
+        "kind": "butter",
+        "size": 24
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 1½ c without going over?",
+      "Start with 1 stick. How much is still missing, and which tool holds that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "1½ c = 3 sticks.",
+      "1 stick = ½ c = 8 T."
+    ],
+    "answer": {
+      "vol": 576,
+      "num": [
+        0,
+        0
+      ],
+      "text": "3 sticks",
+      "bestScoops": 3,
+      "best": [
+        "stick",
+        "stick",
+        "stick"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 576,
+      "answer": 576
+    }
+  },
+  {
+    "id": 9,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 1 ½ tsp baking soda.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 1 ½ tsp without going over?",
+      "Start with 1 t. How much is still missing, and which tool holds that?"
+    ],
+    "explain": [
+      "1 ½ tsp = 1 t + ½ t."
+    ],
+    "answer": {
+      "vol": 12,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 t + ½ t",
+      "bestScoops": 2,
+      "best": [
+        "t1",
+        "t12"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 6 Tbsp butter.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "butter",
+    "tools": [
+      {
+        "id": "stick",
+        "label": "1 stick",
+        "name": "stick of butter (½ c)",
+        "kind": "butter",
+        "size": 192
+      },
+      {
+        "id": "bT",
+        "label": "1 T mark",
+        "name": "tablespoon mark on the wrapper",
+        "kind": "butter",
+        "size": 24
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 6 Tbsp without going over?",
+      "Start with 1 T mark. How much is still missing, and which tool holds that?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "6 Tbsp = 6 T marks."
+    ],
+    "answer": {
+      "vol": 144,
+      "num": [
+        0,
+        0
+      ],
+      "text": "6 T marks",
+      "bestScoops": 6,
+      "best": [
+        "bT",
+        "bT",
+        "bT",
+        "bT",
+        "bT",
+        "bT"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 144,
+      "answer": 144
+    }
+  }
+]

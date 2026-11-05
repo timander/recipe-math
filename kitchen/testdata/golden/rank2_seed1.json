@@ -1,0 +1,370 @@
+[
+  {
+    "id": 1,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many c are in 1 pt?",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 20,
+    "hints": [
+      "A pint of ice cream: is it more or less than 1 c?",
+      "Think “a pint's a pound the world around”: 16 fl oz. How many 8 fl oz cups is that?"
+    ],
+    "explain": [
+      "2 c = 1 pt"
+    ],
+    "answer": {
+      "num": [
+        2,
+        1
+      ],
+      "text": "2 c",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "A recipe says “2 T butter.” What does T mean?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "teaspoon",
+      "ton",
+      "tablespoon",
+      "tub"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Capital T or lowercase t: which one is the bigger letter?",
+      "Which spoon is bigger: a tablespoon or a teaspoon?"
+    ],
+    "explain": [
+      "Capital T = tablespoon (the bigger spoon). Lowercase t = teaspoon."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "tablespoon",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many c are in 1 gal?",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 20,
+    "hints": [
+      "How many qt are in a gallon?",
+      "Each quart is 4 c. How many cups in 4 quarts?"
+    ],
+    "explain": [
+      "16 c = 1 gal"
+    ],
+    "answer": {
+      "num": [
+        16,
+        1
+      ],
+      "text": "16 c",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "“8 oz cheddar” is measured by…",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "counting pieces",
+      "weight, on a scale",
+      "the size of the bag",
+      "space, in a liquid cup"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Does “oz” say fluid ounces or plain ounces?",
+      "Plain ounces measure how heavy something is. What tool measures heavy?"
+    ],
+    "explain": [
+      "oz = ounces of weight (use a scale). fl oz = fluid ounces of space (use a liquid cup)."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "weight, on a scale",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "What does g mean on a nutrition label?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "gallon",
+      "grain",
+      "glass",
+      "gram"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Is it metric?",
+      "Is it a tiny weight or a big volume?"
+    ],
+    "explain": [
+      "g = gram, a small metric weight. 1 oz ≈ 28 g."
+    ],
+    "answer": {
+      "choices": [
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "gram",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many t are in 1 T?",
+    "line": -1,
+    "input": "number",
+    "unit": "t",
+    "seconds": 20,
+    "hints": [
+      "Is a T bigger or smaller than a t?",
+      "How many t scoops would fill one T spoon?"
+    ],
+    "explain": [
+      "3 t = 1 T"
+    ],
+    "answer": {
+      "num": [
+        3,
+        1
+      ],
+      "text": "3 t",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "kind": "fact",
+    "station": "Walk-in Facts",
+    "prompt": "How many c are in 1 qt?",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 20,
+    "hints": [
+      "“Quart” sounds like “quarter.” A quarter of what?",
+      "A quart is a quarter of a gallon (16 c). What's 16 split into 4?"
+    ],
+    "explain": [
+      "4 c = 1 qt"
+    ],
+    "answer": {
+      "num": [
+        4,
+        1
+      ],
+      "text": "4 c",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "“1 c packed brown sugar” means…",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "pour it in loosely",
+      "press it into the cup until it holds its shape",
+      "use a liquid cup",
+      "weigh it in its package"
+    ],
+    "seconds": 20,
+    "hints": [
+      "What does it mean to pack a suitcase full?",
+      "If you dumped the cup out, should it hold the cup's shape?"
+    ],
+    "explain": [
+      "Packed = press it firmly into a dry cup. It should hold the cup's shape when you tip it out."
+    ],
+    "answer": {
+      "choices": [
+        1
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "press it into the cup until it holds its shape",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "What does mL mean on a measuring cup?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "milk level",
+      "mega liter",
+      "milliliter",
+      "mixing line"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Is it metric?",
+      "1 t ≈ 5 of these. Big unit or tiny one?"
+    ],
+    "explain": [
+      "mL = milliliter, a small metric volume. 1 c ≈ 240 mL."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "milliliter",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "vocab",
+    "station": "Read the Recipe",
+    "prompt": "How do you read a liquid measuring cup?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "look down from above",
+      "fill it to the very top",
+      "set it on the counter and read the line at eye level",
+      "hold it up high and look from below"
+    ],
+    "seconds": 20,
+    "hints": [
+      "Where should the cup sit so it isn't tilted?",
+      "Where should your eyes be compared to the line?"
+    ],
+    "explain": [
+      "Flat counter, eyes level with the line. Looking from above makes you under-fill."
+    ],
+    "answer": {
+      "choices": [
+        2
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "set it on the counter and read the line at eye level",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  }
+]

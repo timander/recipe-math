@@ -38,5 +38,17 @@ export default defineConfig(
     files: ["e2e/**", "scripts/**", "*.config.js"],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
+  {
+    // Code inside page.evaluate() runs in the game page and uses its globals.
+    files: ["e2e/**"],
+    languageOptions: {
+      globals: Object.fromEntries(
+        ["S", "cur", "curRec", "renderBowl", "renderGlass", "renderHints", "renderWorksheet"].map((g) => [
+          g,
+          "readonly",
+        ]),
+      ),
+    },
+  },
   prettier,
 );

@@ -1,0 +1,1933 @@
+[
+  {
+    "id": 1,
+    "kind": "fix",
+    "station": "Fix the Mistake",
+    "prompt": "The line cook scaled Chocolate Chip Cookies ×2 (24 → 48 cookies). One row is wrong. Which one?",
+    "context": "Each row shows the original amount and what the cook wrote after ×2. Tap the wrong row.",
+    "card": {
+      "id": 0,
+      "name": "Chocolate Chip Cookies",
+      "makes": 24,
+      "makesWhat": "cookies",
+      "want": 48,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "2 ¼ cups",
+          "scaled": "4 ½ cups",
+          "tool": "all-purpose flour"
+        },
+        {
+          "text": "1 tsp",
+          "scaled": "2 tsp",
+          "tool": "baking soda"
+        },
+        {
+          "text": "½ tsp",
+          "scaled": "1 tsp",
+          "tool": "salt"
+        },
+        {
+          "text": "1 cup",
+          "scaled": "1 cup",
+          "tool": "butter"
+        },
+        {
+          "text": "¾ cup",
+          "scaled": "1 ½ cups",
+          "tool": "sugar"
+        },
+        {
+          "text": "¾ cup",
+          "scaled": "1 ½ cups",
+          "tool": "packed brown sugar"
+        },
+        {
+          "text": "1 tsp",
+          "scaled": "2 tsp",
+          "tool": "vanilla extract"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "4 eggs",
+          "tool": "egg"
+        },
+        {
+          "text": "2 cups",
+          "scaled": "4 cups",
+          "tool": "chocolate chips"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "all-purpose flour: 2 ¼ cups → 4 ½ cups",
+      "baking soda: 1 tsp → 2 tsp",
+      "salt: ½ tsp → 1 tsp",
+      "butter: 1 cup → 1 cup",
+      "sugar: ¾ cup → 1 ½ cups",
+      "packed brown sugar: ¾ cup → 1 ½ cups",
+      "vanilla extract: 1 tsp → 2 tsp",
+      "egg: 2 eggs → 4 eggs",
+      "chocolate chips: 2 cups → 4 cups"
+    ],
+    "seconds": 60,
+    "hints": [
+      "Go row by row. Is each new amount really the original × 2?",
+      "Did every line actually change? Does one still match the original?"
+    ],
+    "explain": [
+      "The cook forgot to scale the butter: 1 cup × 2 = 2 cups."
+    ],
+    "answer": {
+      "choices": [
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "butter: 1 cup → 1 cup",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "measure",
+    "station": "Measure It",
+    "prompt": "Measure 5 t cinnamon.",
+    "context": "Tap tools into the bowl. Fewest scoops earns a bonus.",
+    "line": -1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "What's the biggest tool that fits in 5 t without going over?",
+      "Start with 1 T. How much is still missing, and which tool holds that?"
+    ],
+    "explain": [
+      "5 t = 1 T + 2 t."
+    ],
+    "answer": {
+      "vol": 40,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 T + 2 t",
+      "bestScoops": 3,
+      "best": [
+        "T1",
+        "t1",
+        "t1"
+      ],
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "call",
+    "station": "Chef's Call",
+    "prompt": "You're doubling a cookie recipe. How long do you bake each pan?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Twice as long",
+      "Half as long",
+      "It depends on how many cookies are in the oven, so add 5 min per dozen",
+      "The same time: each cookie is still the same size"
+    ],
+    "seconds": 30,
+    "hints": [
+      "Does doubling the dough make each cookie bigger?",
+      "What decides how long one cookie takes to bake?"
+    ],
+    "explain": [
+      "Bake time depends on the size of each piece, not the size of the batch. Same cookies, same time."
+    ],
+    "answer": {
+      "choices": [
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "The same time: each cookie is still the same size",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "kind": "factor",
+    "station": "Conversion Factor",
+    "prompt": "Mise en place: Blueberry Muffins makes 12 muffins, and the order is for 24. What's your conversion factor?",
+    "context": "Type 2, 1/2, 1 1/2, or 1.5",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "number",
+    "unit": "×",
+    "seconds": 40,
+    "hints": [
+      "Is your batch bigger or smaller than the recipe? So is the factor more than 1 or less than 1?",
+      "The factor answers this: 12 × ? = 24.",
+      "Divide what you want by what the recipe makes. What's 24 ÷ 12?"
+    ],
+    "explain": [
+      "24 ÷ 12 = 2. Every line gets ×2."
+    ],
+    "answer": {
+      "num": [
+        2,
+        1
+      ],
+      "text": "×2",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ],
+      "makes": 12,
+      "want": 24
+    }
+  },
+  {
+    "id": 5,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1½ c all-purpose flour” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 0,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's 1½ c × 2? Then which tools add up to it?"
+    ],
+    "explain": [
+      "24 T × 2 = 48 T = 3 c.",
+      "Measure it as 3 c."
+    ],
+    "answer": {
+      "vol": 1152,
+      "num": [
+        0,
+        0
+      ],
+      "text": "3 c",
+      "bestScoops": 3,
+      "best": [
+        "c1",
+        "c1",
+        "c1"
+      ],
+      "given": [
+        576,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “¾ c sugar” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 1,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's ¾ c × 2? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "12 T × 2 = 24 T = 1½ c.",
+      "Measure it as 1 c + ½ c."
+    ],
+    "answer": {
+      "vol": 576,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 c + ½ c",
+      "bestScoops": 2,
+      "best": [
+        "c1",
+        "c12"
+      ],
+      "given": [
+        288,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 288,
+      "answer": 0
+    }
+  },
+  {
+    "id": 7,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “2 t baking powder” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 2,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's 2 t × 2? Then which tools add up to it?"
+    ],
+    "explain": [
+      "2 t × 2 = 4 t.",
+      "Measure it as 1 T + 1 t."
+    ],
+    "answer": {
+      "vol": 32,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 T + 1 t",
+      "bestScoops": 2,
+      "best": [
+        "T1",
+        "t1"
+      ],
+      "given": [
+        16,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “½ t salt” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 3,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's ½ t × 2? Then which tools add up to it?"
+    ],
+    "explain": [
+      "½ t × 2 = 1 t.",
+      "Measure it as 1 t."
+    ],
+    "answer": {
+      "vol": 8,
+      "num": [
+        0,
+        0
+      ],
+      "text": "1 t",
+      "bestScoops": 1,
+      "best": [
+        "t1"
+      ],
+      "given": [
+        4,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “⅓ c vegetable oil” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 4,
+    "input": "build",
+    "drawer": "liquid",
+    "tools": [
+      {
+        "id": "L96",
+        "label": "¼ c",
+        "name": "¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 96
+      },
+      {
+        "id": "L128",
+        "label": "⅓ c",
+        "name": "⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 128
+      },
+      {
+        "id": "L192",
+        "label": "½ c",
+        "name": "½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 192
+      },
+      {
+        "id": "L256",
+        "label": "⅔ c",
+        "name": "⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 256
+      },
+      {
+        "id": "L288",
+        "label": "¾ c",
+        "name": "¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 288
+      },
+      {
+        "id": "L384",
+        "label": "1 c",
+        "name": "1 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 384
+      },
+      {
+        "id": "L480",
+        "label": "1¼ c",
+        "name": "1¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 480
+      },
+      {
+        "id": "L512",
+        "label": "1⅓ c",
+        "name": "1⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 512
+      },
+      {
+        "id": "L576",
+        "label": "1½ c",
+        "name": "1½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 576
+      },
+      {
+        "id": "L640",
+        "label": "1⅔ c",
+        "name": "1⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 640
+      },
+      {
+        "id": "L672",
+        "label": "1¾ c",
+        "name": "1¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 672
+      },
+      {
+        "id": "L768",
+        "label": "2 c",
+        "name": "2 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 768
+      },
+      {
+        "id": "L864",
+        "label": "2¼ c",
+        "name": "2¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 864
+      },
+      {
+        "id": "L896",
+        "label": "2⅓ c",
+        "name": "2⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 896
+      },
+      {
+        "id": "L960",
+        "label": "2½ c",
+        "name": "2½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 960
+      },
+      {
+        "id": "L1024",
+        "label": "2⅔ c",
+        "name": "2⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1024
+      },
+      {
+        "id": "L1056",
+        "label": "2¾ c",
+        "name": "2¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1056
+      },
+      {
+        "id": "L1152",
+        "label": "3 c",
+        "name": "3 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1152
+      },
+      {
+        "id": "L1248",
+        "label": "3¼ c",
+        "name": "3¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1248
+      },
+      {
+        "id": "L1280",
+        "label": "3⅓ c",
+        "name": "3⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1280
+      },
+      {
+        "id": "L1344",
+        "label": "3½ c",
+        "name": "3½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1344
+      },
+      {
+        "id": "L1408",
+        "label": "3⅔ c",
+        "name": "3⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1408
+      },
+      {
+        "id": "L1440",
+        "label": "3¾ c",
+        "name": "3¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1440
+      },
+      {
+        "id": "L1536",
+        "label": "4 c",
+        "name": "4 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1536
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's ⅓ c × 2? Then which tools add up to it?"
+    ],
+    "explain": [
+      "16 t × 2 = 32 t = ⅔ c.",
+      "Measure it as ⅔ c (liquid cup)."
+    ],
+    "answer": {
+      "vol": 256,
+      "num": [
+        0,
+        0
+      ],
+      "text": "⅔ c (liquid cup)",
+      "bestScoops": 1,
+      "best": [
+        "L256"
+      ],
+      "given": [
+        128,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 egg” by ×2. How many?",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 5,
+    "input": "number",
+    "unit": "eggs",
+    "seconds": 45,
+    "hints": [
+      "With ×2, more or fewer than 1?",
+      "What's 1 × 2?"
+    ],
+    "explain": [
+      "1 × 2 = 2."
+    ],
+    "answer": {
+      "num": [
+        2,
+        1
+      ],
+      "text": "2 eggs",
+      "given": [
+        1,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “⅓ c milk” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 6,
+    "input": "build",
+    "drawer": "liquid",
+    "tools": [
+      {
+        "id": "L96",
+        "label": "¼ c",
+        "name": "¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 96
+      },
+      {
+        "id": "L128",
+        "label": "⅓ c",
+        "name": "⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 128
+      },
+      {
+        "id": "L192",
+        "label": "½ c",
+        "name": "½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 192
+      },
+      {
+        "id": "L256",
+        "label": "⅔ c",
+        "name": "⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 256
+      },
+      {
+        "id": "L288",
+        "label": "¾ c",
+        "name": "¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 288
+      },
+      {
+        "id": "L384",
+        "label": "1 c",
+        "name": "1 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 384
+      },
+      {
+        "id": "L480",
+        "label": "1¼ c",
+        "name": "1¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 480
+      },
+      {
+        "id": "L512",
+        "label": "1⅓ c",
+        "name": "1⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 512
+      },
+      {
+        "id": "L576",
+        "label": "1½ c",
+        "name": "1½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 576
+      },
+      {
+        "id": "L640",
+        "label": "1⅔ c",
+        "name": "1⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 640
+      },
+      {
+        "id": "L672",
+        "label": "1¾ c",
+        "name": "1¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 672
+      },
+      {
+        "id": "L768",
+        "label": "2 c",
+        "name": "2 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 768
+      },
+      {
+        "id": "L864",
+        "label": "2¼ c",
+        "name": "2¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 864
+      },
+      {
+        "id": "L896",
+        "label": "2⅓ c",
+        "name": "2⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 896
+      },
+      {
+        "id": "L960",
+        "label": "2½ c",
+        "name": "2½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 960
+      },
+      {
+        "id": "L1024",
+        "label": "2⅔ c",
+        "name": "2⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1024
+      },
+      {
+        "id": "L1056",
+        "label": "2¾ c",
+        "name": "2¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1056
+      },
+      {
+        "id": "L1152",
+        "label": "3 c",
+        "name": "3 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1152
+      },
+      {
+        "id": "L1248",
+        "label": "3¼ c",
+        "name": "3¼ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1248
+      },
+      {
+        "id": "L1280",
+        "label": "3⅓ c",
+        "name": "3⅓ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1280
+      },
+      {
+        "id": "L1344",
+        "label": "3½ c",
+        "name": "3½ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1344
+      },
+      {
+        "id": "L1408",
+        "label": "3⅔ c",
+        "name": "3⅔ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1408
+      },
+      {
+        "id": "L1440",
+        "label": "3¾ c",
+        "name": "3¾ c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1440
+      },
+      {
+        "id": "L1536",
+        "label": "4 c",
+        "name": "4 c line on the liquid cup",
+        "kind": "liquid",
+        "size": 1536
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's ⅓ c × 2? Then which tools add up to it?"
+    ],
+    "explain": [
+      "16 t × 2 = 32 t = ⅔ c.",
+      "Measure it as ⅔ c (liquid cup)."
+    ],
+    "answer": {
+      "vol": 256,
+      "num": [
+        0,
+        0
+      ],
+      "text": "⅔ c (liquid cup)",
+      "bestScoops": 1,
+      "best": [
+        "L256"
+      ],
+      "given": [
+        128,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "kind": "card",
+    "station": "Recipe Card",
+    "prompt": "Scale “1 c blueberries” by ×2, then measure it.",
+    "card": {
+      "id": 1,
+      "name": "Blueberry Muffins",
+      "makes": 12,
+      "makesWhat": "muffins",
+      "want": 24,
+      "factor": "2",
+      "lines": [
+        {
+          "text": "1½ c all-purpose flour",
+          "scaled": "3 c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "¾ c sugar",
+          "scaled": "1 c + ½ c",
+          "tool": "dry cups"
+        },
+        {
+          "text": "2 t baking powder",
+          "scaled": "1 T + 1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "½ t salt",
+          "scaled": "1 t",
+          "tool": "spoons"
+        },
+        {
+          "text": "⅓ c vegetable oil",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 egg",
+          "scaled": "2 eggs",
+          "tool": "count"
+        },
+        {
+          "text": "⅓ c milk",
+          "scaled": "⅔ c (liquid cup)",
+          "tool": "liquid cup"
+        },
+        {
+          "text": "1 c blueberries",
+          "scaled": "2 c",
+          "tool": "dry cups"
+        }
+      ]
+    },
+    "line": 7,
+    "input": "build",
+    "drawer": "dry",
+    "tools": [
+      {
+        "id": "c1",
+        "label": "1 c",
+        "name": "1 cup dry measure",
+        "kind": "dry",
+        "size": 384
+      },
+      {
+        "id": "c12",
+        "label": "½ c",
+        "name": "½ cup dry measure",
+        "kind": "dry",
+        "size": 192
+      },
+      {
+        "id": "c13",
+        "label": "⅓ c",
+        "name": "⅓ cup dry measure",
+        "kind": "dry",
+        "size": 128
+      },
+      {
+        "id": "c14",
+        "label": "¼ c",
+        "name": "¼ cup dry measure",
+        "kind": "dry",
+        "size": 96
+      },
+      {
+        "id": "T1",
+        "label": "1 T",
+        "name": "tablespoon",
+        "kind": "spoon",
+        "size": 24
+      },
+      {
+        "id": "t1",
+        "label": "1 t",
+        "name": "teaspoon",
+        "kind": "spoon",
+        "size": 8
+      },
+      {
+        "id": "t12",
+        "label": "½ t",
+        "name": "½ teaspoon",
+        "kind": "spoon",
+        "size": 4
+      },
+      {
+        "id": "t14",
+        "label": "¼ t",
+        "name": "¼ teaspoon",
+        "kind": "spoon",
+        "size": 2
+      },
+      {
+        "id": "t18",
+        "label": "⅛ t",
+        "name": "⅛ teaspoon",
+        "kind": "spoon",
+        "size": 1
+      }
+    ],
+    "seconds": 45,
+    "hints": [
+      "With ×2, should the amount get bigger or smaller?",
+      "What's 1 c × 2? Then which tools add up to it?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 T × 2 = 32 T = 2 c.",
+      "Measure it as 2 c."
+    ],
+    "answer": {
+      "vol": 768,
+      "num": [
+        0,
+        0
+      ],
+      "text": "2 c",
+      "bestScoops": 2,
+      "best": [
+        "c1",
+        "c1"
+      ],
+      "given": [
+        384,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 384,
+      "answer": 0
+    }
+  },
+  {
+    "id": 13,
+    "kind": "fix",
+    "station": "Fix the Mistake",
+    "prompt": "The line cook scaled Oatmeal Cookies ×½ (36 → 18 cookies). One row is wrong. Which one?",
+    "context": "Each row shows the original amount and what the cook wrote after ×½. Tap the wrong row.",
+    "card": {
+      "id": 0,
+      "name": "Oatmeal Cookies",
+      "makes": 36,
+      "makesWhat": "cookies",
+      "want": 18,
+      "factor": "½",
+      "lines": [
+        {
+          "text": "1 cup",
+          "scaled": "½ cup",
+          "tool": "butter"
+        },
+        {
+          "text": "1 cup",
+          "scaled": "½ cup",
+          "tool": "packed brown sugar"
+        },
+        {
+          "text": "½ cup",
+          "scaled": "¼ cup",
+          "tool": "sugar"
+        },
+        {
+          "text": "2 eggs",
+          "scaled": "1 egg",
+          "tool": "egg"
+        },
+        {
+          "text": "1 teaspoon",
+          "scaled": "½ teaspoon",
+          "tool": "vanilla extract"
+        },
+        {
+          "text": "1 ½ cups",
+          "scaled": "¾ cup",
+          "tool": "all-purpose flour"
+        },
+        {
+          "text": "1 teaspoon",
+          "scaled": "½ teaspoon",
+          "tool": "baking soda"
+        },
+        {
+          "text": "1 teaspoon",
+          "scaled": "½ teaspoon",
+          "tool": "cinnamon"
+        },
+        {
+          "text": "½ teaspoon",
+          "scaled": "1 teaspoon",
+          "tool": "salt"
+        },
+        {
+          "text": "3 cups",
+          "scaled": "1 ½ cups",
+          "tool": "rolled oats"
+        }
+      ]
+    },
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "butter: 1 cup → ½ cup",
+      "packed brown sugar: 1 cup → ½ cup",
+      "sugar: ½ cup → ¼ cup",
+      "egg: 2 eggs → 1 egg",
+      "vanilla extract: 1 teaspoon → ½ teaspoon",
+      "all-purpose flour: 1 ½ cups → ¾ cup",
+      "baking soda: 1 teaspoon → ½ teaspoon",
+      "cinnamon: 1 teaspoon → ½ teaspoon",
+      "salt: ½ teaspoon → 1 teaspoon",
+      "rolled oats: 3 cups → 1 ½ cups"
+    ],
+    "seconds": 60,
+    "hints": [
+      "Go row by row. Is each new amount really the original × ½?",
+      "With ×½, should every amount get bigger or smaller? Does one row go the other way?"
+    ],
+    "explain": [
+      "The cook went the wrong way. With ×½ every amount gets smaller: ½ teaspoon × ½ = ¼ teaspoon, not 1 teaspoon."
+    ],
+    "answer": {
+      "choices": [
+        8
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "salt: ½ teaspoon → 1 teaspoon",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "kind": "call",
+    "station": "Chef's Call",
+    "prompt": "You're making half a recipe that calls for 3 eggs. What's the best call?",
+    "line": -1,
+    "input": "choice",
+    "choices": [
+      "Use 3 eggs anyway",
+      "Skip the eggs",
+      "Use 1 egg, then beat a 2nd egg and add half of it (about 1½ T)",
+      "Round to 2 eggs",
+      "Crack 1½ eggs straight into the bowl"
+    ],
+    "seconds": 30,
+    "hints": [
+      "Can you crack half an egg cleanly?",
+      "What could you do to an egg so you can measure part of it?"
+    ],
+    "explain": [
+      "Half of 3 = 1½ eggs. Beat one egg and use half (about 1½ T), or round to 2 for most recipes."
+    ],
+    "answer": {
+      "choices": [
+        2,
+        3
+      ],
+      "num": [
+        0,
+        0
+      ],
+      "text": "Use 1 egg, then beat a 2nd egg and add half of it (about 1½ T) or Round to 2 eggs",
+      "given": [
+        0,
+        0
+      ],
+      "factor": [
+        0,
+        0
+      ]
+    }
+  }
+]

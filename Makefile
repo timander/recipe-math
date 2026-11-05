@@ -1,6 +1,6 @@
 # Run `make` or `make help` to list targets.
 .DEFAULT_GOAL := help
-.PHONY: help build test cover vet fmt lint lint-go lint-web open clean node_modules check
+.PHONY: help build test cover vet fmt lint lint-go lint-web open clean node_modules check e2e mutation golden
 
 OUT  := dist/recipe-math.html
 WASM := build/recipemath.wasm
@@ -19,8 +19,20 @@ build: $(OUT) ## Build the single-file app → dist/recipe-math.html
 test: ## Run the Go tests
 	go test ./...
 
-cover: ## Tests with a coverage summary
-	go test -cover ./...
+cover: ## Go coverage → reports/coverage.html (fails under 90%)
+	./scripts/coverage.sh
+
+golden: ## Rewrite the golden files after an intended content change (review the diff!)
+	go test ./kitchen -run TestGoldenShifts -update
+
+mutation: ## Mutation testing with Gremlins → reports/mutation.md
+	@command -v $$(go env GOPATH)/bin/gremlins >/dev/null || go install github.com/go-gremlins/gremlins/cmd/gremlins@v0.6.0
+	./scripts/mutation.sh
+
+e2e: build node_modules ## Playwright UI tests (desktop + phone) → reports/playwright
+	pnpm exec playwright install chromium
+	rm -rf reports/e2e-coverage-raw
+	pnpm e2e
 
 vet: ## go vet (including the WebAssembly entry point)
 	go vet ./...
@@ -47,7 +59,7 @@ node_modules: package.json pnpm-lock.yaml
 open: build ## Build, then open the app in your browser
 	open $(OUT) 2>/dev/null || xdg-open $(OUT)
 
-check: lint test build ## Everything CI's check job runs
+check: lint cover build e2e ## Everything CI runs (except mutation testing)
 
 clean: ## Remove build output and reports
 	rm -rf build dist reports coverage playwright-report test-results

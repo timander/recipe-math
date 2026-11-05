@@ -53,6 +53,9 @@ const params = new URLSearchParams(location.search);
 const MAX_PLATES = Math.min(10, Math.max(1, Number(params.get("plates")) || 4));
 const TIMER_ON = params.get("timer") !== "off";
 const AUTO_NEXT = params.get("auto") !== "off"; // clean answers move on by themselves
+// ?seed=4821 makes every shift the same, like a worksheet version, so a whole
+// class (or a test) gets identical tickets.
+const SEED = Number(params.get("seed")) || null;
 
 // Tips add up over every shift and unlock chef gear (cosmetic, just for fun).
 const GEAR = [
@@ -227,6 +230,8 @@ function showTab(name) {
     $(btn.dataset.tab).hidden = !on;
   }
   store.set("tab", name);
+  // A shift pauses (clock, keys, auto-advance) while another tab is open.
+  S.away = name !== "kitchen";
 }
 
 // ---------- Kitchen home ----------
@@ -314,9 +319,10 @@ const S = {}; // the shift in progress
 
 function startShift(rankId) {
   sound.ensure(); // first user gesture: allowed to start audio
-  const orders = call("shift", rankId, randomSeed()).orders;
+  const orders = call("shift", rankId, SEED ?? randomSeed()).orders;
   clearInterval(S.timer);
   Object.assign(S, {
+    id: (S.id ?? 0) + 1, // stale timers compare this before acting
     rank: RANKS.find((r) => r.id === rankId),
     orders,
     queue: orders.map((_, i) => i), // queue[0] is the current ticket
@@ -352,7 +358,7 @@ const cur = () => S.orders[S.queue[0]];
 const curRec = () => S.rec[S.queue[0]];
 
 function tick() {
-  if (S.over || S.paused || !S.timed) return;
+  if (S.over || S.paused || S.away || !S.timed) return;
   S.timeLeft--;
   if (S.timeLeft === 0) {
     S.late = true;
@@ -766,59 +772,81 @@ function renderBowl() {
 
 // ---------- Serving, hints, skipping ----------
 
-function serve(extra) {
-  if (S.over || S.phase !== "answer") return;
-  const o = cur();
-  const r = curRec();
+// "½ plate", "1 plate", "2½ plates".
+function platesText(n) {
+  const whole = Math.floor(n);
+  const num = n % 1 ? (whole ? `${whole}½` : "½") : String(whole);
+  return `${num} plate${n === 1 || n === 0.5 ? "" : "s"}`;
+}
+
+// What the student is serving, or null (with a nudge) if nothing is picked.
+function readResponse(o, extra) {
   const resp = { choice: -1, tools: [], text: "" };
   if (o.input === "choice") {
     resp.choice = extra.choice ?? S.selected;
     if (resp.choice == null) {
       flash("Tap a choice first.", "warn");
-      return;
+      return null;
     }
   }
   if (o.input === "number") resp.text = $("num").value;
   if (o.input === "build") resp.tools = S.bowl;
+  return resp;
+}
+
+function serve(extra) {
+  if (S.over || S.phase !== "answer") return;
+  const o = cur();
+  const resp = readResponse(o, extra);
+  if (!resp) return;
   const res = call("check", JSON.stringify(o), JSON.stringify(resp));
+  if (res.invalid) flash(res.message, "warn");
+  else if (res.correct) onCorrect(o, curRec(), res);
+  else onAccident(o, curRec(), res, resp);
+}
 
-  if (res.invalid) {
-    flash(res.message, "warn");
-    return;
-  }
-  if (!res.correct) {
-    r.accidents++;
-    S.accidents++;
-    S.streak = 0; // quietly: the lost bonus is penalty enough
-    S.plates = Math.max(0, S.plates - 1);
-    if (o.input === "choice") {
-      r.wrongChoices.push(resp.choice);
-      S.selected = null;
-      $("serve").disabled = true;
-      $("serve").textContent = "🛎 Serve";
-    }
-    if (res.freeHint && r.shown === 0) r.shown = 1; // the message already asked hint 1
-    sound.crash();
-    const t = $("ticket");
-    t.classList.remove("shake");
-    void t.offsetWidth;
-    t.classList.add("shake");
-    const left = S.plates === 1 ? "1 plate left" : `${String(S.plates).replace(".5", "½")} plates left`;
-    flash(`💥 Accident! (${left}) ${res.message}`, "bad");
-    $("feedback").focus({ preventScroll: true });
-    renderHUD();
-    renderHints(o, r);
-    if (o.input === "choice") renderChoices(o, r);
-    updateButtons();
-    if (S.plates <= 0) setTimeout(() => endShift(false), 900);
-    return;
-  }
+function shakeTicket() {
+  const t = $("ticket");
+  t.classList.remove("shake");
+  void t.offsetWidth; // restart the animation
+  t.classList.add("shake");
+}
 
-  // Correct!
-  r.solved = true;
-  S.phase = "review";
-  S.paused = true;
-  S.plates = Math.min(MAX_PLATES, S.plates + 0.5);
+function onAccident(o, r, res, resp) {
+  r.accidents++;
+  S.accidents++;
+  S.streak = 0; // quietly: the lost bonus is penalty enough
+  S.plates = Math.max(0, S.plates - 1);
+  if (o.input === "choice") {
+    r.wrongChoices.push(resp.choice);
+    S.selected = null;
+    $("serve").disabled = true;
+    $("serve").textContent = "🛎 Serve";
+  }
+  if (res.freeHint && r.shown === 0) r.shown = 1; // the message already asked hint 1
+  sound.crash();
+  shakeTicket();
+  flash(`💥 Accident! (${platesText(S.plates)} left) ${res.message}`, "bad");
+  $("feedback").focus({ preventScroll: true });
+  renderHUD();
+  renderHints(o, r);
+  if (o.input === "choice") renderChoices(o, r);
+  updateButtons();
+  if (S.plates <= 0) {
+    // Out of plates: freeze the ticket now, then show the result. The id
+    // check stops a stale timer from ending a shift started in the meantime.
+    S.phase = "out";
+    for (const id of ["serve", "hint-btn", "skip-btn"]) $(id).disabled = true;
+    const shift = S.id;
+    setTimeout(() => {
+      if (S.id === shift) endShift(false);
+    }, 900);
+  }
+}
+
+// Tips for a correct serve: more for a clean first try, a bonus for the
+// fewest scoops, and a streak bonus from 3 clean answers in a row.
+function tipsFor(r, res) {
   const clean = r.accidents === 0 && r.hints === 0;
   let earned = clean ? 10 : 5;
   let note = "";
@@ -832,19 +860,36 @@ function serve(extra) {
     earned += 2;
     note += ` 🔥 Hot line ×${S.streak}: +2!`;
   }
+  return { clean, earned, note };
+}
+
+// Did this serve finish its recipe card?
+function finishesCard(o) {
+  if (!o.card || o.kind === "fix") return false;
+  const key = cardKey(o.card);
+  return S.orders.every((x, i) => cardKey(x.card) !== key || S.rec[i].solved);
+}
+
+function onCorrect(o, r, res) {
+  r.solved = true;
+  S.phase = "review";
+  S.paused = true;
+  S.plates = Math.min(MAX_PLATES, S.plates + 0.5);
+  const { clean, earned, note } = tipsFor(r, res);
   S.tips += earned;
   sound.correct();
-  let msg = `✅ ${res.message} +${earned} tips.${note}`;
-  let cardDone = false;
-  if (o.card && o.kind !== "fix") {
-    const key = cardKey(o.card);
-    if (S.orders.every((x, i) => cardKey(x.card) !== key || S.rec[i].solved)) {
-      sound.chime();
-      cardDone = true;
-      msg += " 📋 Recipe card complete. Mise en place is ready!";
-    }
-  }
-  flash(msg, "good");
+  const cardDone = finishesCard(o);
+  if (cardDone) sound.chime();
+  flash(
+    `✅ ${res.message} +${earned} tips.${note}${cardDone ? " 📋 Recipe card complete. Mise en place is ready!" : ""}`,
+    "good",
+  );
+  showSolved(o);
+  scheduleAutoNext(o, clean, cardDone);
+}
+
+// Lock the ticket, explain the answer, and offer Next.
+function showSolved(o) {
   $("ticket").classList.add("solved");
   $("explain").replaceChildren(
     el("h4", {}, "Chef says"),
@@ -863,25 +908,25 @@ function serve(extra) {
   if (o.input === "build") renderBowl();
   renderCard(o);
   renderHUD();
-  $("serve").hidden = true;
-  $("hint-btn").hidden = true;
-  $("skip-btn").hidden = true;
+  for (const id of ["serve", "hint-btn", "skip-btn"]) $(id).hidden = true;
   $("next-btn").hidden = false;
   $("next-btn").focus();
-  // A clean first-try answer moves on by itself; after an accident or a hint
-  // the student taps Next, because that's when the explanation matters.
+}
+
+// A clean first-try answer moves on by itself; after an accident or a hint
+// the student taps Next, because that's when the explanation matters.
+function scheduleAutoNext(o, clean, cardDone) {
   const nb = $("next-btn");
   nb.classList.remove("auto");
-  if (clean && AUTO_NEXT) {
-    const ms = cardDone ? 2600 : 1800;
-    nb.style.setProperty("--auto", `${ms}ms`);
-    void nb.offsetWidth;
-    nb.classList.add("auto");
-    clearTimeout(S.autoTimer);
-    S.autoTimer = setTimeout(() => {
-      if (!S.over && S.phase === "review" && cur() === o) nextOrder();
-    }, ms);
-  }
+  if (!clean || !AUTO_NEXT) return;
+  const ms = cardDone ? 2600 : 1800;
+  nb.style.setProperty("--auto", `${ms}ms`);
+  void nb.offsetWidth; // restart the fill animation
+  nb.classList.add("auto");
+  clearTimeout(S.autoTimer);
+  S.autoTimer = setTimeout(() => {
+    if (!S.over && !S.away && S.phase === "review" && cur() === o) nextOrder();
+  }, ms);
 }
 
 function nextOrder() {
@@ -932,14 +977,29 @@ function endShift(cleared) {
   if (S.over) return;
   S.over = true;
   clearInterval(S.timer);
+  clearTimeout(S.autoTimer);
+  const score = settleScore(cleared);
+  if (cleared) sound.fanfare();
+  else sound.womp();
+  $("shift").hidden = true;
+  $("result").hidden = false;
+  renderResultHeader(cleared, score);
+  renderUnlocks(score);
+  renderStats();
+  renderReview(cleared);
+  const next = RANKS.find((r) => r.id === S.rank.id + 1);
+  $("up-btn").hidden = !cleared || !next;
+  $("again-btn").focus();
+}
+
+// Add the time bonus, then save lifetime tips, personal bests, and stars.
+function settleScore(cleared) {
   const onTime = S.timed && !S.late;
   const bonus = cleared && onTime ? Math.floor(Math.max(0, S.timeLeft) / 3) : 0; // 1 tip per 3 seconds left
   S.tips += bonus;
-  clearTimeout(S.autoTimer);
   const lifeBefore = store.get("lifetime", 0);
   const lifeAfter = lifeBefore + S.tips;
   store.set("lifetime", lifeAfter);
-  const unlocked = GEAR.filter((g) => g.tips > lifeBefore && g.tips <= lifeAfter);
   const pb = store.get("pb", {});
   const prevBest = pb[S.rank.id];
   const newBest = cleared && (!prevBest || S.tips > prevBest.tips);
@@ -949,43 +1009,42 @@ function endShift(cleared) {
   }
   const half = S.plates >= MAX_PLATES / 2;
   const stars = cleared ? 1 + (half ? 1 : 0) + (half && (onTime || !S.timed) ? 1 : 0) : 0;
-  if (cleared) {
-    const best = store.get("best", {});
-    if (stars > (best[S.rank.id] || 0)) {
-      best[S.rank.id] = stars;
-      store.set("best", best);
-    }
-    sound.fanfare();
-  } else {
-    sound.womp();
+  const best = store.get("best", {});
+  if (stars > (best[S.rank.id] || 0)) {
+    best[S.rank.id] = stars;
+    store.set("best", best);
   }
+  const unlocked = GEAR.filter((g) => g.tips > lifeBefore && g.tips <= lifeAfter);
+  return { onTime, bonus, stars, lifeAfter, unlocked, prevBest, newBest };
+}
 
-  $("shift").hidden = true;
-  $("result").hidden = false;
-  $("r-stars").textContent = cleared ? starText(stars) : "🍽💥";
-  $("r-title").textContent = cleared
-    ? stars === 3 && S.accidents === 0 && S.hintsUsed === 0
-      ? "Flawless service! Chef wants you on the line every night."
-      : ["", "Shift cleared. Rough night, but you made it.", "Solid shift!", "Chef is impressed!"][stars]
-    : "Chef pulled you off the line!";
-  $("r-sub").textContent = cleared
-    ? onTime
-      ? `On-time bonus: +${bonus} tips.`
-      : S.timed
-        ? "Tickets ran late, so no time bonus."
-        : ""
-    : "You dropped all your plates. Study what tripped you up, then get back in there.";
+function resultTitle(cleared, stars) {
+  if (!cleared) return "Chef pulled you off the line!";
+  if (stars === 3 && S.accidents === 0 && S.hintsUsed === 0) {
+    return "Flawless service! Chef wants you on the line every night.";
+  }
+  return ["", "Shift cleared. Rough night, but you made it.", "Solid shift!", "Chef is impressed!"][stars];
+}
+
+function resultSubtitle(cleared, { onTime, bonus }) {
+  if (!cleared) return "You dropped all your plates. Study what tripped you up, then get back in there.";
+  if (onTime) return `On-time bonus: +${bonus} tips.`;
+  return S.timed ? "Tickets ran late, so no time bonus." : "";
+}
+
+function renderResultHeader(cleared, score) {
+  $("r-stars").textContent = cleared ? starText(score.stars) : "🍽💥";
+  $("r-title").textContent = resultTitle(cleared, score.stars);
+  $("r-sub").textContent = resultSubtitle(cleared, score);
+}
+
+function renderUnlocks({ newBest, prevBest, unlocked, lifeAfter }) {
+  const best = prevBest
+    ? `🏅 New personal best: ${S.tips} tips (was ${prevBest.tips})`
+    : `🏅 First clear! Personal best: ${S.tips} tips`;
   const nxt = nextGear(lifeAfter);
   $("r-unlock").replaceChildren(
-    newBest
-      ? el(
-          "p",
-          { class: "pb" },
-          prevBest
-            ? `🏅 New personal best: ${S.tips} tips (was ${prevBest.tips})`
-            : `🏅 First clear! Personal best: ${S.tips} tips`,
-        )
-      : "",
+    newBest ? el("p", { class: "pb" }, best) : "",
     ...unlocked.map((g) => el("p", { class: "unlock" }, `🎉 Unlocked: ${g.icon} ${g.name}`)),
     el(
       "p",
@@ -993,46 +1052,41 @@ function endShift(cleared) {
       nxt ? `${nxt.tips - lifeAfter} more tips to ${nxt.icon} ${nxt.name}` : "All chef gear unlocked. 🏆",
     ),
   );
+}
+
+function renderStats() {
   const stats = [
     ["Tips", `💰 ${S.tips}`],
     ["Best streak", `🔥 ${S.bestStreak}`],
-    ["Plates left", `🍽 ${S.plates} of ${MAX_PLATES}`],
+    ["Plates left", `🍽 ${platesText(S.plates)} of ${MAX_PLATES}`],
     ["Accidents", String(S.accidents)],
     ["Hints", String(S.hintsUsed)],
     ["Tickets", `${S.rec.filter((r) => r.solved).length} of ${S.orders.length}`],
   ];
-  $("r-stats").replaceChildren(...stats.flatMap(([k, v]) => [el("div", {}, el("dt", {}, k), el("dd", {}, v))]));
+  $("r-stats").replaceChildren(...stats.map(([k, v]) => el("div", {}, el("dt", {}, k), el("dd", {}, v))));
+}
 
-  // Review anything that needed help, plus (on a knockout) the ticket that ended it.
+// Review anything that needed help, plus (on a knockout) the ticket that ended it.
+function renderReview(cleared) {
   const ender = S.queue[0];
   const review = S.orders
     .map((o, i) => ({ o, r: S.rec[i], i }))
     .filter(({ r, i }) => r.accidents || r.hints || r.skips > 1 || (!cleared && i === ender));
+  if (review.length === 0) {
+    $("r-review").replaceChildren(el("p", { class: "clean" }, "No accidents, no hints. Clean service! 👏"));
+    return;
+  }
+  const item = ({ o }) =>
+    el(
+      "li",
+      {},
+      el("p", { class: "rv-q" }, el("span", { class: "rv-station" }, o.station), " ", o.prompt),
+      el("p", { class: "rv-a" }, "Answer: ", el("strong", {}, o.answer.text)),
+      ...o.explain.map((e) => el("p", { class: "rv-e" }, e)),
+    );
   $("r-review").replaceChildren(
-    review.length === 0
-      ? el("p", { class: "clean" }, "No accidents, no hints. Clean service! 👏")
-      : el(
-          "div",
-          { class: "review" },
-          el("h3", {}, "Study these"),
-          el(
-            "ol",
-            {},
-            review.map(({ o }) =>
-              el(
-                "li",
-                {},
-                el("p", { class: "rv-q" }, el("span", { class: "rv-station" }, o.station), " ", o.prompt),
-                el("p", { class: "rv-a" }, "Answer: ", el("strong", {}, o.answer.text)),
-                ...o.explain.map((e) => el("p", { class: "rv-e" }, e)),
-              ),
-            ),
-          ),
-        ),
+    el("div", { class: "review" }, el("h3", {}, "Study these"), el("ol", {}, review.map(item))),
   );
-  const next = RANKS.find((r) => r.id === S.rank.id + 1);
-  $("up-btn").hidden = !cleared || !next;
-  $("again-btn").focus();
 }
 
 function goHome() {
@@ -1445,7 +1499,8 @@ function wireUp() {
   $("up-btn").addEventListener("click", () => startShift(S.rank.id + 1));
   // Keyboard: A–E or 1–5 pick a choice; Enter moves on after a correct serve.
   document.addEventListener("keydown", (e) => {
-    if ($("shift").hidden || S.over || e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
+    if ($("shift").hidden || $("kitchen").hidden || S.over) return;
+    if (e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
     const o = cur();
     if (S.phase === "review" && e.key === "Enter") {
       e.preventDefault();

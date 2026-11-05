@@ -1,0 +1,360 @@
+[
+  {
+    "id": 1,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "1 lb = ___ oz",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "oz",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one pound or one ounce? So should your number come out bigger or smaller than 1?",
+      "How many ounces fit in one pound?",
+      "So you have 1 groups of that many. How do you find the total?"
+    ],
+    "explain": [
+      "1 lb = 16 oz, so 1 × 16 = 16."
+    ],
+    "answer": {
+      "num": [
+        16,
+        1
+      ],
+      "text": "16 oz",
+      "given": [
+        1,
+        1
+      ],
+      "factor": [
+        16,
+        1
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "4 quarts = ___ gallon",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "gallon",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one quart or one gallon? So should your number come out bigger or smaller than 4?",
+      "How many quarts fit in one gallon?",
+      "How many groups of that size fit into 4?"
+    ],
+    "explain": [
+      "4 quarts = 1 gallon, so 4 ÷ 4 = 1."
+    ],
+    "answer": {
+      "num": [
+        1,
+        1
+      ],
+      "text": "1 gallon",
+      "given": [
+        4,
+        1
+      ],
+      "factor": [
+        1,
+        4
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "4 sticks = ___ c",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "c",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one stick of butter or one cup? So should your number come out bigger or smaller than 4?",
+      "How many sticks of butter fit in one cup?",
+      "How many groups of that size fit into 4?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "2 sticks = 1 c, so 4 ÷ 2 = 2."
+    ],
+    "answer": {
+      "num": [
+        2,
+        1
+      ],
+      "text": "2 c",
+      "given": [
+        4,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 768,
+      "answer": 768
+    }
+  },
+  {
+    "id": 4,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "2 cups = ___ pint",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "pint",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one cup or one pint? So should your number come out bigger or smaller than 2?",
+      "How many cups fit in one pint?",
+      "How many groups of that size fit into 2?"
+    ],
+    "explain": [
+      "2 cups = 1 pint, so 2 ÷ 2 = 1."
+    ],
+    "answer": {
+      "num": [
+        1,
+        1
+      ],
+      "text": "1 pint",
+      "given": [
+        2,
+        1
+      ],
+      "factor": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "2 qt = ___ pt",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "pt",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one quart or one pint? So should your number come out bigger or smaller than 2?",
+      "How many pints fit in one quart?",
+      "So you have 2 groups of that many. How do you find the total?"
+    ],
+    "explain": [
+      "1 qt = 2 pt, so 2 × 2 = 4."
+    ],
+    "answer": {
+      "num": [
+        4,
+        1
+      ],
+      "text": "4 pt",
+      "given": [
+        2,
+        1
+      ],
+      "factor": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "4 Tbsp = ___ cup",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "cup",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one tablespoon or one cup? So should your number come out bigger or smaller than 4?",
+      "How many tablespoons fit in one cup?",
+      "How many groups of that size fit into 4?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "16 Tbsp = 1 cup, so 4 ÷ 16 = ¼."
+    ],
+    "answer": {
+      "num": [
+        1,
+        4
+      ],
+      "text": "¼ cup",
+      "given": [
+        4,
+        1
+      ],
+      "factor": [
+        1,
+        16
+      ]
+    },
+    "visual": {
+      "kind": "wall",
+      "given": 96,
+      "answer": 96
+    }
+  },
+  {
+    "id": 7,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "4 cups = ___ quart",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "quart",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one cup or one quart? So should your number come out bigger or smaller than 4?",
+      "How many cups fit in one quart?",
+      "How many groups of that size fit into 4?"
+    ],
+    "explain": [
+      "4 cups = 1 quart, so 4 ÷ 4 = 1."
+    ],
+    "answer": {
+      "num": [
+        1,
+        1
+      ],
+      "text": "1 quart",
+      "given": [
+        4,
+        1
+      ],
+      "factor": [
+        1,
+        4
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "½ stick = ___ Tbsp",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "Tbsp",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one stick of butter or one tablespoon? So should your number come out bigger or smaller than ½?",
+      "How many tablespoons fit in one stick of butter?",
+      "So you have ½ groups of that many. How do you find the total?",
+      "Picture it: how many blocks fit under the shaded part?"
+    ],
+    "explain": [
+      "1 stick = 8 Tbsp, so ½ × 8 = 4."
+    ],
+    "answer": {
+      "num": [
+        4,
+        1
+      ],
+      "text": "4 Tbsp",
+      "given": [
+        1,
+        2
+      ],
+      "factor": [
+        8,
+        1
+      ]
+    },
+    "visual": {
+      "kind": "butter",
+      "given": 96,
+      "answer": 96
+    }
+  },
+  {
+    "id": 9,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "1 ½ C. = ___ fl. oz.",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "fl. oz.",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one cup or one fluid ounce? So should your number come out bigger or smaller than 1 ½?",
+      "How many fluid ounces fit in one cup?",
+      "So you have 1 ½ groups of that many. How do you find the total?"
+    ],
+    "explain": [
+      "1 C. = 8 fl. oz., so 1½ × 8 = 12."
+    ],
+    "answer": {
+      "num": [
+        12,
+        1
+      ],
+      "text": "12 fl. oz.",
+      "given": [
+        3,
+        2
+      ],
+      "factor": [
+        8,
+        1
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "kind": "swap",
+    "station": "Unit Swap",
+    "prompt": "1 Tbsp = ___ tsp",
+    "context": "Type a whole number or a fraction, like 4 or 1/2.",
+    "line": -1,
+    "input": "number",
+    "unit": "tsp",
+    "seconds": 25,
+    "hints": [
+      "Which is bigger: one tablespoon or one teaspoon? So should your number come out bigger or smaller than 1?",
+      "How many teaspoons fit in one tablespoon?",
+      "So you have 1 groups of that many. How do you find the total?"
+    ],
+    "explain": [
+      "1 Tbsp = 3 tsp, so 1 × 3 = 3."
+    ],
+    "answer": {
+      "num": [
+        3,
+        1
+      ],
+      "text": "3 tsp",
+      "given": [
+        1,
+        1
+      ],
+      "factor": [
+        3,
+        1
+      ]
+    }
+  }
+]

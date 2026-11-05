@@ -199,16 +199,16 @@ func parseFraction(s string) (Frac, error) {
 
 func parseDecimal(s string) (Frac, error) {
 	whole, dec, hasDot := strings.Cut(s, ".")
+	if whole == "" && dec == "" {
+		return Frac{}, ErrFormat // a lone "." is a typo, not zero
+	}
 	if whole == "" {
 		whole = "0"
 	}
-	if !hasDot {
-		return parseWhole(whole)
+	if !hasDot || dec == "" {
+		return parseWhole(whole) // "5" or "5."
 	}
-	if dec == "" || len(dec) > 6 || strings.ContainsAny(dec, "-./") {
-		if dec == "" {
-			return parseWhole(whole)
-		}
+	if len(dec) > 6 || strings.ContainsAny(dec, "-./") {
 		return Frac{}, ErrFormat
 	}
 	w, err := parseWhole(whole)
