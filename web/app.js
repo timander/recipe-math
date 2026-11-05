@@ -1107,7 +1107,6 @@ function wsSettings() {
     rank: checked ? Number(checked.value) : 1,
     title: $("ws-title").value.trim() || "Recipe Math: The Line",
     version: Math.min(9999, Math.max(1000, Number($("ws-version").value) || 1000)),
-    wall: $("ws-wall").checked,
   };
 }
 
@@ -1156,22 +1155,7 @@ function renderWorksheet(mode) {
     }
     items.push(printOrder(++n, o, key));
   }
-  const wall = s.wall
-    ? el(
-        "section",
-        { class: "ws-wall" },
-        el(
-          "p",
-          { class: "q" },
-          el("span", { class: "q-station" }, "Cup Wall"),
-          key
-            ? " Answer key: each block's size."
-            : " Label every block with its size (1 cup, ½ cup, ⅓ cup, ¼ cup, 2 T, 1 T).",
-        ),
-        cupWall(0, { blank: !key }),
-      )
-    : "";
-  sheet.replaceChildren(head, instructions, el("ol", { class: "ws-items" }, items), wall);
+  sheet.replaceChildren(head, instructions, el("ol", { class: "ws-items" }, items));
 }
 
 const blank = (cls = "") => el("i", { class: `blank ${cls}` });
@@ -1319,11 +1303,11 @@ const WALL_ROWS = [
   ["1 T", 16],
 ];
 
-function cupWall(shade, { blank = false } = {}) {
+function cupWall(shade) {
   const wall = el(
     "div",
     {
-      class: `cup-wall${blank ? " blank" : ""}`,
+      class: "cup-wall",
       role: "img",
       "aria-label": shade
         ? "Cup wall: one cup split into halves, thirds, quarters, 2-tablespoon and 1-tablespoon blocks. The shaded part is the amount on this ticket. Count the blocks under it."
@@ -1333,8 +1317,7 @@ function cupWall(shade, { blank = false } = {}) {
       el(
         "div",
         { class: "wall-row" },
-        // A blank wall keeps "1 cup" on top as the starting point.
-        Array.from({ length: n }, () => el("span", { class: "wall-block" }, blank && n > 1 ? "" : label)),
+        Array.from({ length: n }, () => el("span", { class: "wall-block" }, label)),
       ),
     ),
   );
@@ -1530,7 +1513,6 @@ function wireUp() {
   );
   $("ws-title").value = saved.title ?? "";
   $("ws-version").value = String(saved.version || randomVersion());
-  $("ws-wall").checked = saved.wall ?? false;
   const saveWs = () => store.set("ws", { ...wsSettings(), title: $("ws-title").value });
   $("ws-form").addEventListener("input", () => {
     saveWs();

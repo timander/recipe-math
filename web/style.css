@@ -1661,13 +1661,6 @@ legend {
   background: #f3f3f3;
   font-size: 0.6rem;
 }
-.cup-wall.blank .wall-block {
-  background: #fff;
-  min-height: 2.4em;
-}
-.ws-wall .cup-wall {
-  max-width: none;
-} /* full page width, room to write */
 .wall-shade {
   position: absolute;
   top: -3px;
@@ -1737,10 +1730,6 @@ legend {
 .cheat-grid.pics {
   margin-top: 0.3rem;
   align-items: start;
-}
-.ws-wall {
-  margin-top: 0.8em;
-  break-inside: avoid;
 }
 @media print {
   .wall-block {
