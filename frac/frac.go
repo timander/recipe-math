@@ -41,9 +41,13 @@ func (a Frac) Den() int64 {
 	return a.d
 }
 
+// Add returns a + b.
 func (a Frac) Add(b Frac) Frac { return New(a.n*b.Den()+b.n*a.Den(), a.Den()*b.Den()) }
+
+// Sub returns a - b.
 func (a Frac) Sub(b Frac) Frac { return New(a.n*b.Den()-b.n*a.Den(), a.Den()*b.Den()) }
 
+// Mul returns a × b.
 func (a Frac) Mul(b Frac) Frac {
 	// Cross-reduce first to keep the numbers small.
 	g1 := gcd(abs(a.n), b.Den())
@@ -71,9 +75,14 @@ func (a Frac) Cmp(b Frac) int {
 	return 0
 }
 
+// Equal reports whether a and b are the same number.
 func (a Frac) Equal(b Frac) bool { return a.Cmp(b) == 0 }
-func (a Frac) IsInt() bool       { return a.Den() == 1 }
-func (a Frac) Float64() float64  { return float64(a.n) / float64(a.Den()) }
+
+// IsInt reports whether a is a whole number.
+func (a Frac) IsInt() bool { return a.Den() == 1 }
+
+// Float64 returns a as a floating-point number (for tolerances only).
+func (a Frac) Float64() float64 { return float64(a.n) / float64(a.Den()) }
 
 // String formats as a whole or mixed number: "12", "3/4", "1 1/2".
 func (a Frac) String() string {
@@ -196,8 +205,8 @@ func parseDecimal(s string) (Frac, error) {
 	if !hasDot {
 		return parseWhole(whole)
 	}
-	if len(dec) == 0 || len(dec) > 6 || strings.ContainsAny(dec, "-./") {
-		if len(dec) == 0 {
+	if dec == "" || len(dec) > 6 || strings.ContainsAny(dec, "-./") {
+		if dec == "" {
 			return parseWhole(whole)
 		}
 		return Frac{}, ErrFormat

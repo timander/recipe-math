@@ -12,8 +12,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 )
 
@@ -45,7 +45,11 @@ func run(wasmPath, webDir, out string) error {
 	if err != nil {
 		return err
 	}
-	goJS, err := read(filepath.Join(runtime.GOROOT(), "lib", "wasm", "wasm_exec.js"))
+	root, err := goRoot()
+	if err != nil {
+		return err
+	}
+	goJS, err := read(filepath.Join(root, "lib", "wasm", "wasm_exec.js"))
 	if err != nil {
 		return err
 	}
@@ -54,9 +58,16 @@ func run(wasmPath, webDir, out string) error {
 		return err
 	}
 	var gz bytes.Buffer
-	zw, _ := gzip.NewWriterLevel(&gz, gzip.BestCompression)
-	zw.Write(wasm)
-	zw.Close()
+	zw, err := gzip.NewWriterLevel(&gz, gzip.BestCompression)
+	if err != nil {
+		return err
+	}
+	if _, err := zw.Write(wasm); err != nil {
+		return err
+	}
+	if err := zw.Close(); err != nil {
+		return err
+	}
 
 	for _, s := range []string{css, app, goJS} {
 		if strings.Contains(strings.ToLower(s), "</script") || strings.Contains(strings.ToLower(s), "</style") {
@@ -83,4 +94,14 @@ func run(wasmPath, webDir, out string) error {
 	}
 	fmt.Printf("wrote %s (%.1f MB)\n", out, float64(len(page))/1e6)
 	return nil
+}
+
+// goRoot asks the go tool where Go is installed, since wasm_exec.js must
+// match the compiler that built the engine.
+func goRoot() (string, error) {
+	out, err := exec.Command("go", "env", "GOROOT").Output()
+	if err != nil {
+		return "", fmt.Errorf("finding GOROOT: %w", err)
+	}
+	return strings.TrimSpace(string(out)), nil
 }

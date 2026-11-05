@@ -1,0 +1,2 @@
+# Supply-chain hardening: don't install versions published less than a day ago.
+minimumReleaseAge: 1440

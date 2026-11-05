@@ -32,6 +32,7 @@ const (
 // ToolKind groups tools the way a kitchen drawer does.
 type ToolKind string
 
+// The kinds of measuring tools.
 const (
 	Spoon  ToolKind = "spoon"
 	DryCup ToolKind = "dry"
@@ -102,6 +103,7 @@ var toolByID = func() map[string]Tool {
 // Drawer names which tools a Measure It order offers.
 type Drawer string
 
+// The drawers a Measure It order can offer.
 const (
 	DrawerDry    Drawer = "dry"    // dry cups + spoons
 	DrawerLiquid Drawer = "liquid" // one liquid-cup line + spoons
@@ -123,8 +125,8 @@ func (d Drawer) Tools() []Tool {
 }
 
 // Solve finds the fewest scoops that measure an amount exactly with a
-// drawer's tools. ok is false when the drawer can't make it exactly.
-// A liquid cup counts as one scoop and can be used at most once.
+// drawer's tools. It reports false when the drawer can't make the amount
+// exactly. A liquid cup counts as one scoop and can be used at most once.
 func Solve(amount int, d Drawer) (best []Tool, ok bool) {
 	if amount <= 0 {
 		return nil, false
@@ -281,6 +283,7 @@ func CupText(e int) string { return Mixed(frac.New(int64(e), Cup)) + " c" }
 // often mixed in the same recipe (see docs/recipe-notation.md).
 type Style int
 
+// The recipe styles.
 const (
 	Short Style = iota // classic cookbook: T, t, c
 	Abbr               // Tbsp, tsp, cup

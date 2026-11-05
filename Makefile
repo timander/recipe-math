@@ -1,6 +1,6 @@
 # Run `make` or `make help` to list targets.
 .DEFAULT_GOAL := help
-.PHONY: help build test cover vet fmt open serve clean
+.PHONY: help build test cover vet fmt lint lint-go lint-web open clean node_modules check
 
 OUT  := dist/recipe-math.html
 WASM := build/recipemath.wasm
@@ -26,11 +26,28 @@ vet: ## go vet (including the WebAssembly entry point)
 	go vet ./...
 	GOOS=js GOARCH=wasm go vet ./cmd/wasm
 
-fmt: ## Format all Go code
-	gofmt -w .
+fmt: node_modules ## Format Go (gofmt/goimports) and web code (Prettier)
+	golangci-lint fmt ./...
+	pnpm format
+
+lint: lint-go lint-web ## All static analysis
+
+lint-go: ## golangci-lint with the Google Go style rules (see .golangci.yml)
+	golangci-lint run ./...
+	GOOS=js GOARCH=wasm golangci-lint run ./cmd/wasm
+
+lint-web: node_modules ## ESLint + Prettier check for the browser code and tests
+	pnpm lint
+	pnpm format:check
+
+node_modules: package.json pnpm-lock.yaml
+	pnpm install
+	@touch node_modules
 
 open: build ## Build, then open the app in your browser
 	open $(OUT) 2>/dev/null || xdg-open $(OUT)
 
-clean: ## Remove build output
-	rm -rf build dist
+check: lint test build ## Everything CI's check job runs
+
+clean: ## Remove build output and reports
+	rm -rf build dist reports coverage playwright-report test-results

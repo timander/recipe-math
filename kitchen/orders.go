@@ -12,6 +12,7 @@ import (
 // Kind is the type of order on the ticket rail.
 type Kind string
 
+// The order types, from beginner to boss level.
 const (
 	KSwap    Kind = "swap"    // Unit Swap (beginner)
 	KVocab   Kind = "vocab"   // Read the Recipe
@@ -38,6 +39,7 @@ var seconds = map[Kind]int{
 // Input is how the student answers.
 type Input string
 
+// The ways a student can answer.
 const (
 	InChoice Input = "choice" // tap one choice
 	InBuild  Input = "build"  // tap tools into the bowl
@@ -131,6 +133,7 @@ type Rank struct {
 	Timed   bool   `json:"timed"` // beginners work without a clock
 }
 
+// Ranks are the stations, from beginner to boss level.
 var Ranks = []Rank{
 	{1, "Dish Pit", "Beginner: swap one unit for another. No clock.", "6 t = ___ T", false},
 	{2, "Commis", "Learn the language: T vs. t, c, oz vs. fl oz, and the core equivalents.", "“2 Tbsp.” means 2 ___", true},
@@ -572,8 +575,8 @@ func scaledLine(l Line, f frac.Frac) (Line, bool) {
 	return out, ok
 }
 
-// lineText writes a line as the recipe card prints it, in a recipe style:
-// "¾ c sugar", "¾ C. sugar", "3/4 cup sugar".
+// lineText writes a line as the recipe card prints it, in a recipe style,
+// such as classic cookbook, foods-lab handout, or recipe website notation.
 func lineText(l Line, s Style) string {
 	in := ing[l.Ing]
 	name := in.Name

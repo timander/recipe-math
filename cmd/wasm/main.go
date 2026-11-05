@@ -15,9 +15,9 @@ import (
 func main() {
 	api := map[string]any{
 		// ranks() → [{id, name, goal, example}]
-		"ranks": fn(func(args []js.Value) any { return kitchen.Ranks }),
+		"ranks": fn(func([]js.Value) any { return kitchen.Ranks }),
 		// reference() → cheat-sheet content
-		"reference": fn(func(args []js.Value) any { return kitchen.Ref() }),
+		"reference": fn(func([]js.Value) any { return kitchen.Ref() }),
 		// shift(rank, seed) → {orders} or {error}
 		"shift": fn(func(args []js.Value) any {
 			orders, err := kitchen.Shift(args[0].Int(), uint64(args[1].Float()))
@@ -48,7 +48,7 @@ func main() {
 
 // fn wraps a Go function so JS gets a JSON string back.
 func fn(f func(args []js.Value) any) js.Func {
-	return js.FuncOf(func(this js.Value, args []js.Value) (result any) {
+	return js.FuncOf(func(_ js.Value, args []js.Value) (result any) {
 		// A panic would stop the Go program for good; report it instead.
 		defer func() {
 			if r := recover(); r != nil {

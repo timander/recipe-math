@@ -5,6 +5,7 @@ import "github.com/timander/recipe-math/frac"
 // IngKind decides how an ingredient is measured.
 type IngKind string
 
+// The ways ingredients are measured.
 const (
 	Dry    IngKind = "dry"    // flour, sugar: spoon into dry cups, level off
 	Wet    IngKind = "liquid" // milk, oil: liquid cup at eye level

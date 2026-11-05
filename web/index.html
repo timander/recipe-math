@@ -1,149 +1,193 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Recipe Math: The Line. Work shifts in a kitchen: read recipes, grab the right tool, measure with real scoops, and scale whole recipes. Play on screen or print.">
-<title>Recipe Math: The Line</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛎️</text></svg>">
-<style>/*STYLE*/</style>
-</head>
-<body>
-<header class="app-header no-print">
-  <div class="brand">
-    <h1><span aria-hidden="true">🛎️</span> Recipe Math <small>The Line</small></h1>
-    <button type="button" id="sound-btn" class="sound-btn" aria-label="Sound: soft. Click to change.">🔉 Soft</button>
-  </div>
-  <nav class="tabs" role="tablist" aria-label="Sections">
-    <button role="tab" id="tab-kitchen" data-tab="kitchen" aria-controls="kitchen" aria-selected="true">Kitchen</button>
-    <button role="tab" id="tab-worksheet" data-tab="worksheet" aria-controls="worksheet" aria-selected="false">Worksheet</button>
-    <button role="tab" id="tab-cheatsheet" data-tab="cheatsheet" aria-controls="cheatsheet" aria-selected="false">Cheat Sheet</button>
-  </nav>
-</header>
-
-<main>
-  <p id="loading" class="loading" role="status">Firing up the stoves…</p>
-  <p id="load-error" class="load-error" role="alert" hidden></p>
-
-  <!-- KITCHEN: pick a station -->
-  <section id="kitchen" class="panel" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
-    <div id="home">
-      <p class="house-rules"><b>How it works:</b> a wrong serve drops a plate 🍽. A right answer wins half a plate back. Lose them all and Chef pulls you off the line.</p>
-      <div id="gear" class="gear"></div>
-      <h2 class="ladder-title">The brigade: start at Dish Pit and work your way up</h2>
-      <ol id="rank-list" class="rank-list"></ol>
-    </div>
-
-    <!-- THE LINE: a shift in progress -->
-    <div id="shift" class="shift" hidden>
-      <div class="hud" role="group" aria-label="Shift status">
-        <div class="plates" id="plates" role="img" aria-label="Plates"></div>
-        <div class="clock" id="clock" aria-live="off">⏱ 0:00</div>
-        <div class="tips" id="tips">💰 0</div>
-        <div class="streak" id="streak" hidden></div>
-        <button type="button" id="quit" class="link-button" aria-label="Leave shift">✕<span class="quit-word"> Leave</span></button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Recipe Math: The Line. Work shifts in a kitchen: read recipes, grab the right tool, measure with real scoops, and scale whole recipes. Play on screen or print."
+    />
+    <title>Recipe Math: The Line</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛎️</text></svg>"
+    />
+    <style>
+      /*STYLE*/
+    </style>
+  </head>
+  <body>
+    <header class="app-header no-print">
+      <div class="brand">
+        <h1><span aria-hidden="true">🛎️</span> Recipe Math <small>The Line</small></h1>
+        <button type="button" id="sound-btn" class="sound-btn" aria-label="Sound: soft. Click to change.">
+          🔉 Soft
+        </button>
       </div>
-      <ol id="rail" class="rail" aria-label="Ticket rail"></ol>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button role="tab" id="tab-kitchen" data-tab="kitchen" aria-controls="kitchen" aria-selected="true">
+          Kitchen
+        </button>
+        <button role="tab" id="tab-worksheet" data-tab="worksheet" aria-controls="worksheet" aria-selected="false">
+          Worksheet
+        </button>
+        <button role="tab" id="tab-cheatsheet" data-tab="cheatsheet" aria-controls="cheatsheet" aria-selected="false">
+          Cheat Sheet
+        </button>
+      </nav>
+    </header>
 
-      <div class="workspace">
-        <aside id="card" class="recipe-card" hidden aria-label="Recipe card"></aside>
+    <main>
+      <p id="loading" class="loading" role="status">Firing up the stoves…</p>
+      <p id="load-error" class="load-error" role="alert" hidden></p>
 
-        <form id="ticket" class="ticket" autocomplete="off" novalidate>
-          <div class="ticket-head">
-            <span id="t-num" class="t-num"></span>
-            <span id="t-station" class="t-station"></span>
+      <!-- KITCHEN: pick a station -->
+      <section id="kitchen" class="panel" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
+        <div id="home">
+          <p class="house-rules">
+            <b>How it works:</b> a wrong serve drops a plate 🍽. A right answer wins half a plate back. Lose them all and
+            Chef pulls you off the line.
+          </p>
+          <div id="gear" class="gear"></div>
+          <h2 class="ladder-title">The brigade: start at Dish Pit and work your way up</h2>
+          <ol id="rank-list" class="rank-list"></ol>
+        </div>
+
+        <!-- THE LINE: a shift in progress -->
+        <div id="shift" class="shift" hidden>
+          <div class="hud" role="group" aria-label="Shift status">
+            <div class="plates" id="plates" role="img" aria-label="Plates"></div>
+            <div class="clock" id="clock" aria-live="off">⏱ 0:00</div>
+            <div class="tips" id="tips">💰 0</div>
+            <div class="streak" id="streak" hidden></div>
+            <button type="button" id="quit" class="link-button" aria-label="Leave shift">
+              ✕<span class="quit-word"> Leave</span>
+            </button>
           </div>
-          <p id="t-context" class="t-context"></p>
-          <p id="t-prompt" class="t-prompt"></p>
+          <ol id="rail" class="rail" aria-label="Ticket rail"></ol>
 
-          <div id="in-choice" class="choices" role="group" hidden></div>
+          <div class="workspace">
+            <aside id="card" class="recipe-card" hidden aria-label="Recipe card"></aside>
 
-          <div id="in-number" class="number-in" hidden>
-            <label><span class="sr-only">Your answer</span>
-              <input id="num" type="text" inputmode="text" enterkeyhint="done" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="12">
-            </label>
-            <span id="num-unit" class="num-unit"></span>
+            <form id="ticket" class="ticket" autocomplete="off" novalidate>
+              <div class="ticket-head">
+                <span id="t-num" class="t-num"></span>
+                <span id="t-station" class="t-station"></span>
+              </div>
+              <p id="t-context" class="t-context"></p>
+              <p id="t-prompt" class="t-prompt"></p>
+
+              <div id="in-choice" class="choices" role="group" hidden></div>
+
+              <div id="in-number" class="number-in" hidden>
+                <label
+                  ><span class="sr-only">Your answer</span>
+                  <input
+                    id="num"
+                    type="text"
+                    inputmode="text"
+                    enterkeyhint="done"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    maxlength="12"
+                  />
+                </label>
+                <span id="num-unit" class="num-unit"></span>
+              </div>
+
+              <div id="in-build" class="build" hidden>
+                <div class="bowl-wrap">
+                  <div class="bowl" id="bowl" aria-live="polite" aria-label="Mixing bowl"></div>
+                  <button type="button" id="bowl-clear" class="small">Empty bowl</button>
+                  <button type="submit" class="primary tray-serve">🛎 Serve</button>
+                </div>
+                <div id="drawer" class="drawer"></div>
+              </div>
+
+              <ol id="hints" class="hints" aria-live="polite"></ol>
+              <div id="feedback" class="feedback" aria-live="assertive" tabindex="-1"></div>
+              <div id="explain" class="explain" hidden></div>
+
+              <div class="actions">
+                <button type="submit" id="serve" class="primary">🛎 Serve</button>
+                <button type="button" id="hint-btn">💡 Hint <span class="cost">−½ 🍽</span></button>
+                <button type="button" id="skip-btn">↪ Skip</button>
+                <button type="button" id="next-btn" class="primary" hidden>Next ticket →</button>
+              </div>
+            </form>
           </div>
+        </div>
 
-          <div id="in-build" class="build" hidden>
-            <div class="bowl-wrap">
-              <div class="bowl" id="bowl" aria-live="polite" aria-label="Mixing bowl"></div>
-              <button type="button" id="bowl-clear" class="small">Empty bowl</button>
-              <button type="submit" class="primary tray-serve">🛎 Serve</button>
-            </div>
-            <div id="drawer" class="drawer"></div>
+        <!-- END OF SHIFT -->
+        <div id="result" class="result" hidden>
+          <p id="r-stars" class="stars-big" aria-hidden="true"></p>
+          <h2 id="r-title"></h2>
+          <p id="r-sub" class="r-sub"></p>
+          <div id="r-unlock" class="r-unlock"></div>
+          <dl id="r-stats" class="r-stats"></dl>
+          <div id="r-review"></div>
+          <div class="actions center">
+            <button type="button" id="again-btn" class="primary">Run it again</button>
+            <button type="button" id="up-btn">Next station →</button>
+            <button type="button" id="home-btn">Back to the kitchen</button>
           </div>
+        </div>
+      </section>
 
-          <ol id="hints" class="hints" aria-live="polite"></ol>
-          <div id="feedback" class="feedback" aria-live="assertive" tabindex="-1"></div>
-          <div id="explain" class="explain" hidden></div>
-
-          <div class="actions">
-            <button type="submit" id="serve" class="primary">🛎 Serve</button>
-            <button type="button" id="hint-btn">💡 Hint <span class="cost">−½ 🍽</span></button>
-            <button type="button" id="skip-btn">↪ Skip</button>
-            <button type="button" id="next-btn" class="primary" hidden>Next ticket →</button>
+      <!-- WORKSHEET -->
+      <section id="worksheet" class="panel" role="tabpanel" aria-labelledby="tab-worksheet" hidden>
+        <form id="ws-form" class="controls no-print" onsubmit="return false;">
+          <fieldset>
+            <legend>Station</legend>
+            <div id="ws-ranks" class="checks"></div>
+          </fieldset>
+          <div class="control-row">
+            <label class="grow"
+              >Title <input id="ws-title" type="text" maxlength="60" placeholder="Recipe Math: The Line"
+            /></label>
+            <label>Version <input id="ws-version" type="number" min="1000" max="9999" inputmode="numeric" /></label>
+            <button type="button" id="ws-new">New version</button>
           </div>
+          <div class="control-row">
+            <label class="check"
+              ><input id="ws-wall" type="checkbox" /> Add a blank cup wall for students to label</label
+            >
+          </div>
+          <div class="control-row">
+            <button type="button" id="ws-print" class="primary">🖨 Print worksheet</button>
+            <button type="button" id="ws-print-key">🖨 Print answer key</button>
+            <span class="preview-toggle" role="radiogroup" aria-label="Preview">
+              Preview:
+              <label><input type="radio" name="ws-preview" value="sheet" checked /> Worksheet</label>
+              <label><input type="radio" name="ws-preview" value="key" /> Answer key</label>
+            </span>
+          </div>
+          <p class="fine">
+            The worksheet is the same shift students play on screen. The version number picks the questions, so the same
+            version always prints the same worksheet and key. Use a different version for each class period.
+          </p>
         </form>
-      </div>
-    </div>
+        <article id="ws-sheet" class="sheet"></article>
+      </section>
 
-    <!-- END OF SHIFT -->
-    <div id="result" class="result" hidden>
-      <p id="r-stars" class="stars-big" aria-hidden="true"></p>
-      <h2 id="r-title"></h2>
-      <p id="r-sub" class="r-sub"></p>
-      <div id="r-unlock" class="r-unlock"></div>
-      <dl id="r-stats" class="r-stats"></dl>
-      <div id="r-review"></div>
-      <div class="actions center">
-        <button type="button" id="again-btn" class="primary">Run it again</button>
-        <button type="button" id="up-btn">Next station →</button>
-        <button type="button" id="home-btn">Back to the kitchen</button>
-      </div>
-    </div>
-  </section>
+      <!-- CHEAT SHEET -->
+      <section id="cheatsheet" class="panel" role="tabpanel" aria-labelledby="tab-cheatsheet" hidden>
+        <div class="controls no-print">
+          <button type="button" id="cheat-print" class="primary">🖨 Print cheat sheet</button>
+        </div>
+        <article id="cheat-sheet" class="sheet"></article>
+      </section>
+    </main>
 
-  <!-- WORKSHEET -->
-  <section id="worksheet" class="panel" role="tabpanel" aria-labelledby="tab-worksheet" hidden>
-    <form id="ws-form" class="controls no-print" onsubmit="return false">
-      <fieldset>
-        <legend>Station</legend>
-        <div id="ws-ranks" class="checks"></div>
-      </fieldset>
-      <div class="control-row">
-        <label class="grow">Title <input id="ws-title" type="text" maxlength="60" placeholder="Recipe Math: The Line"></label>
-        <label>Version <input id="ws-version" type="number" min="1000" max="9999" inputmode="numeric"></label>
-        <button type="button" id="ws-new">New version</button>
-      </div>
-      <div class="control-row">
-        <label class="check"><input id="ws-wall" type="checkbox"> Add a blank cup wall for students to label</label>
-      </div>
-      <div class="control-row">
-        <button type="button" id="ws-print" class="primary">🖨 Print worksheet</button>
-        <button type="button" id="ws-print-key">🖨 Print answer key</button>
-        <span class="preview-toggle" role="radiogroup" aria-label="Preview">
-          Preview:
-          <label><input type="radio" name="ws-preview" value="sheet" checked> Worksheet</label>
-          <label><input type="radio" name="ws-preview" value="key"> Answer key</label>
-        </span>
-      </div>
-      <p class="fine">The worksheet is the same shift students play on screen. The version number picks the questions, so the same version always prints the same worksheet and key. Use a different version for each class period.</p>
-    </form>
-    <article id="ws-sheet" class="sheet"></article>
-  </section>
-
-  <!-- CHEAT SHEET -->
-  <section id="cheatsheet" class="panel" role="tabpanel" aria-labelledby="tab-cheatsheet" hidden>
-    <div class="controls no-print">
-      <button type="button" id="cheat-print" class="primary">🖨 Print cheat sheet</button>
-    </div>
-    <article id="cheat-sheet" class="sheet"></article>
-  </section>
-</main>
-
-<script>/*WASM_EXEC*/</script>
-<script>const WASM_GZIP_BASE64 = "__WASM_GZIP_BASE64__";</script>
-<script>/*APP*/</script>
-</body>
+    <script>
+      /*WASM_EXEC*/
+    </script>
+    <script>
+      const WASM_GZIP_BASE64 = "__WASM_GZIP_BASE64__";
+    </script>
+    <script>
+      /*APP*/
+    </script>
+  </body>
 </html>

@@ -1,0 +1,108 @@
+# golangci-lint v2 configuration.
+#
+# The aim is the Google Go Style Guide (https://google.github.io/styleguide/go/)
+# as far as linters can check it: gofmt/goimports formatting, doc comments on
+# exported names written as full sentences, MixedCaps and initialisms in names,
+# lowercase error strings, early returns instead of else-after-return, short
+# receiver names, no naked returns, and no shadowed built-ins. Plus the usual
+# correctness checks (vet, staticcheck, errcheck, unused).
+version: "2"
+
+run:
+  tests: true
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gofmt:
+      simplify: true
+
+linters:
+  default: none
+  enable:
+    # Correctness
+    - govet
+    - staticcheck # includes the old gosimple and stylecheck checks
+    - errcheck
+    - ineffassign
+    - unused
+    - errorlint
+    - nilerr
+    - copyloopvar
+    - bodyclose
+    # Google style
+    - revive
+    - godot
+    - misspell
+    - nakedret
+    - predeclared
+    - unconvert
+    - usestdlibvars
+    - dupword
+    - nolintlint
+    - gocritic
+  settings:
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment # readability beats saving a few bytes here
+    staticcheck:
+      checks: ["all"]
+    godot:
+      scope: declarations
+      capital: true
+    nakedret:
+      max-func-lines: 0 # Google style: avoid naked returns
+    misspell:
+      locale: US
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    gocritic:
+      enabled-tags: [diagnostic, style]
+      disabled-checks:
+        - commentedOutCode
+        - unnamedResult
+        - ifElseChain # switch isn't always clearer for two branches
+    revive:
+      rules:
+        # https://google.github.io/styleguide/go/decisions
+        - name: exported # doc comments on exported names, starting with the name
+        - name: package-comments
+        - name: var-naming # MixedCaps, initialisms like ID and URL
+        - name: receiver-naming # short, consistent receivers
+        - name: error-strings # lowercase, no trailing punctuation
+        - name: error-naming
+        - name: error-return
+        - name: errorf
+        - name: indent-error-flow # early return instead of else
+        - name: superfluous-else
+        - name: early-return
+        - name: if-return
+        - name: increment-decrement
+        - name: var-declaration
+        - name: range
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: unexported-return
+        - name: time-naming
+        - name: redefines-builtin-id
+        - name: unreachable-code
+        - name: unused-parameter
+        - name: unnecessary-stmt
+        - name: use-any
+        - name: empty-block
+        - name: identical-branches
+  exclusions:
+    generated: lax
+    rules:
+      # Table-driven tests repeat words in data on purpose.
+      - path: _test\.go
+        linters: [dupword]
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
