@@ -914,7 +914,8 @@ function cupWall(shade, { blank = false } = {}) {
       ? "Cup wall: one cup split into halves, thirds, quarters, 2-tablespoon and 1-tablespoon blocks. The shaded part is the amount on this ticket. Count the blocks under it."
       : "Cup wall: 1 cup = 2 half cups = 3 third cups = 4 quarter cups = 8 two-tablespoon blocks = 16 tablespoons.",
   }, ...WALL_ROWS.map(([label, n]) => el("div", { class: "wall-row" },
-    Array.from({ length: n }, () => el("span", { class: "wall-block" }, blank ? "" : label)))));
+    // A blank wall keeps "1 cup" on top as the starting point.
+    Array.from({ length: n }, () => el("span", { class: "wall-block" }, blank && n > 1 ? "" : label)))));
   if (shade) wall.append(el("div", { class: "wall-shade", style: `width:${Math.min(100, (shade / 384) * 100)}%` }));
   return wall;
 }

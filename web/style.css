@@ -458,7 +458,7 @@ legend { font-weight: 700; margin-bottom: 0.3rem; }
 .ticket.solved .tray-serve { display: none !important; }
 
 /* ---------- Cup wall and butter pictures ---------- */
-.cup-wall { position: relative; display: grid; gap: 2px; margin: 0.5rem 0; max-width: 34rem; background: #fff; }
+.cup-wall { position: relative; display: grid; gap: 2px; margin: 0.5rem 0; width: 100%; max-width: 34rem; background: #fff; }
 .wall-row { display: flex; gap: 2px; }
 .wall-block {
   flex: 1; min-width: 0; text-align: center; font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0;
@@ -470,7 +470,8 @@ legend { font-weight: 700; margin-bottom: 0.3rem; }
 .wall-row:nth-child(4) .wall-block { background: #dcefff; }
 .wall-row:nth-child(5) .wall-block { background: #e2f5e5; }
 .wall-row:nth-child(6) .wall-block { background: #f3f3f3; font-size: 0.6rem; }
-.cup-wall.blank .wall-block { background: #fff; min-height: 1.6rem; }
+.cup-wall.blank .wall-block { background: #fff; min-height: 2.4em; }
+.ws-wall .cup-wall { max-width: none; } /* full page width, room to write */
 .wall-shade {
   position: absolute; top: -3px; bottom: -3px; left: 0; pointer-events: none;
   background: rgb(194 65 12 / 0.22); border-right: 3px dashed var(--accent); border-radius: 3px 0 0 3px;
