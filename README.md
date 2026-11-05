@@ -1,61 +1,58 @@
-# 🥄 Recipe Math: Units & Conversions
+# 🛎️ Recipe Math: The Line
 
-Practice kitchen unit conversions on a Chromebook or phone, or print worksheets with answer keys.
-Built for high school (grades 10–12) Family & Consumer Sciences foods classes.
+A kitchen game for high school (grades 10–12) Family & Consumer Sciences foods classes. Students work shifts on a ticket rail and climb the brigade from Dish Pit to Chef de Cuisine. Along the way they learn to read recipe notation, grab the right tool, measure with real scoops, and scale whole recipes, mise en place style.
 
-The finished app is **one file**: `dist/recipe-math.html`. Open it in any browser. It works offline, so you can email it or put it on a USB stick.
+The app is **one file**: `dist/recipe-math.html`. Open it in any browser on a Chromebook, phone, or laptop. It works offline. Every shift also prints as a worksheet with an answer key.
 
-## What's in it
+## How a shift works
 
-- **Practice:** 10-problem rounds at six levels. A wrong answer gets a nudge, such as "check your direction" or "good start, keep going," and the student can try again. **Hint** shows which equivalents to use. After each problem, the steps are shown. Right on the first try = 1 point; with help = ½. Up to 3 stars per level.
-- **Worksheet:** Pick levels and how many problems, then print a student copy and an answer key (with the work shown). The **version number** picks the problems, so the same version always prints the same worksheet and key.
-- **Cheat Sheet:** A one-page reference, including the "Gallon Kingdom" picture (1 gallon = 4 quarts = 8 pints = 16 cups).
+- **🍽 Plates are your life** (4 by default). A wrong serve is an accident: a plate clatters and you lose one. The feedback asks a question that points at the mistake without giving away the answer.
+- **💡 Hints are questions** (Socratic), and each costs ½ plate. The last hint sets up the math but never gives the number.
+- **↪ Skip** sends a ticket to the back of the rail for free. Skipping the same ticket again costs ½ plate.
+- **✅ Correct** wins back ½ plate and earns tips (more on the first try, plus a bonus for the fewest scoops).
+- **⏱ The shift clock** counts down. Finishing early earns tips. Running late never costs plates; the time bonus just stops.
+- **Sounds:** an order-up bell, a soft tick for correct answers, a plate clatter for accidents, a chime for a finished recipe card. All are synthesized in the browser. The 🔉 button cycles soft / full / off.
+- Lose every plate and **Chef pulls you off the line**: a review of what tripped you up, then a retry.
 
-## Units
+## Stations
 
-| Unit | Written as | Measures |
+| # | Station | What's on the rail |
 |---|---|---|
-| teaspoon | tsp, t | volume |
-| tablespoon | Tbsp, T | volume |
-| fluid ounce | fl oz | volume |
-| cup | cup, c | volume |
-| pint | pint, pt | volume |
-| quart | quart, qt | volume |
-| gallon | gallon, gal | volume |
-| ounce | oz | weight |
-| pound | lb | weight |
-| milliliter | mL | volume |
-| liter | L | volume |
-| gram | g | weight |
-| kilogram | kg | weight |
+| 1 | Dish Pit | Read the Recipe (T vs. t, c, oz vs. fl oz, pinch, packed) · Walk-in Facts |
+| 2 | Prep Cook | + Grab the Tool (dry cups / liquid cup / spoons / scale / butter wrapper) · Measure It |
+| 3 | Line Cook | + Conversion Factor · Scale a Line |
+| 4 | Sous Chef | + **Recipe Card**: factor → every line → mise en place · Chef's Call (eggs, leavening, salt, pans) |
+| 5 | Chef de Cuisine | + Fix the Line Cook's Mistake · factors like ×2½, ×¾, ×⅔ |
 
-**Exact:** 1 Tbsp = 3 tsp · 1 fl oz = 2 Tbsp · 1 cup = 16 Tbsp = 8 fl oz · 1 pint = 2 cups · 1 quart = 2 pints = 4 cups · 1 gallon = 4 quarts · 1 lb = 16 oz · 1 L = 1000 mL · 1 kg = 1000 g
+Every shift mixes order types, so it never drills one conversion over and over.
 
-**US ↔ metric (rounded, as on US food labels):** 1 tsp ≈ 5 mL · 1 Tbsp ≈ 15 mL · 1 fl oz ≈ 30 mL · 1 cup ≈ 240 mL · 1 oz ≈ 28 g · 1 lb ≈ 454 g · 1 kg ≈ 2.2 lb. Answers within 3% count, so the true values (1 cup = 237 mL) are accepted too.
+**Measure It** uses the real drawer: spoons ⅛ t–1 T, dry cups ¼–1 c, a glass liquid cup with ¼ and ⅓ lines, and butter sticks with tablespoon marks. Any exact combination counts. The bowl lists the scoops but never adds them up; that's the student's job.
 
-## Levels
+## Teacher settings (add to the URL)
 
-| # | Level | Example |
-|---|---|---|
-| 1 | Spoons: tsp ↔ Tbsp, whole numbers | 2 Tbsp = ___ tsp |
-| 2 | Spoons to Cups: Tbsp, fl oz, cups (¼, ½, ¾) | 1/2 cup = ___ Tbsp |
-| 3 | Big Containers: cups, pints, quarts, gallons | 1 gallon = ___ quarts |
-| 4 | Weight & Metric: oz ↔ lb, g ↔ kg, mL ↔ L | 1 1/2 lb = ___ oz |
-| 5 | Two Steps & Thirds: tsp ↔ cups, etc. | 1/3 cup = ___ Tbsp |
-| 6 | US ↔ Metric (≈) | 1 cup ≈ ___ mL |
+| Setting | Effect |
+|---|---|
+| `?plates=6` | More (or fewer) plates per shift, from 1 to 10 |
+| `?timer=off` | Hide the clock |
+| `?sound=off` | Start with sound off (students can still change it) |
 
-Levels are defined in `problems/levels.go`. Each one lists its unit pairs and which fractions are allowed, so a level never asks for something like 1/3 gallon or 0.7 tsp.
+Combine them: `recipe-math.html?plates=6&timer=off`.
+
+## Background
+
+- [`docs/research.md`](docs/research.md): what students and home cooks struggle with, plus the learning science behind the design.
+- [`docs/chef-critique.md`](docs/chef-critique.md): an executive chef's roast of v1 and of the v2 plan.
+- [`docs/v2-design.md`](docs/v2-design.md): the design, and how the teacher's rules and the chef's advice were combined.
 
 ## How it's built
 
 All the math is Go, compiled to WebAssembly and bundled into the HTML file:
 
-- `frac/`: exact fractions, so 1/3 × 3 = 1 exactly. Reads answers like `12`, `3/4`, `1 1/2`, `1-1/2`, `½`, `1.5`, or `12 Tbsp`.
-- `units/`: the units, the equivalents, conversions, and the shortest chain of known equivalents used to explain an answer.
-- `problems/`: the levels, the problem generator (seeded, so worksheets can be recreated), the worked steps, and answer checking with common-mistake feedback.
+- `frac/`: exact fractions; reads answers like `2.5`, `2 1/2`, `5/2`, or `½`.
+- `kitchen/`: tools and the fewest-scoops solver, ingredients, real recipes, order generators with Socratic hint ladders, shifts (seeded, so worksheets can be recreated), and answer checking with targeted feedback.
 - `cmd/wasm/`: exposes the engine to the page as `window.recipeMath`.
 - `cmd/bundle/`: inlines everything into `dist/recipe-math.html`.
-- `web/`: the page (HTML, CSS, plain JavaScript; screen and print layouts).
+- `web/`: the page (HTML, CSS, plain JavaScript, sounds, print layouts).
 
 Requires Go 1.24+.
 

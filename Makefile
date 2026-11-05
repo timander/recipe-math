@@ -8,7 +8,7 @@ WASM := build/recipemath.wasm
 help: ## List available targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  \033[1mmake %-7s\033[0m %s\n", $$1, $$2}'
 
-$(WASM): $(shell find frac units problems cmd/wasm -name '*.go' -not -name '*_test.go') go.mod
+$(WASM): $(shell find frac kitchen cmd/wasm -name '*.go' -not -name '*_test.go') go.mod
 	GOOS=js GOARCH=wasm go build -trimpath -ldflags="-s -w" -o $@ ./cmd/wasm
 
 $(OUT): $(WASM) web/index.html web/style.css web/app.js cmd/bundle/main.go

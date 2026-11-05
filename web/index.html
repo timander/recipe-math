@@ -3,73 +3,107 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Practice kitchen unit conversions: teaspoons, tablespoons, cups, quarts, ounces, grams, and more. Play on screen or print worksheets.">
-<title>Recipe Math: Units &amp; Conversions</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥄</text></svg>">
+<meta name="description" content="Recipe Math: The Line. Work shifts in a kitchen: read recipes, grab the right tool, measure with real scoops, and scale whole recipes. Play on screen or print.">
+<title>Recipe Math: The Line</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛎️</text></svg>">
 <style>/*STYLE*/</style>
 </head>
 <body>
 <header class="app-header no-print">
-  <h1><span aria-hidden="true">🥄</span> Recipe Math <small>Units &amp; Conversions</small></h1>
+  <div class="brand">
+    <h1><span aria-hidden="true">🛎️</span> Recipe Math <small>The Line</small></h1>
+    <button type="button" id="sound-btn" class="sound-btn" aria-label="Sound: soft. Click to change.">🔉 Soft</button>
+  </div>
   <nav class="tabs" role="tablist" aria-label="Sections">
-    <button role="tab" id="tab-practice" data-tab="practice" aria-controls="practice" aria-selected="true">Practice</button>
+    <button role="tab" id="tab-kitchen" data-tab="kitchen" aria-controls="kitchen" aria-selected="true">Kitchen</button>
     <button role="tab" id="tab-worksheet" data-tab="worksheet" aria-controls="worksheet" aria-selected="false">Worksheet</button>
     <button role="tab" id="tab-cheatsheet" data-tab="cheatsheet" aria-controls="cheatsheet" aria-selected="false">Cheat Sheet</button>
   </nav>
 </header>
 
 <main>
-  <p id="loading" class="loading" role="status">Warming up the kitchen…</p>
+  <p id="loading" class="loading" role="status">Firing up the stoves…</p>
   <p id="load-error" class="load-error" role="alert" hidden></p>
 
-  <!-- PRACTICE -->
-  <section id="practice" class="panel" role="tabpanel" aria-labelledby="tab-practice" hidden>
-    <div id="level-picker">
-      <p class="lead">Pick a level. Each round is 10 problems. Start at Level 1 and work your way up.</p>
-      <ol id="level-list" class="level-list"></ol>
-    </div>
-
-    <div id="round" hidden>
-      <div class="round-top">
-        <button type="button" id="quit" class="link-button">← Levels</button>
-        <span id="round-level" class="round-level"></span>
-        <span id="round-progress" class="round-progress"></span>
+  <!-- KITCHEN: pick a station -->
+  <section id="kitchen" class="panel" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
+    <div id="home">
+      <div class="house-rules">
+        <h2>Welcome to the line</h2>
+        <ul>
+          <li><b>🍽 Plates are your life.</b> A wrong serve is an accident: you drop a plate.</li>
+          <li><b>💡 Hints ask questions</b> and cost half a plate each. Think first!</li>
+          <li><b>↪ Skip</b> sends a ticket to the back of the rail. Skip it again and it costs half a plate.</li>
+          <li><b>✅ Right answers</b> win back half a plate. Beat the clock for tips.</li>
+        </ul>
       </div>
-      <ol id="dots" class="dots" aria-label="Progress"></ol>
-
-      <form id="answer-form" class="problem-card" autocomplete="off" novalidate>
-        <p class="problem">
-          <span id="given" class="given"></span>
-          <span id="equals" class="equals"></span>
-          <label class="answer-wrap">
-            <span class="sr-only">Your answer</span>
-            <input id="answer" type="text" inputmode="text" enterkeyhint="go" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="12">
-          </label>
-          <span id="to-label" class="to-label"></span>
-        </p>
-        <p class="typing-tip">Type 12, 3/4, 1 1/2, or 1.5</p>
-        <div class="actions">
-          <button type="submit" id="check-btn" class="primary">Check</button>
-          <button type="button" id="hint-btn">Hint</button>
-          <button type="button" id="next-btn" class="primary" hidden>Next →</button>
-        </div>
-        <div id="feedback" class="feedback" aria-live="polite"></div>
-        <div id="work" class="work" hidden>
-          <h3>How it works</h3>
-          <ol id="steps" class="steps"></ol>
-        </div>
-      </form>
+      <h2 class="ladder-title">The brigade: start at the bottom and work your way up</h2>
+      <ol id="rank-list" class="rank-list" reversed></ol>
     </div>
 
-    <div id="summary" class="summary" hidden>
-      <p id="summary-stars" class="stars-big" aria-hidden="true"></p>
-      <h2 id="summary-title"></h2>
-      <p id="summary-score" class="summary-score"></p>
-      <div id="summary-missed"></div>
-      <div class="actions">
-        <button type="button" id="again-btn" class="primary">Play again</button>
-        <button type="button" id="next-level-btn">Next level →</button>
-        <button type="button" id="levels-btn">All levels</button>
+    <!-- THE LINE: a shift in progress -->
+    <div id="shift" class="shift" hidden>
+      <div class="hud" role="group" aria-label="Shift status">
+        <div class="plates" id="plates" role="img" aria-label="Plates"></div>
+        <div class="clock" id="clock" aria-live="off">⏱ 0:00</div>
+        <div class="tips" id="tips">💰 0</div>
+        <button type="button" id="quit" class="link-button">Leave</button>
+      </div>
+      <ol id="rail" class="rail" aria-label="Ticket rail"></ol>
+
+      <div class="workspace">
+        <aside id="card" class="recipe-card" hidden aria-label="Recipe card"></aside>
+
+        <form id="ticket" class="ticket" autocomplete="off" novalidate>
+          <div class="ticket-head">
+            <span id="t-num" class="t-num"></span>
+            <span id="t-station" class="t-station"></span>
+          </div>
+          <p id="t-context" class="t-context"></p>
+          <p id="t-prompt" class="t-prompt"></p>
+
+          <div id="in-choice" class="choices" role="group" hidden></div>
+
+          <div id="in-number" class="number-in" hidden>
+            <label><span class="sr-only">Your answer</span>
+              <input id="num" type="text" inputmode="text" enterkeyhint="done" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="12">
+            </label>
+            <span id="num-unit" class="num-unit"></span>
+          </div>
+
+          <div id="in-build" class="build" hidden>
+            <div class="bowl-wrap">
+              <div class="bowl" id="bowl" aria-live="polite" aria-label="Mixing bowl"></div>
+              <button type="button" id="bowl-clear" class="small">Empty bowl</button>
+            </div>
+            <div id="drawer" class="drawer"></div>
+          </div>
+
+          <ol id="hints" class="hints" aria-live="polite"></ol>
+          <div id="feedback" class="feedback" aria-live="assertive"></div>
+          <div id="explain" class="explain" hidden></div>
+
+          <div class="actions">
+            <button type="submit" id="serve" class="primary">🛎 Serve</button>
+            <button type="button" id="hint-btn">💡 Hint <span class="cost">−½ 🍽</span></button>
+            <button type="button" id="skip-btn">↪ Skip</button>
+            <button type="button" id="next-btn" class="primary" hidden>Next ticket →</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- END OF SHIFT -->
+    <div id="result" class="result" hidden>
+      <p id="r-stars" class="stars-big" aria-hidden="true"></p>
+      <h2 id="r-title"></h2>
+      <p id="r-sub" class="r-sub"></p>
+      <dl id="r-stats" class="r-stats"></dl>
+      <div id="r-review"></div>
+      <div class="actions center">
+        <button type="button" id="again-btn" class="primary">Run it again</button>
+        <button type="button" id="up-btn">Next station →</button>
+        <button type="button" id="home-btn">Back to the kitchen</button>
       </div>
     </div>
   </section>
@@ -78,22 +112,13 @@
   <section id="worksheet" class="panel" role="tabpanel" aria-labelledby="tab-worksheet" hidden>
     <form id="ws-form" class="controls no-print" onsubmit="return false">
       <fieldset>
-        <legend>Levels</legend>
-        <div id="ws-levels" class="checks"></div>
+        <legend>Station</legend>
+        <div id="ws-ranks" class="checks"></div>
       </fieldset>
       <div class="control-row">
-        <label>Problems
-          <select id="ws-count">
-            <option>10</option><option>12</option><option>16</option><option selected>20</option><option>24</option><option>30</option>
-          </select>
-        </label>
-        <label class="grow">Title <input id="ws-title" type="text" maxlength="60"></label>
+        <label class="grow">Title <input id="ws-title" type="text" maxlength="60" placeholder="Recipe Math: The Line"></label>
         <label>Version <input id="ws-version" type="number" min="1000" max="9999" inputmode="numeric"></label>
         <button type="button" id="ws-new">New version</button>
-      </div>
-      <div class="control-row">
-        <label class="check"><input id="ws-cheat" type="checkbox"> Add a cheat-sheet box</label>
-        <label class="check"><input id="ws-work" type="checkbox" checked> Show work on the answer key</label>
       </div>
       <div class="control-row">
         <button type="button" id="ws-print" class="primary">🖨 Print worksheet</button>
@@ -104,7 +129,7 @@
           <label><input type="radio" name="ws-preview" value="key"> Answer key</label>
         </span>
       </div>
-      <p class="fine">The version number picks the problems. Same version = same worksheet and key, so you can print the key later. Use different versions for different class periods.</p>
+      <p class="fine">The worksheet is the same shift students play on screen. The version number picks the questions, so the same version always prints the same worksheet and key. Use a different version for each class period.</p>
     </form>
     <article id="ws-sheet" class="sheet"></article>
   </section>

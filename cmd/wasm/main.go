@@ -9,59 +9,34 @@ import (
 	"fmt"
 	"syscall/js"
 
-	"github.com/timander/recipe-math/problems"
-	"github.com/timander/recipe-math/units"
+	"github.com/timander/recipe-math/kitchen"
 )
-
-type levelInfo struct {
-	problems.Level
-	PoolSize int `json:"poolSize"`
-}
-
-type factInfo struct {
-	Text   string `json:"text"`
-	Big    string `json:"big"`
-	Small  string `json:"small"`
-	Approx bool   `json:"approx"`
-}
 
 func main() {
 	api := map[string]any{
-		// levels() → [{id, name, goal, example, poolSize}]
-		"levels": fn(func(args []js.Value) any {
-			var out []levelInfo
-			for _, l := range problems.Levels {
-				out = append(out, levelInfo{l, problems.PoolSize(l.ID)})
-			}
-			return out
-		}),
-		// reference() → {units, facts, tips} for the cheat sheet
-		"reference": fn(func(args []js.Value) any {
-			var facts []factInfo
-			for _, f := range units.Facts {
-				facts = append(facts, factInfo{f.String(), f.Big, f.Small, f.Approx})
-			}
-			return map[string]any{"units": units.All, "facts": facts, "tips": units.Tips}
-		}),
-		// generate(levelsJSON, count, seed) → {problems} or {error}
-		"generate": fn(func(args []js.Value) any {
-			var levels []int
-			if err := json.Unmarshal([]byte(args[0].String()), &levels); err != nil {
-				return map[string]string{"error": err.Error()}
-			}
-			ps, err := problems.Generate(levels, args[1].Int(), uint64(args[2].Float()))
+		// ranks() → [{id, name, goal, example}]
+		"ranks": fn(func(args []js.Value) any { return kitchen.Ranks }),
+		// reference() → cheat-sheet content
+		"reference": fn(func(args []js.Value) any { return kitchen.Ref() }),
+		// shift(rank, seed) → {orders} or {error}
+		"shift": fn(func(args []js.Value) any {
+			orders, err := kitchen.Shift(args[0].Int(), uint64(args[1].Float()))
 			if err != nil {
 				return map[string]string{"error": err.Error()}
 			}
-			return map[string]any{"problems": ps}
+			return map[string]any{"orders": orders}
 		}),
-		// check(problemJSON, input) → {status, message}
+		// check(orderJSON, responseJSON) → {correct, invalid, message, ...}
 		"check": fn(func(args []js.Value) any {
-			var p problems.Problem
-			if err := json.Unmarshal([]byte(args[0].String()), &p); err != nil {
+			var o kitchen.Order
+			var r kitchen.Response
+			if err := json.Unmarshal([]byte(args[0].String()), &o); err != nil {
 				return map[string]string{"error": err.Error()}
 			}
-			return problems.Check(p, args[1].String())
+			if err := json.Unmarshal([]byte(args[1].String()), &r); err != nil {
+				return map[string]string{"error": err.Error()}
+			}
+			return kitchen.Check(o, r)
 		}),
 	}
 	js.Global().Set("recipeMath", js.ValueOf(api))
