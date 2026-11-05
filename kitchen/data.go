@@ -19,12 +19,14 @@ type Ingredient struct {
 	Plural string  `json:"plural,omitempty"` // for counted things: "eggs"
 	Kind   IngKind `json:"kind"`
 	Pounds bool    `json:"pounds,omitempty"` // weight written in lb, not oz
+	// Fancy is how lab sheets and websites write it: "butter, softened".
+	Fancy string `json:"-"`
 }
 
 var ing = map[string]Ingredient{
 	"flour":       {Name: "all-purpose flour", Kind: Dry},
 	"sugar":       {Name: "sugar", Kind: Dry},
-	"brownsugar":  {Name: "packed brown sugar", Kind: Dry},
+	"brownsugar":  {Name: "packed brown sugar", Kind: Dry, Fancy: "firmly packed brown sugar"},
 	"cocoa":       {Name: "cocoa powder", Kind: Dry},
 	"oats":        {Name: "rolled oats", Kind: Dry},
 	"chips":       {Name: "chocolate chips", Kind: Dry},
@@ -41,18 +43,18 @@ var ing = map[string]Ingredient{
 	"water":       {Name: "water", Kind: Wet},
 	"oil":         {Name: "vegetable oil", Kind: Wet},
 	"vinegar":     {Name: "vinegar", Kind: Wet},
-	"vanilla":     {Name: "vanilla extract", Kind: Wet},
+	"vanilla":     {Name: "vanilla extract", Kind: Wet, Fancy: "pure vanilla extract"},
 	"sauce":       {Name: "tomato sauce", Kind: Wet},
 	"broth":       {Name: "chicken broth", Kind: Wet},
 	"honey":       {Name: "honey", Kind: Wet},
 	"mustard":     {Name: "Dijon mustard", Kind: Wet},
-	"butter":      {Name: "butter", Kind: Fat},
+	"butter":      {Name: "butter", Kind: Fat, Fancy: "butter, softened"},
 	"pasta":       {Name: "elbow macaroni", Kind: Weight},
 	"cheese":      {Name: "shredded cheddar", Kind: Weight},
 	"beef":        {Name: "ground beef", Kind: Weight, Pounds: true},
 	"chipsoz":     {Name: "chocolate chips", Kind: Weight},
 	"creamcheese": {Name: "cream cheese", Kind: Weight},
-	"egg":         {Name: "egg", Plural: "eggs", Kind: Count},
+	"egg":         {Name: "egg", Plural: "eggs", Kind: Count, Fancy: "large"},
 }
 
 // Line is one ingredient line on a recipe card. Exactly one of Vol, Oz,

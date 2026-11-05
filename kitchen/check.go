@@ -113,6 +113,16 @@ func checkNumber(o Order, text string) Result {
 		}
 		return Result{Message: fmt.Sprintf("Check it: what's %d × %s? Is that %d?", mk, Mixed(got), wt)}
 	}
+	if o.Kind == KSwap {
+		given, f := unpair(o.Answer.Given), unpair(o.Answer.Factor)
+		switch {
+		case got.Equal(given):
+			return Result{Message: "That's the number you started with. Are the two units really the same size?"}
+		case got.Equal(given.Div(f)):
+			return Result{Message: "You went the wrong way. Which unit is bigger? So should your number get bigger or smaller?"}
+		}
+		return Result{Message: "Not quite. " + o.Hints[1], FreeHint: false}
+	}
 	if o.Answer.Given[1] != 0 { // scaling a weight or a count
 		given, f := unpair(o.Answer.Given), unpair(o.Answer.Factor)
 		switch {

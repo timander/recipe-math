@@ -18,11 +18,16 @@ The app is **one file**: `dist/recipe-math.html`. Open it in any browser on a Ch
 
 | # | Station | What's on the rail |
 |---|---|---|
-| 1 | Dish Pit | Read the Recipe (T vs. t, c, oz vs. fl oz, pinch, packed) · Walk-in Facts |
-| 2 | Prep Cook | + Grab the Tool (dry cups / liquid cup / spoons / scale / butter wrapper) · Measure It |
-| 3 | Line Cook | + Conversion Factor · Scale a Line |
-| 4 | Sous Chef | + **Recipe Card**: factor → every line → mise en place · Chef's Call (eggs, leavening, salt, pans) |
-| 5 | Chef de Cuisine | + Fix the Line Cook's Mistake · factors like ×2½, ×¾, ×⅔ |
+| 1 | Dish Pit (beginner, no clock) | Unit Swap only: one unit to another (6 t = 2 T, ½ c = 8 T, 2 sticks = 1 c, 2 lb = 32 oz) |
+| 2 | Commis | Read the Recipe (T vs. t, C., oz vs. fl oz, pinch, packed) · Walk-in Facts |
+| 3 | Prep Cook | + Grab the Tool (dry cups / liquid cup / spoons / scale / butter wrapper) · Measure It |
+| 4 | Line Cook | + Conversion Factor · Scale a Line |
+| 5 | Sous Chef | + **Recipe Card**: factor → every line → mise en place · Chef's Call (eggs, leavening, salt, pans) |
+| 6 | Chef de Cuisine | + Fix the Line Cook's Mistake: a side-by-side ledger of original → what the cook wrote |
+
+Recipe cards are mostly ×½ or ×2, sometimes ×3 or ×4. They're written in the styles real recipes use: lab handouts (`1 ½ C.`, `3 Tbsp. butter, softened`), recipe sites (`1 1/2 cups`, `2 large eggs`), and classic cookbooks (`1½ c`, `2 T`, `1 t`). See [`docs/recipe-notation.md`](docs/recipe-notation.md).
+
+Choices work tap-to-pick, then Serve (or tap the same choice again), so a slip of the finger doesn't cost a plate.
 
 Every shift mixes order types, so it never drills one conversion over and over.
 
@@ -35,6 +40,7 @@ Every shift mixes order types, so it never drills one conversion over and over.
 | `?plates=6` | More (or fewer) plates per shift, from 1 to 10 |
 | `?timer=off` | Hide the clock |
 | `?sound=off` | Start with sound off (students can still change it) |
+| `?rank=1` | Open straight into a station's shift (1–6) |
 
 Combine them: `recipe-math.html?plates=6&timer=off`.
 
@@ -43,6 +49,8 @@ Combine them: `recipe-math.html?plates=6&timer=off`.
 - [`docs/research.md`](docs/research.md): what students and home cooks struggle with, plus the learning science behind the design.
 - [`docs/chef-critique.md`](docs/chef-critique.md): an executive chef's roast of v1 and of the v2 plan.
 - [`docs/v2-design.md`](docs/v2-design.md): the design, and how the teacher's rules and the chef's advice were combined.
+- [`docs/recipe-notation.md`](docs/recipe-notation.md): how real recipes write amounts and units.
+- [`docs/ux-critique.md`](docs/ux-critique.md): a UX expert's roast of v2.
 
 ## How it's built
 

@@ -13,6 +13,7 @@ import (
 type Kind string
 
 const (
+	KSwap    Kind = "swap"    // Unit Swap (beginner)
 	KVocab   Kind = "vocab"   // Read the Recipe
 	KFact    Kind = "fact"    // Walk-in Facts
 	KTool    Kind = "tool"    // Grab the Tool
@@ -25,13 +26,13 @@ const (
 )
 
 var stationName = map[Kind]string{
-	KVocab: "Read the Recipe", KFact: "Walk-in Facts", KTool: "Grab the Tool", KMeasure: "Measure It",
+	KSwap: "Unit Swap", KVocab: "Read the Recipe", KFact: "Walk-in Facts", KTool: "Grab the Tool", KMeasure: "Measure It",
 	KFactor: "Conversion Factor", KScale: "Scale a Line", KCard: "Recipe Card", KCall: "Chef's Call",
 	KFix: "Fix the Mistake",
 }
 
 var seconds = map[Kind]int{
-	KVocab: 20, KFact: 20, KTool: 20, KMeasure: 45, KFactor: 40, KScale: 60, KCard: 45, KCall: 30, KFix: 60,
+	KSwap: 25, KVocab: 20, KFact: 20, KTool: 20, KMeasure: 45, KFactor: 40, KScale: 60, KCard: 45, KCall: 30, KFix: 60,
 }
 
 // Input is how the student answers.
@@ -126,20 +127,23 @@ type Rank struct {
 	Name    string `json:"name"`
 	Goal    string `json:"goal"`
 	Example string `json:"example"`
+	Timed   bool   `json:"timed"` // beginners work without a clock
 }
 
 var Ranks = []Rank{
-	{1, "Dish Pit", "Learn the language: T vs. t, c, oz vs. fl oz, and the core equivalents.", "“2 T” means 2 ___"},
-	{2, "Prep Cook", "Grab the right tool for each ingredient, and measure amounts with real scoops.", "5 T = ¼ c + 1 T"},
-	{3, "Line Cook", "Find the conversion factor and scale single ingredients.", "Makes 24, need 60 → ×2½"},
-	{4, "Sous Chef", "Scale a whole recipe card, mise en place style, and make the judgment calls.", "Cookies ×1½, every line"},
-	{5, "Chef de Cuisine", "Catch the line cook's mistakes and run tricky factors like ×2½ and ×¾.", "Find the 2 T that should be 2 t"},
+	{1, "Dish Pit", "Beginner: swap one unit for another. No clock.", "6 t = ___ T", false},
+	{2, "Commis", "Learn the language: T vs. t, c, oz vs. fl oz, and the core equivalents.", "“2 Tbsp.” means 2 ___", true},
+	{3, "Prep Cook", "Grab the right tool for each ingredient, and measure amounts with real scoops.", "5 T = ¼ c + 1 T", true},
+	{4, "Line Cook", "Find the conversion factor and scale single ingredients.", "Makes 12, need 24 → ×2", true},
+	{5, "Sous Chef", "Scale a whole recipe card, mise en place style, and make the judgment calls.", "Cookies ×½, every line", true},
+	{6, "Chef de Cuisine", "Run full recipe cards and catch the line cook's mistakes.", "Spot the 2 T that should be 2 t", true},
 }
 
+// Real kitchens mostly halve or double a recipe, sometimes ×3 or ×4. Repeats
+// in these lists make those factors come up more often.
 var (
-	easyFactors = []frac.Frac{frac.Int(2), frac.New(1, 2), frac.Int(3)}
-	cardFactors = []frac.Frac{frac.New(1, 2), frac.Int(2), frac.New(3, 2), frac.Int(3)}
-	hardFactors = []frac.Frac{frac.New(3, 2), frac.New(5, 2), frac.New(3, 4), frac.New(2, 3), frac.Int(4), frac.New(1, 3)}
+	easyFactors = []frac.Frac{frac.Int(2), frac.Int(2), frac.New(1, 2), frac.New(1, 2), frac.Int(3), frac.Int(4), frac.New(3, 2)}
+	cardFactors = []frac.Frac{frac.New(1, 2), frac.New(1, 2), frac.New(1, 2), frac.Int(2), frac.Int(2), frac.Int(2), frac.Int(3), frac.Int(4)}
 )
 
 // Shift builds one shift's ticket rail for a rank. The same seed always
@@ -157,24 +161,26 @@ func Shift(rank int, seed uint64) ([]Order, error) {
 
 	switch rank {
 	case 1:
+		add(10, one(g.swap))
+	case 2:
 		add(6, one(g.vocab))
 		add(4, one(g.fact))
-	case 2:
+	case 3:
 		add(2, one(g.vocab))
 		add(2, one(g.fact))
 		add(3, one(g.tool))
 		add(3, one(func() Order { return g.measure(false) }))
-	case 3:
+	case 4:
 		add(1, one(g.fact))
 		add(2, one(g.tool))
 		add(2, one(func() Order { return g.measure(true) }))
 		add(2, one(func() Order { return g.factor(easyFactors) }))
 		add(3, one(func() Order { return g.scale(easyFactors) }))
-	case 4:
+	case 5:
 		add(1, one(g.tool))
 		add(1, one(func() Order { return g.measure(true) }))
 		add(2, one(g.call))
-	case 5:
+	case 6:
 		add(1, one(func() Order { return g.measure(true) }))
 		add(2, one(g.fix))
 		add(2, one(g.call))
@@ -184,10 +190,10 @@ func Shift(rank int, seed uint64) ([]Order, error) {
 	plan = shuffled(rng, plan)
 	// The recipe card is the main event: it comes after the warm-up orders.
 	switch rank {
-	case 4:
-		plan = slices.Insert(plan, 2, func() []Order { return g.card(cardFactors) })
 	case 5:
-		plan = slices.Insert(plan, 3, func() []Order { return g.card(hardFactors) })
+		plan = slices.Insert(plan, 2, func() []Order { return g.card(cardFactors) })
+	case 6:
+		plan = slices.Insert(plan, 3, func() []Order { return g.card(cardFactors) })
 	}
 	var out []Order
 	prompts := map[string]bool{}
@@ -552,24 +558,48 @@ func scaledLine(l Line, f frac.Frac) (Line, bool) {
 	return out, ok
 }
 
-// lineText writes a line as the recipe card prints it: "¾ c sugar".
+// lineText writes a line as the recipe card prints it, in a recipe style:
+// "¾ c sugar", "¾ C. sugar", "3/4 cup sugar".
 func lineText(l Line, s Style) string {
+	in := ing[l.Ing]
+	name := in.Name
+	if s != Short && in.Fancy != "" && in.Kind != Count {
+		name = in.Fancy
+	}
+	switch in.Kind {
+	case Weight:
+		return OzStyled(l.Oz, in.Pounds, s) + " " + name
+	case Count:
+		size := ""
+		if s != Short && in.Fancy != "" {
+			size = in.Fancy + " "
+		}
+		if l.N.Equal(frac.Int(1)) {
+			return "1 " + size + in.Name
+		}
+		return spaced(l.N, s) + " " + size + in.Plural
+	case Fat:
+		if l.Vol%Stick == 0 {
+			n := l.Vol / Stick
+			return fmt.Sprintf("%s (%d stick%s) %s", Text(l.Vol, s), n, map[bool]string{true: "s"}[n > 1], name)
+		}
+	}
+	return Text(l.Vol, s) + " " + name
+}
+
+// amountText is just the amount of a line, in a style: "2 T", "3 eggs".
+func amountText(l Line, s Style) string {
 	in := ing[l.Ing]
 	switch in.Kind {
 	case Weight:
-		return Oz(l.Oz, in.Pounds) + " " + in.Name
+		return OzStyled(l.Oz, in.Pounds, s)
 	case Count:
-		if l.N.Equal(frac.Int(1)) {
-			return "1 " + in.Name
+		if l.N.Cmp(frac.Int(1)) <= 0 {
+			return spaced(l.N, s) + " " + in.Name
 		}
-		return Mixed(l.N) + " " + in.Plural
-	case Fat:
-		if l.Vol%Stick == 0 && s == Short {
-			n := l.Vol / Stick
-			return fmt.Sprintf("%s butter (%d stick%s)", Text(l.Vol, s), n, map[bool]string{true: "s"}[n > 1])
-		}
+		return spaced(l.N, s) + " " + in.Plural
 	}
-	return Text(l.Vol, s) + " " + in.Name
+	return Text(l.Vol, s)
 }
 
 // measuredText is how a scaled line gets measured: tools, weight, or count.
@@ -594,7 +624,7 @@ func smallUnit(e int) string {
 }
 
 // lineOrder builds the order that measures one scaled line.
-func lineOrder(k Kind, orig, scaled Line, f frac.Frac, fs string) Order {
+func lineOrder(k Kind, orig, scaled Line, f frac.Frac, fs string, st Style) Order {
 	in := ing[orig.Ing]
 	switch in.Kind {
 	case Weight:
@@ -603,7 +633,7 @@ func lineOrder(k Kind, orig, scaled Line, f frac.Frac, fs string) Order {
 			unit, amount, given = "lb", scaled.Oz.Div(frac.Int(16)), orig.Oz.Div(frac.Int(16))
 		}
 		return Order{Kind: k, Input: InNumber, Unit: unit,
-			Prompt: fmt.Sprintf("Scale “%s” by ×%s. How much goes on the scale?", lineText(orig, Short), fs),
+			Prompt: fmt.Sprintf("Scale “%s” by ×%s. How much goes on the scale?", lineText(orig, st), fs),
 			Hints: []string{
 				fmt.Sprintf("With ×%s, should you weigh out more or less than the recipe says?", fs),
 				fmt.Sprintf("What's %s × %s?", Mixed(given), fs),
@@ -613,7 +643,7 @@ func lineOrder(k Kind, orig, scaled Line, f frac.Frac, fs string) Order {
 		}
 	case Count:
 		return Order{Kind: k, Input: InNumber, Unit: in.Plural,
-			Prompt:  fmt.Sprintf("Scale “%s” by ×%s. How many?", lineText(orig, Short), fs),
+			Prompt:  fmt.Sprintf("Scale “%s” by ×%s. How many?", lineText(orig, st), fs),
 			Hints:   []string{fmt.Sprintf("With ×%s, more or fewer than %s?", fs, Mixed(orig.N)), fmt.Sprintf("What's %s × %s?", Mixed(orig.N), fs)},
 			Explain: []string{fmt.Sprintf("%s × %s = %s.", Mixed(orig.N), fs, Mixed(scaled.N))},
 			Answer:  Answer{Num: pair(scaled.N), Text: measuredText(scaled), Given: pair(orig.N), Factor: pair(f)},
@@ -621,7 +651,7 @@ func lineOrder(k Kind, orig, scaled Line, f frac.Frac, fs string) Order {
 	}
 	d := drawerFor(orig.Ing)
 	o := buildOrder(k, scaled.Vol, d)
-	o.Prompt = fmt.Sprintf("Scale “%s” by ×%s, then measure it.", lineText(orig, Short), fs)
+	o.Prompt = fmt.Sprintf("Scale “%s” by ×%s, then measure it.", lineText(orig, st), fs)
 	o.Answer.Given, o.Answer.Factor = [2]int64{int64(orig.Vol), 1}, pair(f)
 	// Socratic ladder: direction, convert to a friendlier unit, multiply.
 	o.Hints = []string{fmt.Sprintf("With ×%s, should the amount get bigger or smaller?", fs)}
@@ -658,7 +688,7 @@ func (g *gen) scale(factors []frac.Frac) Order {
 		if !ok || g.seen(key) {
 			continue
 		}
-		o := lineOrder(KScale, l, s, f, Mixed(f))
+		o := lineOrder(KScale, l, s, f, Mixed(f), Styles[g.rng.IntN(len(Styles))])
 		want := int(frac.Int(int64(r.Makes)).Mul(f).Num())
 		o.Context = fmt.Sprintf("%s: makes %d %s, you need %d (×%s).", r.Name, r.Makes, r.MakesWhat, want, Mixed(f))
 		return o
@@ -685,9 +715,10 @@ func (g *gen) card(factors []frac.Frac) []Order {
 	fs := Mixed(f)
 	want := int(frac.Int(int64(r.Makes)).Mul(f).Num())
 	card := &Card{ID: g.cards, Name: r.Name, Makes: r.Makes, MakesWhat: r.MakesWhat, Want: want, Factor: fs}
+	st := Styles[g.rng.IntN(len(Styles))] // each card is written in one recipe style
 	for _, l := range r.Lines {
 		s, _ := scaledLine(l, f)
-		card.Lines = append(card.Lines, CardLine{Text: lineText(l, Short), Scaled: measuredText(s), Tool: toolLabel(l)})
+		card.Lines = append(card.Lines, CardLine{Text: lineText(l, st), Scaled: measuredText(s), Tool: toolLabel(l)})
 	}
 
 	fo := g.factorFor(r, f, want)
@@ -697,9 +728,9 @@ func (g *gen) card(factors []frac.Frac) []Order {
 		s, _ := scaledLine(l, f)
 		var o Order
 		if ing[l.Ing].Kind == Count && !s.N.IsInt() {
-			o = eggCall(g.rng, l, s, fs)
+			o = eggCall(g.rng, l, s, fs, st)
 		} else {
-			o = lineOrder(KCard, l, s, f, fs)
+			o = lineOrder(KCard, l, s, f, fs, st)
 		}
 		o.Card, o.Line = card, i
 		out = append(out, o)
@@ -718,7 +749,7 @@ func (g *gen) factorFor(r Recipe, f frac.Frac, want int) Order {
 }
 
 // eggCall turns half an egg into a judgment question.
-func eggCall(rng *rand.Rand, orig, scaled Line, fs string) Order {
+func eggCall(rng *rand.Rand, orig, scaled Line, fs string, st Style) Order {
 	x := scaled.N
 	lo := x.Num() / x.Den()
 	hi := lo + 1
@@ -740,7 +771,7 @@ func eggCall(rng *rand.Rand, orig, scaled Line, fs string) Order {
 	}
 	cs, idx := choices(rng, right, wrong)
 	return Order{Kind: KCall, Input: InChoice, Choices: cs,
-		Prompt:  fmt.Sprintf("Chef's Call: “%s” ×%s = %s eggs. What do you do?", lineText(orig, Short), fs, Mixed(x)),
+		Prompt:  fmt.Sprintf("Chef's Call: “%s” ×%s = %s eggs. What do you do?", lineText(orig, st), fs, Mixed(x)),
 		Hints:   []string{"Can you crack half an egg cleanly?", "What could you do to an egg so you can measure part of it?"},
 		Explain: []string{fmt.Sprintf("%s eggs: round up, or beat one egg and use half (a large egg is about 3 T).", Mixed(x))},
 		Answer:  Answer{Choices: idx, Text: strings.Join(right, " or ")},
@@ -749,64 +780,69 @@ func eggCall(rng *rand.Rand, orig, scaled Line, fs string) Order {
 
 // ---------- Fix the Mistake ----------
 
+// fix plants one mistake in a scaled recipe. The card shows each line as
+// original → what the cook wrote, side by side, so students compare rows
+// instead of hunting around the screen.
 func (g *gen) fix() Order {
 	for range 500 {
-		r, f := g.pickRecipeFactor(hardFactors[:3:3], cardFits)
-		if f.Equal(frac.Int(1)) {
-			continue
-		}
+		r, f := g.pickRecipeFactor(cardFactors, cardFits)
 		fs := Mixed(f)
-		type row struct{ text, tool string }
-		var rows []row
+		st := Styles[g.rng.IntN(len(Styles))]
 		var scaled []Line
+		var cook []string
 		for _, l := range r.Lines {
-			s, _ := scaledLine(l, f)
-			scaled = append(scaled, s)
-			rows = append(rows, row{strings.ReplaceAll(measuredText(s), " (liquid cup)", ""), toolLabel(l)})
+			sl, _ := scaledLine(l, f)
+			scaled = append(scaled, sl)
+			cook = append(cook, amountText(sl, st))
 		}
 		bad := g.rng.IntN(len(r.Lines))
 		l, s := r.Lines[bad], scaled[bad]
 		in := ing[l.Ing]
+		right := cook[bad]
 		var why, fixHint string
 		switch g.rng.IntN(3) {
 		case 0: // T/t mix-up on a small spoon amount
 			if in.Kind == Count || in.Kind == Weight || s.Vol >= Tbsp || s.Vol%Tsp != 0 {
 				continue
 			}
-			rows[bad].text = fmt.Sprintf("%d T", s.Vol/Tsp)
-			why = fmt.Sprintf("The cook wrote %d T, but it should be %d t (%s × %s). T is 3 times bigger than t!", s.Vol/Tsp, s.Vol/Tsp, Text(l.Vol, Short), fs)
-			fixHint = "Look closely at every capital T and lowercase t."
+			k := s.Vol / Tsp
+			cook[bad] = fmt.Sprintf("%d %s", k, unitName("T", st, k > 1))
+			why = fmt.Sprintf("The cook wrote %s, but %s × %s = %s. A tablespoon is 3 times bigger than a teaspoon!", cook[bad], amountText(l, st), fs, right)
+			fixHint = "Is every tablespoon (T) really a tablespoon, or should one of them be a teaspoon (t)?"
 		case 1: // forgot to scale
-			if in.Kind == Count || measuredText(l) == rows[bad].text {
+			if in.Kind == Count || amountText(l, st) == right {
 				continue
 			}
-			rows[bad].text = strings.ReplaceAll(measuredText(l), " (liquid cup)", "")
-			why = fmt.Sprintf("The cook forgot to scale the %s. %s × %s = %s.", in.Name, lineText(l, Short), fs, measuredText(s))
-			fixHint = fmt.Sprintf("Did every line actually get multiplied by %s?", fs)
-		default: // wrong tool
-			wrongTool := map[IngKind]string{Dry: "liquid cup", Wet: "dry cups", Weight: "liquid cup"}[in.Kind]
-			if wrongTool == "" || toolFor(l) == 2 {
+			cook[bad] = amountText(l, st)
+			why = fmt.Sprintf("The cook forgot to scale the %s: %s × %s = %s.", in.Name, cook[bad], fs, right)
+			fixHint = "Did every line actually change? Does one still match the original?"
+		default: // went the wrong way: divided instead of multiplied (or the reverse)
+			wrong, ok := scaledLine(l, frac.Int(1).Div(f))
+			if !ok || in.Kind == Count {
 				continue
 			}
-			rows[bad].tool = wrongTool
-			why = fmt.Sprintf("%s goes in the %s, not the %s.", capitalize(in.Name), toolShort[toolFor(l)], wrongTool)
-			fixHint = "Check the tool on each line: dry, liquid, or weight?"
-		}
-		var cs []string
-		for i, rw := range rows {
-			cs = append(cs, fmt.Sprintf("%s: %s (%s)", ing[r.Lines[i].Ing].Name, rw.text, rw.tool))
+			cook[bad] = amountText(wrong, st)
+			dir := "bigger"
+			if f.Cmp(frac.Int(1)) < 0 {
+				dir = "smaller"
+			}
+			why = fmt.Sprintf("The cook went the wrong way. With ×%s every amount gets %s: %s × %s = %s, not %s.", fs, dir, amountText(l, st), fs, right, cook[bad])
+			fixHint = fmt.Sprintf("With ×%s, should every amount get bigger or smaller? Does one row go the other way?", fs)
 		}
 		want := int(frac.Int(int64(r.Makes)).Mul(f).Num())
 		card := &Card{Name: r.Name, Makes: r.Makes, MakesWhat: r.MakesWhat, Want: want, Factor: fs}
-		for _, l := range r.Lines {
-			card.Lines = append(card.Lines, CardLine{Text: lineText(l, Short)})
+		var cs []string
+		for i, l := range r.Lines {
+			name := ing[l.Ing].Name
+			card.Lines = append(card.Lines, CardLine{Text: amountText(l, st), Scaled: cook[i], Tool: name})
+			cs = append(cs, fmt.Sprintf("%s: %s → %s", name, amountText(l, st), cook[i]))
 		}
 		return Order{Kind: KFix, Input: InChoice, Choices: cs,
-			Prompt:  fmt.Sprintf("The line cook scaled %s ×%s (%d → %d %s). One line is wrong. Which one?", r.Name, fs, r.Makes, want, r.MakesWhat),
-			Context: "Compare each line with the original recipe card.",
+			Prompt:  fmt.Sprintf("The line cook scaled %s ×%s (%d → %d %s). One row is wrong. Which one?", r.Name, fs, r.Makes, want, r.MakesWhat),
+			Context: fmt.Sprintf("Each row shows the original amount and what the cook wrote after ×%s. Tap the wrong row.", fs),
 			Card:    card, Line: -1,
-			Hints:   []string{fmt.Sprintf("Go line by line. Does each one equal the original × %s?", fs), fixHint},
-			Explain: []string{why},
+			Hints:   []string{fmt.Sprintf("Go row by row. Is each new amount really the original × %s?", fs), fixHint},
+			Explain: []string{strings.ReplaceAll(why, "..", ".")}, // "1 C." at a sentence end
 			Answer:  Answer{Choices: []int{bad}, Text: cs[bad]},
 		}
 	}

@@ -196,13 +196,15 @@ function showTab(name) {
 
 function renderRanks() {
   const best = store.get("best", {});
-  // Top of the brigade first, like a ladder you climb.
-  $("rank-list").replaceChildren(...[...RANKS].reverse().map((r) =>
+  const fresh = Object.keys(best).length === 0;
+  $("rank-list").replaceChildren(...RANKS.map((r) =>
     el("li", {},
       el("button", { type: "button", class: "rank-card", "data-rank": r.id },
         el("span", { class: "rank-num", "aria-hidden": "true" }, String(r.id)),
         el("span", { class: "rank-text" },
-          el("strong", {}, r.name),
+          el("strong", {}, r.name,
+            fresh && r.id === 1 ? el("span", { class: "badge start" }, "Start here") : "",
+            !r.timed ? el("span", { class: "badge" }, "No clock") : ""),
           el("span", { class: "rank-goal" }, r.goal),
           el("span", { class: "rank-example" }, r.example)),
         el("span", { class: "rank-side" },
@@ -239,7 +241,8 @@ function startShift(rankId) {
   $("home").hidden = true;
   $("result").hidden = true;
   $("shift").hidden = false;
-  $("clock").hidden = !TIMER_ON;
+  S.timed = TIMER_ON && S.rank.timed;
+  $("clock").hidden = !S.timed;
   renderHUD();
   showOrder();
   sound.bell();
@@ -250,7 +253,7 @@ const cur = () => S.orders[S.queue[0]];
 const curRec = () => S.rec[S.queue[0]];
 
 function tick() {
-  if (S.over || S.paused || !TIMER_ON) return;
+  if (S.over || S.paused || !S.timed) return;
   S.timeLeft--;
   if (S.timeLeft === 0) {
     S.late = true;
@@ -306,6 +309,7 @@ function showOrder() {
   S.phase = "answer";
   S.paused = false;
   S.bowl = [];
+  S.selected = null;
   $("t-num").textContent = `#${o.id}`;
   $("t-station").textContent = o.station;
   $("t-prompt").textContent = o.prompt;
@@ -329,7 +333,9 @@ function showOrder() {
   renderHints(o, r);
   renderCard(o);
 
-  $("serve").hidden = o.input === "choice";
+  $("serve").hidden = false;
+  $("serve").textContent = "🛎 Serve";
+  $("serve").disabled = o.input === "choice";
   $("hint-btn").hidden = false;
   $("skip-btn").hidden = false;
   $("next-btn").hidden = true;
@@ -349,13 +355,46 @@ function updateButtons() {
   $("skip-btn").textContent = skipCosts ? "↪ Skip (−½ 🍽)" : "↪ Skip";
 }
 
+// Tap once to pick, tap again (or press Serve) to serve, so one slip of a
+// finger doesn't cost a plate.
+function pickChoice(i) {
+  const o = cur();
+  if (S.phase !== "answer" || curRec().wrongChoices.includes(i)) return;
+  if (S.selected === i) return serve({});
+  S.selected = i;
+  $("serve").disabled = false;
+  $("serve").textContent = `🛎 Serve ${letters[i]}`;
+  for (const b of $("in-choice").querySelectorAll("[data-choice]")) {
+    b.setAttribute("aria-pressed", String(Number(b.dataset.choice) === i));
+  }
+  if (o.kind !== "fix") $("serve").focus();
+}
+
 function renderChoices(o, r) {
-  $("in-choice").replaceChildren(...o.choices.map((text, i) =>
-    el("button", {
-      type: "button", class: "choice", "data-choice": i,
-      disabled: r.wrongChoices.includes(i) || S.phase !== "answer",
-      onclick: () => serve({ choice: i }),
-    }, el("span", { class: "choice-key", "aria-hidden": "true" }, letters[i]), el("span", {}, text))));
+  const box = $("in-choice");
+  box.classList.toggle("ledger", o.kind === "fix");
+  const state = (i) => ({
+    type: "button", class: `choice${r.wrongChoices.includes(i) ? " struck" : ""}`, "data-choice": i,
+    "aria-pressed": String(S.selected === i),
+    disabled: r.wrongChoices.includes(i) || S.phase !== "answer",
+    onclick: () => pickChoice(i),
+  });
+  if (o.kind === "fix") {
+    // Fix the Mistake: one table, original next to what the cook wrote.
+    const c = o.card;
+    box.replaceChildren(
+      el("div", { class: "ledger-head", "aria-hidden": "true" },
+        el("span", {}, ""), el("span", {}, "Ingredient"), el("span", {}, `Recipe (makes ${c.makes})`),
+        el("span", {}, `Cook wrote (×${c.factor} → ${c.want})`)),
+      ...c.lines.map((l, i) => el("button", { ...state(i), "aria-label": `${letters[i]}: ${o.choices[i]}` },
+        el("span", { class: "choice-key", "aria-hidden": "true" }, letters[i]),
+        el("span", { class: "lg-ing" }, l.tool),
+        el("span", { class: "lg-orig" }, l.text),
+        el("span", { class: "lg-cook" }, el("span", { class: "lg-arrow", "aria-hidden": "true" }, "→ "), l.scaled))));
+    return;
+  }
+  box.replaceChildren(...o.choices.map((text, i) =>
+    el("button", state(i), el("span", { class: "choice-key", "aria-hidden": "true" }, letters[i]), el("span", {}, text))));
 }
 
 function renderHints(o, r) {
@@ -367,7 +406,7 @@ function renderHints(o, r) {
 
 function renderCard(o) {
   const box = $("card");
-  if (!o.card) { box.hidden = true; return; }
+  if (!o.card || o.kind === "fix") { box.hidden = true; return; }
   box.hidden = false;
   const key = cardKey(o.card);
   const isFix = o.kind === "fix";
@@ -462,7 +501,10 @@ function renderGlass(o) {
   const id = S.bowl.find((x) => toolById(o, x).kind === "liquid");
   const top = Number($("glass").dataset.top);
   fill.style.height = id ? `${(toolById(o, id).size / top) * 100}%` : "0";
-  for (const b of document.querySelectorAll(".gline")) b.classList.toggle("on", b.dataset.tool === id);
+  for (const b of document.querySelectorAll(".gline")) {
+    b.classList.toggle("on", b.dataset.tool === id);
+    b.setAttribute("aria-pressed", String(b.dataset.tool === id));
+  }
 }
 
 function renderBowl() {
@@ -472,15 +514,21 @@ function renderBowl() {
     bowl.replaceChildren(el("span", { class: "bowl-empty" }, "Empty bowl. Tap tools below to add scoops."));
     return;
   }
-  // The bowl lists scoops but never adds them up: that's the student's job.
-  bowl.replaceChildren(...S.bowl.map((id, i) => {
-    const t = toolById(o, id);
-    return el("button", {
-      type: "button", class: `scoop ${t.kind}`, "aria-label": `Remove ${t.name}`,
-      disabled: S.phase !== "answer",
-      onclick: () => { S.bowl.splice(i, 1); renderBowl(); renderGlass(o); },
-    }, t.kind === "liquid" ? `${t.label} line` : t.label, el("span", { "aria-hidden": "true" }, " ×"));
-  }), el("span", { class: "scoop-count" }, `${S.bowl.length} scoop${S.bowl.length === 1 ? "" : "s"}`));
+  // The bowl groups scoops ("1 T ×3") but never adds them up: that's the
+  // student's job. Tapping a group takes one scoop out.
+  const groups = [];
+  for (const id of S.bowl) {
+    const g = groups.find((x) => x.id === id);
+    if (g) g.n++; else groups.push({ id, n: 1, t: toolById(o, id) });
+  }
+  groups.sort((a, b) => b.t.size - a.t.size);
+  bowl.replaceChildren(...groups.map(({ id, n, t }) => el("button", {
+    type: "button", class: `scoop ${t.kind}`, "aria-label": `${t.name}, ${n} scoop${n > 1 ? "s" : ""}. Remove one.`,
+    disabled: S.phase !== "answer",
+    onclick: () => { S.bowl.splice(S.bowl.lastIndexOf(id), 1); renderBowl(); renderGlass(o); },
+  }, t.kind === "liquid" ? `${t.label} line` : t.label, n > 1 ? el("b", { class: "scoop-n" }, ` ×${n}`) : "",
+  el("span", { class: "scoop-minus", "aria-hidden": "true" }, "−"))),
+  el("span", { class: "scoop-count" }, `${S.bowl.length} scoop${S.bowl.length === 1 ? "" : "s"}`));
 }
 
 // ---------- Serving, hints, skipping ----------
@@ -490,7 +538,10 @@ function serve(extra) {
   const o = cur();
   const r = curRec();
   const resp = { choice: -1, tools: [], text: "" };
-  if (o.input === "choice") resp.choice = extra.choice;
+  if (o.input === "choice") {
+    resp.choice = extra.choice ?? S.selected;
+    if (resp.choice == null) { flash("Tap a choice first.", "warn"); return; }
+  }
   if (o.input === "number") resp.text = $("num").value;
   if (o.input === "build") resp.tools = S.bowl;
   const res = call("check", JSON.stringify(o), JSON.stringify(resp));
@@ -500,12 +551,14 @@ function serve(extra) {
     r.accidents++;
     S.accidents++;
     S.plates = Math.max(0, S.plates - 1);
-    if (o.input === "choice") r.wrongChoices.push(resp.choice);
+    if (o.input === "choice") { r.wrongChoices.push(resp.choice); S.selected = null; $("serve").disabled = true; $("serve").textContent = "🛎 Serve"; }
     if (res.freeHint && r.shown === 0) r.shown = 1; // the message already asked hint 1
     sound.crash();
     const t = $("ticket");
     t.classList.remove("shake"); void t.offsetWidth; t.classList.add("shake");
-    flash(`💥 Accident! ${res.message}`, "bad");
+    const left = S.plates === 1 ? "1 plate left" : `${String(S.plates).replace(".5", "½")} plates left`;
+    flash(`💥 Accident! (${left}) ${res.message}`, "bad");
+    $("feedback").focus({ preventScroll: true });
     renderHUD();
     renderHints(o, r);
     if (o.input === "choice") renderChoices(o, r);
@@ -538,8 +591,9 @@ function serve(extra) {
   $("explain").hidden = false;
   if (o.input === "number") $("num").disabled = true;
   if (o.input === "choice") {
-    for (const b of $("in-choice").children) {
+    for (const b of $("in-choice").querySelectorAll("[data-choice]")) {
       b.disabled = true;
+      b.classList.add("locked"); // locked, not crossed out: still readable for review
       if (o.answer.choices.includes(Number(b.dataset.choice))) b.classList.add("right");
     }
   }
@@ -592,11 +646,11 @@ function endShift(cleared) {
   if (S.over) return;
   S.over = true;
   clearInterval(S.timer);
-  const onTime = TIMER_ON && !S.late;
+  const onTime = S.timed && !S.late;
   const bonus = cleared && onTime ? Math.floor(Math.max(0, S.timeLeft) / 3) : 0; // 1 tip per 3 seconds left
   S.tips += bonus;
   const half = S.plates >= MAX_PLATES / 2;
-  const stars = cleared ? 1 + (half ? 1 : 0) + (half && (onTime || !TIMER_ON) ? 1 : 0) : 0;
+  const stars = cleared ? 1 + (half ? 1 : 0) + (half && (onTime || !S.timed) ? 1 : 0) : 0;
   if (cleared) {
     const best = store.get("best", {});
     if (stars > (best[S.rank.id] || 0)) { best[S.rank.id] = stars; store.set("best", best); }
@@ -613,7 +667,7 @@ function endShift(cleared) {
       : ["", "Shift cleared. Rough night, but you made it.", "Solid shift!", "Chef is impressed!"][stars])
     : "Chef pulled you off the line!";
   $("r-sub").textContent = cleared
-    ? (onTime ? `On-time bonus: +${bonus} tips.` : TIMER_ON ? "Tickets ran late, so no time bonus." : "")
+    ? (onTime ? `On-time bonus: +${bonus} tips.` : S.timed ? "Tickets ran late, so no time bonus." : "")
     : "You dropped all your plates. Study what tripped you up, then get back in there.";
   const stats = [
     ["Tips", `💰 ${S.tips}`],
@@ -703,7 +757,17 @@ const keyAns = (text) => el("b", { class: "ans" }, text);
 function printOrder(num, o, key) {
   const parts = [el("p", { class: "q" }, el("span", { class: "q-station" }, o.station), " ", o.prompt)];
   if (o.context && o.kind === "scale") parts.push(el("p", { class: "q-ctx" }, o.context));
-  if (o.kind === "fix") parts.push(el("p", { class: "q-ctx" }, "Original: ", o.card.lines.map((l) => l.text).join(" · ")));
+  if (o.kind === "fix") {
+    const c = o.card;
+    parts.push(el("table", { class: "card-table fix-table" },
+      el("thead", {}, el("tr", {}, el("th", {}, ""), el("th", {}, "Ingredient"), el("th", {}, `Recipe (makes ${c.makes})`),
+        el("th", {}, `Cook wrote (×${c.factor})`), el("th", {}, "Wrong?"))),
+      el("tbody", {}, c.lines.map((l, i) => el("tr", { class: key && o.answer.choices.includes(i) ? "right" : "" },
+        el("td", { class: "ln" }, letters[i]), el("td", {}, l.tool), el("td", {}, l.text), el("td", {}, l.scaled),
+        el("td", { class: "ln" }, key && o.answer.choices.includes(i) ? "✗" : "☐"))))));
+    if (key) parts.push(el("p", { class: "q-why" }, o.explain.join(" ")));
+    return el("li", { class: "ws-item ws-card", value: String(num) }, parts);
+  }
   if (o.input === "choice") {
     parts.push(el("ol", { class: "q-choices", type: "A" }, o.choices.map((c, i) =>
       el("li", { class: key && o.answer.choices.includes(i) ? "right" : "" }, c))));
@@ -813,9 +877,9 @@ function wireUp() {
     const o = cur();
     if (S.phase === "review" && e.key === "Enter") { e.preventDefault(); nextOrder(); return; }
     if (o.input !== "choice" || S.phase !== "answer") return;
-    let i = "12345".indexOf(e.key);
-    if (i < 0) i = "abcde".indexOf(e.key.toLowerCase());
-    if (i >= 0 && i < o.choices.length && !curRec().wrongChoices.includes(i)) serve({ choice: i });
+    let i = "1234567890".indexOf(e.key);
+    if (i < 0) i = "abcdefghij".indexOf(e.key.toLowerCase());
+    if (i >= 0 && i < o.choices.length) { e.preventDefault(); pickChoice(i); }
   });
 
   // Worksheet controls
@@ -852,4 +916,6 @@ function wireUp() {
   renderCheatSheet();
   $("loading").hidden = true;
   showTab(store.get("tab", "kitchen"));
+  const deep = Number(params.get("rank"));
+  if (RANKS.some((r) => r.id === deep)) { showTab("kitchen"); startShift(deep); }
 })();

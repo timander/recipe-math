@@ -65,7 +65,7 @@ func TestText(t *testing.T) {
 			t.Errorf("Text(%d) = %q, want %q", e, got, want)
 		}
 	}
-	if got := Text(c(3, 2), Abbr); got != "1½ cups" {
+	if got := Text(c(3, 2), Abbr); got != "1 ½ cups" {
 		t.Errorf("Abbr = %q", got)
 	}
 	if got := Oz(frac.Int(24), true); got != "1½ lb" {
@@ -202,7 +202,7 @@ func TestSameSeedSameShift(t *testing.T) {
 			t.Errorf("rank %d: different seeds, same shift", rank.ID)
 		}
 	}
-	if _, err := Shift(9, 1); err == nil {
+	if _, err := Shift(7, 1); err == nil {
 		t.Error("rank 9 should fail")
 	}
 }
@@ -216,7 +216,7 @@ func prompts(os []Order) string {
 }
 
 func TestRecipeCardShift(t *testing.T) {
-	orders, _ := Shift(4, 5)
+	orders, _ := Shift(5, 5)
 	var card []Order
 	for _, o := range orders {
 		if o.Card != nil {
@@ -249,7 +249,7 @@ func TestCheckFeedback(t *testing.T) {
 	}
 	sugar := Line{Ing: "sugar", Vol: c(3, 4)}
 	s, _ := scaledLine(sugar, frac.New(1, 2))
-	lo := lineOrder(KScale, sugar, s, frac.New(1, 2), "½")
+	lo := lineOrder(KScale, sugar, s, frac.New(1, 2), "½", Short)
 	cases = append(cases,
 		struct {
 			o    Order
@@ -291,5 +291,101 @@ func TestCheckFeedback(t *testing.T) {
 	// 6 T = ¼ c + 2 T is 3 scoops; ⅓ c + ... can't beat it.
 	if lo.Answer.BestScoops != 3 || lo.Answer.Text != "¼ c + 2 T" {
 		t.Errorf("¾ c × ½ best = %q (%d)", lo.Answer.Text, lo.Answer.BestScoops)
+	}
+}
+
+func TestUnitSwap(t *testing.T) {
+	orders, _ := Shift(1, 3)
+	for _, o := range orders {
+		if o.Kind != KSwap || o.Input != InNumber {
+			t.Fatalf("beginner shift should be all unit swaps, got %s", o.Kind)
+		}
+	}
+	g := &gen{rng: newRNG(1)}
+	for range 200 {
+		o := g.swap()
+		given, want := unpair(o.Answer.Given), unpair(o.Answer.Num)
+		if !given.Mul(unpair(o.Answer.Factor)).Equal(want) {
+			t.Errorf("%s: factor doesn't match", o.Prompt)
+		}
+		if r := Check(o, Response{Text: Mixed(given)}); !strings.Contains(r.Message, "started with") {
+			t.Errorf("%s: same-number slip not caught: %q", o.Prompt, r.Message)
+		}
+		if r := Check(o, Response{Text: given.Div(unpair(o.Answer.Factor)).String()}); !strings.Contains(r.Message, "wrong way") {
+			t.Errorf("%s: wrong-way slip not caught: %q", o.Prompt, r.Message)
+		}
+	}
+	if Ranks[0].Timed {
+		t.Error("the beginner station should have no clock")
+	}
+}
+
+func TestFactorsAreMostlyHalfOrDouble(t *testing.T) {
+	counts := map[string]int{}
+	for seed := range uint64(300) {
+		orders, _ := Shift(5, seed)
+		for _, o := range orders {
+			if o.Kind == KFactor && o.Card != nil {
+				counts[o.Card.Factor]++
+			}
+		}
+	}
+	common := counts["½"] + counts["2"]
+	if common*10 < 300*6 { // at least 60%
+		t.Errorf("×½ and ×2 should dominate recipe cards: %v", counts)
+	}
+	for f := range counts {
+		if !slices.Contains([]string{"½", "2", "3", "4"}, f) {
+			t.Errorf("unexpected recipe-card factor ×%s", f)
+		}
+	}
+}
+
+func TestFixRowsLineUp(t *testing.T) {
+	g := &gen{rng: newRNG(4)}
+	for range 100 {
+		o := g.fix()
+		if len(o.Card.Lines) != len(o.Choices) {
+			t.Fatalf("each row needs a choice")
+		}
+		wrong := 0
+		for i, l := range o.Card.Lines {
+			if l.Text == "" || l.Scaled == "" {
+				t.Errorf("%s row %d is empty", o.Prompt, i)
+			}
+			if strings.Contains(l.Scaled, "(liquid cup)") || strings.Count(l.Scaled, "+") > 1 {
+				t.Errorf("%s: row should show a single amount, got %q", o.Prompt, l.Scaled)
+			}
+			if i == o.Answer.Choices[0] {
+				wrong++
+			}
+		}
+		if wrong != 1 {
+			t.Errorf("exactly one wrong row expected")
+		}
+	}
+}
+
+func TestStyles(t *testing.T) {
+	cases := map[Style]string{Short: "2¼ c", Abbr: "2 ¼ cups", Lab: "2 ¼ C.", Words: "2 ¼ cups"}
+	for s, want := range cases {
+		if got := Text(c(9, 4), s); got != want {
+			t.Errorf("style %d: %q, want %q", s, got, want)
+		}
+	}
+	if got := Text(tb(3), Lab); got != "3 Tbsp." {
+		t.Errorf("lab T = %q", got)
+	}
+	if got := Text(ts(8, 1), Lab); got != "2 Tbsp. + 2 tsp." {
+		t.Errorf("lab combo = %q", got)
+	}
+	if got := Text(ts(1, 2), Words); got != "½ teaspoon" {
+		t.Errorf("words t = %q", got)
+	}
+	if got := lineText(Line{Ing: "butter", Vol: c(1, 2)}, Words); got != "½ cup (1 stick) butter, softened" {
+		t.Errorf("butter = %q", got)
+	}
+	if got := lineText(Line{Ing: "egg", N: frac.Int(2)}, Lab); got != "2 large eggs" {
+		t.Errorf("eggs = %q", got)
 	}
 }

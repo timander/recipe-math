@@ -28,17 +28,9 @@
   <!-- KITCHEN: pick a station -->
   <section id="kitchen" class="panel" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
     <div id="home">
-      <div class="house-rules">
-        <h2>Welcome to the line</h2>
-        <ul>
-          <li><b>🍽 Plates are your life.</b> A wrong serve is an accident: you drop a plate.</li>
-          <li><b>💡 Hints ask questions</b> and cost half a plate each. Think first!</li>
-          <li><b>↪ Skip</b> sends a ticket to the back of the rail. Skip it again and it costs half a plate.</li>
-          <li><b>✅ Right answers</b> win back half a plate. Beat the clock for tips.</li>
-        </ul>
-      </div>
-      <h2 class="ladder-title">The brigade: start at the bottom and work your way up</h2>
-      <ol id="rank-list" class="rank-list" reversed></ol>
+      <p class="house-rules"><b>How it works:</b> a wrong serve drops a plate 🍽. A right answer wins half a plate back. Lose them all and Chef pulls you off the line.</p>
+      <h2 class="ladder-title">The brigade: start at Dish Pit and work your way up</h2>
+      <ol id="rank-list" class="rank-list"></ol>
     </div>
 
     <!-- THE LINE: a shift in progress -->
@@ -47,7 +39,7 @@
         <div class="plates" id="plates" role="img" aria-label="Plates"></div>
         <div class="clock" id="clock" aria-live="off">⏱ 0:00</div>
         <div class="tips" id="tips">💰 0</div>
-        <button type="button" id="quit" class="link-button">Leave</button>
+        <button type="button" id="quit" class="link-button" aria-label="Leave shift">✕<span class="quit-word"> Leave</span></button>
       </div>
       <ol id="rail" class="rail" aria-label="Ticket rail"></ol>
 
@@ -80,7 +72,7 @@
           </div>
 
           <ol id="hints" class="hints" aria-live="polite"></ol>
-          <div id="feedback" class="feedback" aria-live="assertive"></div>
+          <div id="feedback" class="feedback" aria-live="assertive" tabindex="-1"></div>
           <div id="explain" class="explain" hidden></div>
 
           <div class="actions">

@@ -277,44 +277,102 @@ func Mixed(f frac.Frac) string {
 // CupText writes a volume in cups: "1½ c".
 func CupText(e int) string { return Mixed(frac.New(int64(e), Cup)) + " c" }
 
-// Style is how a recipe spells its units.
+// Style is how a recipe spells its units. Real recipes use all of these,
+// often mixed in the same recipe (see docs/recipe-notation.md).
 type Style int
 
 const (
-	Short Style = iota // T, t, c
+	Short Style = iota // classic cookbook: T, t, c
 	Abbr               // Tbsp, tsp, cup
+	Lab                // foods-lab handout: Tbsp., tsp., C.
+	Words              // recipe website: tablespoons, teaspoons, cups
 )
+
+// Styles lists every style, for picking one at random.
+var Styles = []Style{Short, Abbr, Lab, Words}
+
+// unitName spells T, t, or c in a style, singular or plural.
+func unitName(u string, s Style, plural bool) string {
+	names := map[string][4]string{
+		"T": {"T", "Tbsp", "Tbsp.", "tablespoon"},
+		"t": {"t", "tsp", "tsp.", "teaspoon"},
+		"c": {"c", "cup", "C.", "cup"},
+	}
+	name := names[u][s]
+	if plural && (s == Words || (s == Abbr && u == "c")) {
+		name += "s"
+	}
+	return name
+}
+
+// spaced writes "2 ¼" (with a space) for lab and website styles, the way
+// they print mixed numbers, and "2¼" for the compact classic style.
+func spaced(f frac.Frac, s Style) string {
+	m := Mixed(f)
+	if s == Short || f.IsInt() || f.Num() < f.Den() {
+		return m
+	}
+	whole := fmt.Sprint(f.Num() / f.Den())
+	return whole + " " + strings.TrimPrefix(m, whole)
+}
 
 // Text writes a volume the way a recipe would, using the largest unit that
 // reads naturally: "2¼ c", "3 T", "1½ t", "4 t". It can return a combo
 // ("1 T + 1 t") when no single unit fits, e.g. for a scaled amount.
 func Text(e int, s Style) string {
-	tb, ts, cu := "T", "t", "c"
-	if s == Abbr {
-		tb, ts, cu = "Tbsp", "tsp", "cup"
-		if e > Cup {
-			cu = "cups"
-		}
-	}
 	cups := frac.New(int64(e), Cup)
 	if e >= QuarterCup && slices.Contains([]int64{1, 2, 3, 4}, cups.Den()) {
-		return Mixed(cups) + " " + cu
+		return spaced(cups, s) + " " + unitName("c", s, cups.Cmp(frac.Int(1)) > 0)
 	}
 	if e%Tbsp == 0 {
-		return fmt.Sprintf("%d %s", e/Tbsp, tb)
+		return fmt.Sprintf("%d %s", e/Tbsp, unitName("T", s, e > Tbsp))
 	}
 	t := frac.New(int64(e), Tsp)
 	if t.Den() <= 8 && (e < Tbsp || (e%Tsp == 0 && e/Tsp <= 6)) {
-		return Mixed(t) + " " + ts
+		return spaced(t, s) + " " + unitName("t", s, e > Tsp)
 	}
 	best, _ := Solve(e, DrawerDry)
-	return Combo(best)
+	return comboStyled(best, s)
+}
+
+// comboStyled writes a measuring combo in a recipe style: "2 Tbsp. + 2 tsp.".
+func comboStyled(tools []Tool, s Style) string {
+	if s == Short {
+		return Combo(tools)
+	}
+	var parts []string
+	for i := 0; i < len(tools); {
+		t, k := tools[i], 0
+		for i < len(tools) && tools[i].ID == t.ID {
+			i, k = i+1, k+1
+		}
+		size := frac.New(int64(t.Size*k), 1)
+		switch t.Kind {
+		case DryCup:
+			parts = append(parts, Text(t.Size*k, s))
+		default:
+			if t.Size >= Tbsp {
+				parts = append(parts, fmt.Sprintf("%d %s", t.Size*k/Tbsp, unitName("T", s, k > 1)))
+			} else {
+				amt := size.Div(frac.Int(Tsp))
+				parts = append(parts, spaced(amt, s)+" "+unitName("t", s, amt.Cmp(frac.Int(1)) > 0))
+			}
+		}
+	}
+	return strings.Join(parts, " + ")
 }
 
 // Oz writes a weight: "12 oz", "1½ lb".
-func Oz(oz frac.Frac, inPounds bool) string {
+func Oz(oz frac.Frac, inPounds bool) string { return OzStyled(oz, inPounds, Short) }
+
+// OzStyled writes a weight in a recipe style: "12 oz.", "1 ½ pounds".
+func OzStyled(oz frac.Frac, inPounds bool, s Style) string {
+	amount, unit := oz, [4]string{"oz", "oz", "oz.", "ounce"}[s]
 	if inPounds {
-		return Mixed(oz.Div(frac.Int(16))) + " lb"
+		amount, unit = oz.Div(frac.Int(16)), [4]string{"lb", "lb", "lb.", "pound"}[s]
 	}
-	return Mixed(oz) + " oz"
+	if s == Words && amount.Cmp(frac.Int(1)) > 0 {
+		unit += "s"
+	}
+	return spaced(amount, s) + " " + unit
 }
