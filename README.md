@@ -1,5 +1,9 @@
 # 🛎️ Recipe Math: The Line
 
+[![CI](https://github.com/timander/recipe-math/actions/workflows/ci.yml/badge.svg)](https://github.com/timander/recipe-math/actions/workflows/ci.yml)
+
+**Play it:** https://timander.github.io/recipe-math/ · **Test results:** https://timander.github.io/recipe-math/reports/
+
 A kitchen game for high school (grades 10–12) Family & Consumer Sciences foods classes. Students work shifts on a ticket rail and climb the brigade from Dish Pit to Chef de Cuisine. Along the way they learn to read recipe notation, grab the right tool, measure with real scoops, and scale whole recipes, mise en place style.
 
 The app is **one file**: `dist/recipe-math.html`. Open it in any browser on a Chromebook, phone, or laptop. It works offline. Every shift also prints as a worksheet with an answer key.
@@ -68,10 +72,25 @@ All the math is Go, compiled to WebAssembly and bundled into the HTML file:
 - `cmd/bundle/`: inlines everything into `dist/recipe-math.html`.
 - `web/`: the page (HTML, CSS, plain JavaScript, sounds, print layouts).
 
-Requires Go 1.24+.
+Requires Go 1.27+, Node 24+, and pnpm. Run `make` to list every target.
 
 ```sh
-make test    # Go tests
-make build   # → dist/recipe-math.html
-make open    # build and open in your browser
+make build    # → dist/recipe-math.html
+make open     # build and open in your browser
+make test     # Go tests
+make check    # everything CI runs: lint, coverage, build, Playwright
 ```
+
+## Quality checks
+
+Every push runs these in GitHub Actions. Results for `main` are published at [/reports/](https://timander.github.io/recipe-math/reports/).
+
+| Check | Command | Gate |
+|---|---|---|
+| **Static analysis:** golangci-lint with rules from the [Google Go Style Guide](https://google.github.io/styleguide/go/) (vet, staticcheck, errcheck, revive, godot, …), ESLint with a DOM-XSS check, Prettier | `make lint` | 0 issues |
+| **Go unit tests + coverage**, including golden files that pin every order students see | `make cover` | ≥ 90% (currently ~98%) |
+| **Mutation testing** with [Gremlins](https://github.com/go-gremlins/gremlins): plants small bugs and checks the tests catch them | `make mutation` | ≥ 90% efficacy (currently ~96%) |
+| **Playwright UI tests** on desktop Chrome and a Pixel 7, opening the built single file; includes print checks and browser code coverage | `make e2e` | all pass |
+
+If you change game wording or math on purpose, the golden-file tests will fail. Run `make golden`, then review the diff in `kitchen/testdata/golden/` before committing.
+

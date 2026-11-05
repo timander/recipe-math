@@ -5,13 +5,15 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p reports
-go test -covermode=atomic -coverprofile=reports/coverage.out ./frac ./kitchen
+go test -covermode=atomic -coverprofile=reports/coverage.out ./frac ./kitchen | tee reports/coverage-test.txt
 go tool cover -html=reports/coverage.out -o reports/coverage.html
 {
   echo "## Go test coverage"
   echo
   echo "| Package / function | Coverage |"
   echo "|---|---:|"
+  # Per-package lines from go test: "ok  github.com/.../kitchen  0.9s  coverage: 98.4% of statements"
+  awk '/coverage:/ { pkg = $2; sub(/.*recipe-math\//, "", pkg); for (i = 1; i <= NF; i++) if ($i == "coverage:") print "| " pkg " | " $(i+1) " |" }' reports/coverage-test.txt
   go tool cover -func=reports/coverage.out | awk '
     /^total:/ { total = $3; next }
     { split($1, p, ":"); pkg = p[1]; sub(/\/[^\/]+$/, "", pkg); sub(/.*recipe-math\//, "", pkg)
