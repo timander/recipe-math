@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Practice kitchen unit conversions: teaspoons, tablespoons, cups, quarts, ounces, grams, and more. Play on screen or print worksheets.">
+<title>Recipe Math: Units &amp; Conversions</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥄</text></svg>">
+<style>/*STYLE*/</style>
+</head>
+<body>
+<header class="app-header no-print">
+  <h1><span aria-hidden="true">🥄</span> Recipe Math <small>Units &amp; Conversions</small></h1>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="tab-practice" data-tab="practice" aria-controls="practice" aria-selected="true">Practice</button>
+    <button role="tab" id="tab-worksheet" data-tab="worksheet" aria-controls="worksheet" aria-selected="false">Worksheet</button>
+    <button role="tab" id="tab-cheatsheet" data-tab="cheatsheet" aria-controls="cheatsheet" aria-selected="false">Cheat Sheet</button>
+  </nav>
+</header>
+
+<main>
+  <p id="loading" class="loading" role="status">Warming up the kitchen…</p>
+  <p id="load-error" class="load-error" role="alert" hidden></p>
+
+  <!-- PRACTICE -->
+  <section id="practice" class="panel" role="tabpanel" aria-labelledby="tab-practice" hidden>
+    <div id="level-picker">
+      <p class="lead">Pick a level. Each round is 10 problems. Start at Level 1 and work your way up.</p>
+      <ol id="level-list" class="level-list"></ol>
+    </div>
+
+    <div id="round" hidden>
+      <div class="round-top">
+        <button type="button" id="quit" class="link-button">← Levels</button>
+        <span id="round-level" class="round-level"></span>
+        <span id="round-progress" class="round-progress"></span>
+      </div>
+      <ol id="dots" class="dots" aria-label="Progress"></ol>
+
+      <form id="answer-form" class="problem-card" autocomplete="off" novalidate>
+        <p class="problem">
+          <span id="given" class="given"></span>
+          <span id="equals" class="equals"></span>
+          <label class="answer-wrap">
+            <span class="sr-only">Your answer</span>
+            <input id="answer" type="text" inputmode="text" enterkeyhint="go" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="12">
+          </label>
+          <span id="to-label" class="to-label"></span>
+        </p>
+        <p class="typing-tip">Type 12, 3/4, 1 1/2, or 1.5</p>
+        <div class="actions">
+          <button type="submit" id="check-btn" class="primary">Check</button>
+          <button type="button" id="hint-btn">Hint</button>
+          <button type="button" id="next-btn" class="primary" hidden>Next →</button>
+        </div>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="work" class="work" hidden>
+          <h3>How it works</h3>
+          <ol id="steps" class="steps"></ol>
+        </div>
+      </form>
+    </div>
+
+    <div id="summary" class="summary" hidden>
+      <p id="summary-stars" class="stars-big" aria-hidden="true"></p>
+      <h2 id="summary-title"></h2>
+      <p id="summary-score" class="summary-score"></p>
+      <div id="summary-missed"></div>
+      <div class="actions">
+        <button type="button" id="again-btn" class="primary">Play again</button>
+        <button type="button" id="next-level-btn">Next level →</button>
+        <button type="button" id="levels-btn">All levels</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKSHEET -->
+  <section id="worksheet" class="panel" role="tabpanel" aria-labelledby="tab-worksheet" hidden>
+    <form id="ws-form" class="controls no-print" onsubmit="return false">
+      <fieldset>
+        <legend>Levels</legend>
+        <div id="ws-levels" class="checks"></div>
+      </fieldset>
+      <div class="control-row">
+        <label>Problems
+          <select id="ws-count">
+            <option>10</option><option>12</option><option>16</option><option selected>20</option><option>24</option><option>30</option>
+          </select>
+        </label>
+        <label class="grow">Title <input id="ws-title" type="text" maxlength="60"></label>
+        <label>Version <input id="ws-version" type="number" min="1000" max="9999" inputmode="numeric"></label>
+        <button type="button" id="ws-new">New version</button>
+      </div>
+      <div class="control-row">
+        <label class="check"><input id="ws-cheat" type="checkbox"> Add a cheat-sheet box</label>
+        <label class="check"><input id="ws-work" type="checkbox" checked> Show work on the answer key</label>
+      </div>
+      <div class="control-row">
+        <button type="button" id="ws-print" class="primary">🖨 Print worksheet</button>
+        <button type="button" id="ws-print-key">🖨 Print answer key</button>
+        <span class="preview-toggle" role="radiogroup" aria-label="Preview">
+          Preview:
+          <label><input type="radio" name="ws-preview" value="sheet" checked> Worksheet</label>
+          <label><input type="radio" name="ws-preview" value="key"> Answer key</label>
+        </span>
+      </div>
+      <p class="fine">The version number picks the problems. Same version = same worksheet and key, so you can print the key later. Use different versions for different class periods.</p>
+    </form>
+    <article id="ws-sheet" class="sheet"></article>
+  </section>
+
+  <!-- CHEAT SHEET -->
+  <section id="cheatsheet" class="panel" role="tabpanel" aria-labelledby="tab-cheatsheet" hidden>
+    <div class="controls no-print">
+      <button type="button" id="cheat-print" class="primary">🖨 Print cheat sheet</button>
+    </div>
+    <article id="cheat-sheet" class="sheet"></article>
+  </section>
+</main>
+
+<script>/*WASM_EXEC*/</script>
+<script>const WASM_GZIP_BASE64 = "__WASM_GZIP_BASE64__";</script>
+<script>/*APP*/</script>
+</body>
+</html>

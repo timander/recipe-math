@@ -1,0 +1,232 @@
+:root {
+  --bg: #fdf8f1;
+  --card: #ffffff;
+  --ink: #1f2933;
+  --muted: #5f6b76;
+  --line: #e4dccf;
+  --accent: #c2410c;
+  --accent-dark: #9a3412;
+  --good: #15803d;
+  --good-bg: #e8f6ec;
+  --bad: #b91c1c;
+  --bad-bg: #fdecec;
+  --hint-bg: #fff7e0;
+  --gold: #d99a00;
+  --radius: 14px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; line-height: 1.45; }
+button, input, select { font: inherit; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Header & tabs ---------- */
+.app-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  padding: 0.75rem 1rem 0;
+  position: sticky; top: 0; z-index: 5;
+}
+.app-header h1 { margin: 0 0 0.5rem; font-size: 1.35rem; }
+.app-header h1 small { font-weight: 500; color: var(--muted); font-size: 0.95rem; margin-left: 0.35rem; }
+.tabs { display: flex; gap: 0.25rem; overflow-x: auto; }
+.tabs button {
+  border: 0; background: none; padding: 0.6rem 0.9rem; cursor: pointer;
+  border-bottom: 3px solid transparent; color: var(--muted); font-weight: 600; white-space: nowrap;
+  border-radius: 0;
+}
+.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+main { max-width: 52rem; margin: 0 auto; padding: 1rem; }
+.loading, .load-error { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+.load-error { color: var(--bad); }
+.lead { font-size: 1.05rem; }
+
+/* ---------- Buttons ---------- */
+button {
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  border-radius: 999px; padding: 0.55rem 1.1rem; cursor: pointer; font-weight: 600;
+  min-height: 44px; /* easy to tap */
+}
+button:hover { border-color: var(--accent); }
+button:disabled { opacity: 0.5; cursor: default; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.primary:hover { background: var(--accent-dark); }
+.link-button { border: 0; background: none; color: var(--accent); padding: 0.4rem 0; min-height: 0; }
+:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+
+/* ---------- Level picker ---------- */
+.level-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+@media (min-width: 40rem) { .level-list { grid-template-columns: 1fr 1fr; } }
+.level-card {
+  width: 100%; height: 100%; display: flex; align-items: flex-start; gap: 0.8rem; text-align: left;
+  border-radius: var(--radius); padding: 0.9rem 1rem; font-weight: 400;
+}
+.level-num {
+  flex: none; width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: #fff; font-weight: 700;
+}
+.level-text { display: grid; gap: 0.15rem; flex: 1; }
+.level-goal { color: var(--muted); font-size: 0.92rem; }
+.level-example { font-family: ui-monospace, Menlo, monospace; font-size: 0.9rem; color: var(--accent-dark); }
+.level-stars { color: var(--gold); letter-spacing: 1px; white-space: nowrap; }
+
+/* ---------- Round ---------- */
+.round-top { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.round-level { font-weight: 700; flex: 1; }
+.round-progress { color: var(--muted); }
+.dots { list-style: none; display: flex; gap: 0.35rem; padding: 0; margin: 0.6rem 0 1rem; }
+.dot { width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--line); }
+.dot.now { background: #fff; box-shadow: inset 0 0 0 3px var(--accent); }
+.dot.full { background: var(--good); }
+.dot.half { background: var(--gold); }
+.dot.miss { background: var(--bad); }
+
+.problem-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.5rem 1.25rem; box-shadow: 0 2px 10px rgb(0 0 0 / 0.04);
+}
+.problem {
+  font-size: clamp(1.6rem, 6vw, 2.4rem); font-weight: 700; margin: 0;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em;
+}
+.equals { color: var(--accent); }
+.answer-wrap input {
+  width: 4.6em; font-size: inherit; font-weight: 700; text-align: center; padding: 0.1em 0.2em;
+  border: 0; border-bottom: 4px solid var(--accent); background: #fffaf3; border-radius: 6px 6px 0 0; color: var(--ink);
+}
+.answer-wrap input:focus { outline: none; background: #fff1e0; }
+.answer-wrap input[aria-invalid="true"] { border-bottom-color: var(--gold); }
+.answer-wrap input:disabled { color: var(--ink); opacity: 1; }
+.typing-tip { color: var(--muted); font-size: 0.85rem; margin: 0.5rem 0 0; }
+
+.feedback { margin-top: 1rem; border-radius: 10px; font-weight: 600; }
+.feedback:empty { display: none; }
+.feedback.good, .feedback.bad, .feedback.warn, .feedback.hint { padding: 0.75rem 1rem; }
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+.feedback.warn, .feedback.hint { background: var(--hint-bg); color: #7a5200; }
+
+.work { margin-top: 1rem; border-top: 1px dashed var(--line); padding-top: 0.75rem; }
+.work h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+.steps { margin: 0; padding-left: 1.3rem; }
+.steps li { margin: 0.2rem 0; }
+
+/* ---------- Summary ---------- */
+.summary { text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.summary .actions { justify-content: center; }
+.stars-big { font-size: 3rem; color: var(--gold); margin: 0; letter-spacing: 4px; }
+.summary h2 { margin: 0.3rem 0; }
+.summary-score { font-size: 1.15rem; }
+.missed { text-align: left; max-width: 26rem; margin: 1rem auto 0; }
+.missed h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+
+/* ---------- Worksheet controls ---------- */
+.controls {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1rem; margin-bottom: 1rem; display: grid; gap: 0.8rem;
+}
+fieldset { border: 0; padding: 0; margin: 0; }
+legend { font-weight: 700; margin-bottom: 0.3rem; }
+.checks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; }
+.check { display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; }
+.check input { width: 1.15rem; height: 1.15rem; accent-color: var(--accent); }
+.control-row { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem 1rem; }
+.control-row > label:not(.check) { display: grid; gap: 0.2rem; font-weight: 600; font-size: 0.9rem; }
+.control-row .grow { flex: 1; min-width: 12rem; }
+.control-row input[type="text"], .control-row input[type="number"], .control-row select {
+  border: 1px solid var(--line); border-radius: 8px; padding: 0.5rem 0.6rem; min-height: 44px; background: #fff;
+}
+#ws-version { width: 6.5rem; }
+.preview-toggle { display: inline-flex; gap: 0.7rem; align-items: center; color: var(--muted); }
+.fine { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+/* ---------- Printable sheets (worksheet, key, cheat sheet) ---------- */
+.sheet {
+  background: #fff; color: #000; border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.6in 0.6in; box-shadow: 0 2px 14px rgb(0 0 0 / 0.07);
+  font-size: 11.5pt; max-width: 8.5in; margin: 0 auto;
+}
+.sheet .empty { color: var(--muted); text-align: center; }
+.sheet-head h2 { margin: 0 0 0.4rem; font-size: 18pt; }
+.sheet-head .meta { margin: 0; color: #444; }
+.name-line { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+.blank { display: inline-block; border-bottom: 1px solid #000; width: 7em; height: 1em; vertical-align: baseline; }
+.blank.wide { width: 14em; }
+.blank.short { width: 3.5em; }
+.instructions { margin: 0.8rem 0 0.4rem; font-style: italic; }
+.ws-group h3 { font-size: 11.5pt; margin: 0.9rem 0 0.2rem; border-bottom: 1px solid #bbb; padding-bottom: 0.1rem; }
+.ws-list { columns: 2; column-gap: 2.5em; padding-left: 1.8em; margin: 0.4rem 0; }
+.ws-list li { break-inside: avoid; padding: 0.55em 0; }
+.ws-q { white-space: nowrap; font-size: 12.5pt; }
+.ans-blank { width: 5em; }
+.is-key .ans { color: var(--accent-dark); text-decoration: underline; text-underline-offset: 3px; }
+.is-key .ws-list li { padding: 0.35em 0; }
+/* 24+ problems: tighter rows so the student page fits on one sheet */
+.dense .ws-list li { padding: 0.15em 0; }
+.dense .ws-list { margin: 0.2rem 0; }
+.dense .ws-group h3 { margin-top: 0.35rem; }
+.dense .instructions { margin: 0.5rem 0 0.2rem; }
+.dense.is-key .ws-list li { padding: 0.15em 0; }
+.ws-work { display: block; font-size: 8.5pt; color: #444; line-height: 1.3; }
+.sheet-foot { margin-top: 1rem; }
+.mini-cheat { border: 1.5px dashed #888; border-radius: 6px; padding: 0.5em 0.8em; font-size: 9.5pt; line-height: 1.6; }
+.mini-cheat .fact { display: inline-block; margin-right: 1.3em; white-space: nowrap; }
+.sheet-head h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.version { font-size: 9pt; font-weight: 400; color: #555; white-space: nowrap; }
+
+/* Cheat sheet */
+.cheat-grid { display: grid; gap: 1rem 1.5rem; }
+@media (min-width: 40rem) { .cheat-grid { grid-template-columns: 1.1fr 1fr; } }
+.sheet h3 { font-size: 12pt; margin: 0.8rem 0 0.3rem; }
+.fact-list { margin: 0; padding-left: 1.2em; columns: 2; column-gap: 1.2em; }
+.fact-list li { break-inside: avoid; }
+.tips { margin: 0; padding-left: 1.2em; }
+.tips li { margin: 0.15rem 0; }
+.caption { text-align: center; font-weight: 700; margin: 0.4rem 0 0; }
+.unit-table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.unit-table th, .unit-table td { text-align: left; border-bottom: 1px solid #ddd; padding: 0.2em 0.4em; }
+
+/* The Gallon Kingdom picture */
+.g-gallon, .g-quart, .g-pint, .g-cup { border: 2px solid #000; border-radius: 6px; text-align: center; font-weight: 700; }
+.g-gallon { padding: 0.3em; background: #fde7d9; }
+.g-quarts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3em; }
+.g-quart { padding: 0.2em; background: #fff3c4; }
+.g-pint { padding: 0.15em; background: #dcefff; flex: 1; }
+.g-cup { background: #e2f5e5; flex: 1; padding: 0.15em 0; font-size: 0.85em; }
+.g-row { display: flex; gap: 0.2em; }
+.g-gallon > span, .g-quart > span, .g-pint > span { display: block; font-size: 0.85em; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 30rem) {
+  main { padding: 0.75rem; }
+  .problem-card { padding: 1.1rem 0.9rem; }
+  .sheet { padding: 0.35in 0.3in; font-size: 10.5pt; }
+  .ws-list { columns: 1; }
+  .app-header h1 small { display: block; margin: 0; }
+}
+
+/* ---------- Printing ---------- */
+@page { size: letter; margin: 0.5in; }
+@media print {
+  :root { background: #fff; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print, .app-header, .loading { display: none !important; }
+  main { max-width: none; padding: 0; margin: 0; }
+  .sheet { border: 0; box-shadow: none; padding: 0; max-width: none; border-radius: 0; font-size: 11.5pt; }
+  .ws-list { columns: 2; }
+  .cheat-grid { grid-template-columns: 1.1fr 1fr; }
+  .is-key .ans { color: #000; }
+  /* Cheat sheet fits on one page */
+  #cheat-sheet { font-size: 10pt; }
+  #cheat-sheet h3 { margin: 0.5rem 0 0.2rem; font-size: 11pt; }
+  #cheat-sheet .g-gallon { font-size: 0.85em; }
+  #cheat-sheet .unit-table { font-size: 8.5pt; }
+  #cheat-sheet .unit-table td, #cheat-sheet .unit-table th { padding: 0.1em 0.4em; }
+}
+.mini-cheat { break-inside: avoid; }
