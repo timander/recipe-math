@@ -1,9 +1,10 @@
 # Run `make` or `make help` to list targets.
 .DEFAULT_GOAL := help
-.PHONY: help build test cover vet fmt lint lint-go lint-web open clean node_modules check e2e mutation golden
+.PHONY: help build test cover vet vuln fmt lint lint-go lint-web open clean node_modules check e2e mutation golden
 
 OUT  := dist/recipe-math.html
 WASM := build/recipemath.wasm
+GOVULNCHECK_VERSION := v1.10.0
 
 help: ## List available targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  \033[1mmake %-7s\033[0m %s\n", $$1, $$2}'
@@ -42,6 +43,11 @@ fmt: node_modules ## Format Go (gofmt/goimports) and web code (Prettier)
 	golangci-lint fmt ./...
 	pnpm format
 
+vuln: ## Known vulnerabilities in reachable Go code (including the WebAssembly entry point)
+	GOBIN="$(CURDIR)/build/tools" go install golang.org/x/vuln/cmd/govulncheck@$(GOVULNCHECK_VERSION)
+	build/tools/govulncheck ./...
+	GOOS=js GOARCH=wasm build/tools/govulncheck ./cmd/wasm
+
 lint: lint-go lint-web ## All static analysis
 
 lint-go: ## golangci-lint with the Google Go style rules (see .golangci.yml)
@@ -59,7 +65,7 @@ node_modules: package.json pnpm-lock.yaml
 open: build ## Build, then open the app in your browser
 	open $(OUT) 2>/dev/null || xdg-open $(OUT)
 
-check: lint cover build e2e ## Everything CI runs (except mutation testing)
+check: lint vuln cover build e2e ## Everything CI runs (except mutation testing)
 
 clean: ## Remove build output and reports
 	rm -rf build dist reports coverage playwright-report test-results
